@@ -1,0 +1,11 @@
+node_modules/
+dist/
+.DS_Store
+*.local
+.env
+.env.*
+!.env.example
+
+# Earlier preview assets are unused by the current gallery.
+public/hero-atmosphere.png
+public/work/*.jpg
