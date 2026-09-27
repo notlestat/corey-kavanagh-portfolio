@@ -17,7 +17,7 @@ function Header() {
   const [open, setOpen] = useState(false);
   const menuId = useId();
   return <header className="site-header">
-    <a className="wordmark" href="#top" aria-label="Corey Kavanagh, back to top">CK<span className="accent-dot">.</span></a>
+    <a className="wordmark" href="#top" aria-label="Corey Kavanagh, back to top"><img src="/ck-logo.png" alt="" width="320" height="180" /></a>
     <button className="menu-button" type="button" aria-expanded={open} aria-controls={menuId} onClick={() => setOpen(!open)}>{open ? "Close" : "Menu"}</button>
     <nav id={menuId} className={open ? "site-nav is-open" : "site-nav"} aria-label="Primary navigation">
       <a href="#work-index" onClick={() => setOpen(false)}>Work</a>
