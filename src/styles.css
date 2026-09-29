@@ -268,23 +268,31 @@ img{display:block;width:100%;height:100%;object-fit:cover}
 .conversation-heading>p:last-child{max-width:39ch;margin:0;font-size:17px;line-height:1.45;color:var(--muted)}
 .conversation-side{padding-top:27px;min-width:0}
 .conversation-label{margin:0 0 22px;font-size:12px;letter-spacing:.04em;color:var(--muted)}
+.conversation-stage{display:flex;flex-direction:column;justify-content:flex-end;min-height:412px;gap:20px}
 .conversation{display:flex;flex-direction:column;gap:10px}
-.conversation-bubble{display:flex;flex-direction:column;align-items:flex-start;max-width:84%;min-width:0}
+.conversation-bubble{display:flex;flex-direction:column;align-items:flex-start;max-width:84%;min-width:0;animation:conversation-arrive 240ms var(--ease-out) both}
 .conversation-bubble[data-align="end"]{align-self:flex-end;align-items:flex-end}
 .conversation-content{display:flex;align-items:flex-start;gap:18px;max-width:100%;min-width:0;margin:0;padding:17px 19px;border:0;border-radius:19px 19px 19px 6px;background:var(--chat-question);color:var(--ink);font-size:16px;line-height:1.4;text-align:left}
 .conversation-bubble[data-align="end"] .conversation-content{border-radius:19px 19px 6px 19px;background:var(--chat-answer);color:var(--chat-answer-ink)}
-button.conversation-content{cursor:pointer;transition:transform 180ms var(--ease-out),background-color 180ms ease}
-button.conversation-content:active{transform:scale(.98)}
-.conversation-indicator{flex:none;margin-left:auto;font-size:16px;line-height:1.2}
-.conversation-note-wrap{display:grid;grid-template-rows:0fr;width:100%;transition:grid-template-rows 200ms var(--ease-out)}
-.conversation-note-wrap[data-open="true"]{grid-template-rows:1fr}
-.conversation-note-wrap>div{overflow:hidden;min-height:0}
-.conversation-note{margin:0;padding:8px 6px 3px;font-size:11px;letter-spacing:.04em;text-align:right;color:var(--muted)}
-.conversation-bubble[data-no-motion="true"] .conversation-note-wrap{transition:none}
-.conversation-links{display:flex;justify-content:flex-end;flex-wrap:wrap;gap:22px;margin-top:40px}
+.conversation-typing{display:flex;align-items:center;justify-content:center;gap:5px;width:64px;height:37px;border-radius:19px 19px 19px 6px;background:var(--chat-question);animation:conversation-arrive 200ms var(--ease-out) both}
+.conversation-typing i{display:block;width:5px;height:5px;border-radius:50%;background:var(--muted);animation:conversation-dot 900ms ease-in-out infinite}
+.conversation-typing i:nth-child(2){animation-delay:120ms}
+.conversation-typing i:nth-child(3){animation-delay:240ms}
+.conversation-composer{display:flex;align-items:flex-end;gap:14px;min-height:51px;padding:6px 7px 6px 18px;border:1px solid var(--line);border-radius:26px;background:var(--surface);color:var(--ink)}
+.conversation-draft{flex:1;min-width:0;align-self:center;overflow:hidden;font-size:14px;line-height:1.3;white-space:nowrap;text-overflow:clip}
+.conversation-placeholder{color:var(--muted)}
+.conversation-caret{display:inline-block;width:1px;height:1em;margin-left:1px;vertical-align:-.17em;background:var(--blue)}
+.conversation-send{display:grid;place-items:center;flex:none;width:37px;height:37px;border-radius:50%;background:var(--surface-strong);color:var(--muted);font-size:21px;line-height:1;transition:background-color 180ms ease,color 180ms ease,transform 180ms var(--ease-out)}
+.conversation-composer[data-active="true"] .conversation-send{background:var(--blue);color:#fff;transform:scale(1.04)}
+.conversation-replay{display:inline-flex;align-items:center;gap:7px;margin-top:13px;padding:4px 0;border:0;background:none;color:var(--muted);font:inherit;font-size:11px;cursor:pointer;transition:color 180ms ease}
+.conversation-replay[hidden]{display:none}
+.conversation-replay span{font-size:16px}
+.conversation-links{display:flex;justify-content:flex-end;flex-wrap:wrap;gap:22px;margin-top:27px}
 .conversation-links a{display:inline-flex;gap:7px;align-items:center;padding-bottom:7px;border-bottom:1px solid var(--ink);font-size:13px;font-weight:600;text-decoration:none;transition:color 180ms ease,border-color 180ms ease}
 .conversation-links a span{transition:transform 180ms var(--ease-out)}
-@media(hover:hover) and (pointer:fine){button.conversation-content:hover{transform:translateY(-2px)}.conversation-links a:hover{color:var(--blue);border-color:var(--blue)}.conversation-links a:hover span{transform:translate(2px,-2px)}}
+@keyframes conversation-arrive{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes conversation-dot{50%{opacity:.4;transform:translateY(-3px)}}
+@media(hover:hover) and (pointer:fine){.conversation-replay:hover{color:var(--blue)}.conversation-links a:hover{color:var(--blue);border-color:var(--blue)}.conversation-links a:hover span{transform:translate(2px,-2px)}}
 
 .work-landing{display:grid;grid-template-columns:minmax(300px,.78fr) minmax(0,1.22fr);align-items:center;gap:3%;min-height:calc(100dvh - 94px);padding:72px 3.175% 38px;border-bottom:1px solid var(--line);background:var(--paper)}
 .work-landing-copy{align-self:center;position:relative;z-index:4}
@@ -341,6 +349,7 @@ button.conversation-content:active{transform:scale(.98)}
   .conversation-side{padding-top:70px}
   .conversation-bubble{max-width:89%}
   .conversation-content{font-size:14px;padding:14px 16px}
+  .conversation-stage{min-height:390px}
   .conversation-links{justify-content:flex-start;gap:24px}
   .work-landing{min-height:calc(100svh - 70px);padding:56px 20px 25px}
   .work-landing-copy h1{font-size:clamp(70px,17vw,100px)}
@@ -364,6 +373,7 @@ button.conversation-content:active{transform:scale(.98)}
   .digital-site-arrow{grid-column:3;grid-row:1/3}
 }
 @media(prefers-reduced-motion:reduce){
-  .page-switch-link,.page-switch-link svg,.page-switch-tip,.github-link,.conversation-content,.conversation-note-wrap,.conversation-links a,.conversation-links a span,.pinned-card,.digital-site-link,.digital-site-arrow{transition:none!important}
-  .pinned-card:hover,.pinned-card:focus-visible,.pinned-card:active,.page-switch-link:active,button.conversation-content:hover,button.conversation-content:active{transform:none!important}
+  .page-switch-link,.page-switch-link svg,.page-switch-tip,.github-link,.conversation-send,.conversation-replay,.conversation-links a,.conversation-links a span,.pinned-card,.digital-site-link,.digital-site-arrow{transition:none!important}
+  .conversation-bubble,.conversation-typing,.conversation-typing i{animation:none!important}
+  .pinned-card:hover,.pinned-card:focus-visible,.pinned-card:active,.page-switch-link:active{transform:none!important}
 }

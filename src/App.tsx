@@ -1,7 +1,7 @@
 import { useEffect, useId, useRef, useState, type MouseEvent } from "react";
 import { flushSync } from "react-dom";
 import { collections, galleryItems } from "./portfolioData";
-import { Conversation, ConversationBubble } from "./Conversation";
+import { ConversationPlayback, type ConversationMessage } from "./Conversation";
 
 type SelectedWork = { category: number; position: number };
 type Theme = "light" | "dark";
@@ -142,15 +142,17 @@ function Intro() {
   </section>;
 }
 
+const conversationMessages: ConversationMessage[] = [
+  { align: "start", text: "What do you work on?" },
+  { align: "end", text: "I direct images and identities for brands. I also build websites and tools with the same visual intent." },
+  { align: "start", text: "Where should I start?" },
+  { align: "end", text: "Start with the work. The image archive is there now, alongside the digital projects and systems I have made." },
+];
+
 function ConversationSection() {
   return <section className="conversation-section" id="about" aria-labelledby="conversation-title">
     <div className="conversation-heading"><p className="eyebrow">01 / The practice</p><h2 id="conversation-title">One point of view.<br /><span>More than one medium.</span></h2><p>The image, the identity, the interaction. Each needs a clear idea behind it.</p></div>
-    <div className="conversation-side"><p className="conversation-label">A short conversation about the work</p><Conversation>
-      <ConversationBubble>What do you work on?</ConversationBubble>
-      <ConversationBubble align="end" note="Art direction / Design / Creative technology">I direct images and identities for brands. I also build websites and tools with the same visual intent.</ConversationBubble>
-      <ConversationBubble>Where should I start?</ConversationBubble>
-      <ConversationBubble align="end" note="The digital portfolio is growing as new work is built.">Start with the work. The image archive is there now, alongside the digital projects and systems I have made.</ConversationBubble>
-    </Conversation><div className="conversation-links"><a href="/work#art-direction">Art direction <span aria-hidden="true">↗</span></a><a href="/work#digital-work">Digital work <span aria-hidden="true">↗</span></a></div></div>
+    <div className="conversation-side"><p className="conversation-label">A short conversation about the work</p><ConversationPlayback messages={conversationMessages} /><div className="conversation-links"><a href="/work#art-direction">Art direction <span aria-hidden="true">↗</span></a><a href="/work#digital-work">Digital work <span aria-hidden="true">↗</span></a></div></div>
   </section>;
 }
 
