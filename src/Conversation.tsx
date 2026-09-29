@@ -124,9 +124,9 @@ export function ConversationPlayback({ messages }: { messages: ConversationMessa
       </div>
       <div className="conversation-composer" data-active={phase === "composing"}>
         <span className="conversation-draft" ref={draftRef}>{draft || <span className="conversation-placeholder">Message</span>}{phase === "composing" && <span className="conversation-caret" />}</span>
-        <span className="conversation-send" aria-hidden="true">↑</span>
+        <span className="conversation-send" aria-hidden="true">Send</span>
       </div>
     </div>
-    <button className="conversation-replay" type="button" hidden={reducedMotion} onClick={changePlayback}>{phase === "done" ? "Replay conversation" : "Show all messages"} <span aria-hidden="true">{phase === "done" ? "↺" : "↗"}</span></button>
+    <button className="conversation-replay" type="button" hidden={reducedMotion} onClick={changePlayback}>{phase === "done" ? "Replay conversation" : "Show all messages"}</button>
   </div>;
 }

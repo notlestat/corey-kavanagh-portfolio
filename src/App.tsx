@@ -137,7 +137,7 @@ function Intro() {
       <h1 id="intro-title" ref={nameRef}><span>COREY</span><span>KAVANAGH<span className="accent-dot">.</span></span></h1>
       <p className="sr-only">Art Direction, Design and Creative Technology.</p>
       <div className="intro-roles-window" aria-hidden="true"><div className="intro-roles" ref={rolesRef}>{Array.from({ length: 3 }, (_, index) => <em key={index}>Art Direction / Design / Creative Technology</em>)}</div></div>
-      <a className="intro-next" href="/work">Explore the work <span aria-hidden="true">↗</span></a>
+      <a className="intro-next" href="/work">Explore the work</a>
     </div>
   </section>;
 }
@@ -152,7 +152,7 @@ const conversationMessages: ConversationMessage[] = [
 function ConversationSection() {
   return <section className="conversation-section" id="about" aria-labelledby="conversation-title">
     <div className="conversation-heading"><p className="eyebrow">01 / The practice</p><h2 id="conversation-title">One point of view.<br /><span>More than one medium.</span></h2><p>The image, the identity, the interaction. Each needs a clear idea behind it.</p></div>
-    <div className="conversation-side"><p className="conversation-label">A short conversation about the work</p><ConversationPlayback messages={conversationMessages} /><div className="conversation-links"><a href="/work#art-direction">Art direction <span aria-hidden="true">↗</span></a><a href="/work#digital-work">Digital work <span aria-hidden="true">↗</span></a></div></div>
+    <div className="conversation-side"><p className="conversation-label">A short conversation about the work</p><ConversationPlayback messages={conversationMessages} /><div className="conversation-links"><a href="/work#art-direction">Art direction</a><a href="/work#digital-work">Digital work</a></div></div>
   </section>;
 }
 
@@ -164,7 +164,7 @@ function WorkLanding({ onChoose }: { onChoose: (category: number, position: numb
       <a className="pinned-card pinned-card-graphic" href="#work-index" onClick={() => onChoose(7, 0)} aria-label="Explore graphic design work"><img src="/work/gallery/graphic-01.jpg" alt="Graphic design portfolio work" /><span className="pinned-caption"><strong>Graphic design</strong><small>Identity / image</small></span></a>
       <a className="pinned-card pinned-card-digital" href="#digital-work" aria-label="Explore digital projects"><span className="pinned-digital-art" aria-hidden="true"><span className="pinned-digital-mark">CK<span>.</span></span><span className="pinned-digital-lines"><i /><i /><i /></span></span><span className="pinned-caption"><strong>Digital work</strong><small>Sites / systems</small></span></a>
     </div>
-    <div className="work-landing-bottom"><span>Click a pin or scroll to browse</span><span aria-hidden="true">↓</span></div>
+    <div className="work-landing-bottom"><span>Click a pin or scroll to browse</span></div>
   </section>;
 }
 
@@ -227,7 +227,7 @@ function Gallery({ onChoose }: { onChoose: (category: number, position: number) 
     <div className="gallery-viewport" ref={viewportRef} tabIndex={0} role="region" aria-label="Work gallery. Scroll while pointing here, or use the left and right arrow keys." onKeyDown={event => { if (event.key === "ArrowRight" || event.key === "ArrowLeft") { event.preventDefault(); moveRef.current(event.key === "ArrowRight" ? 360 : -360); } }}>
       <div className="gallery-track" ref={trackRef}>{renderCycle(false)}{renderCycle(true)}</div>
     </div>
-    <div className="gallery-footer"><span className="desktop-gallery-hint">Point here and scroll to browse.</span><span className="mobile-gallery-hint">Swipe to browse.</span><div className="gallery-actions"><button type="button" onClick={() => moveRef.current(-360)} aria-label="Previous work">←</button><button type="button" onClick={() => moveRef.current(360)} aria-label="Next work">→</button><a href="#work-index">All work ↗</a></div></div>
+    <div className="gallery-footer"><span className="desktop-gallery-hint">Point here and scroll to browse.</span><span className="mobile-gallery-hint">Swipe to browse.</span><div className="gallery-actions"><button type="button" onClick={() => moveRef.current(-360)} aria-label="Previous work">Prev</button><button type="button" onClick={() => moveRef.current(360)} aria-label="Next work">Next</button><a href="#work-index">All work</a></div></div>
   </section>;
 }
 
@@ -238,13 +238,13 @@ function WorkIndex({ selected, onChoose }: { selected: SelectedWork; onChoose: (
   return <section className="work-index" id="work-index" aria-labelledby="work-index-title">
     <div className="index-heading"><p className="eyebrow">Portfolio</p><h2 id="work-index-title">Work<span className="accent-dot">.</span></h2><span className="index-count">{collections.length} categories</span></div>
     <div className="index-body"><div className="index-list" role="group" aria-label="Work categories">
-      {collections.map((entry, index) => <button className={index === selected.category ? "index-item is-selected" : "index-item"} type="button" key={entry.name} onClick={() => onChoose(index, 0)} aria-pressed={index === selected.category}><span className="index-number">{String(index + 1).padStart(2, "0")}</span><span className="index-name">{entry.name}</span><span className="index-arrow" aria-hidden="true">↗</span></button>)}
+      {collections.map((entry, index) => <button className={index === selected.category ? "index-item is-selected" : "index-item"} type="button" key={entry.name} onClick={() => onChoose(index, 0)} aria-pressed={index === selected.category}><span className="index-number">{String(index + 1).padStart(2, "0")}</span><span className="index-name">{entry.name}</span></button>)}
     </div><div className="index-visual" aria-live="polite" aria-atomic="true">
       <div className="visual-main" key={`${selected.category}-${selected.position}`}>{item.video ? <video src={item.video} poster={item.image} controls preload="metadata" aria-label={`${collection.name} video ${selected.position + 1} of ${collection.items.length}`} /> : <img src={item.image} alt={`${collection.name} portfolio image ${selected.position + 1} of ${collection.items.length}`} />}</div>
       <div className="visual-secondary" aria-hidden="true"><img src={collection.items[(selected.position + 1) % collection.items.length].image} alt="" /></div>
       <div className="visual-caption"><span>{collection.name}</span><span>{collection.year ?? "Selected work"}</span></div>
-      <div className="visual-controls"><button type="button" onClick={() => step(-1)} aria-label={`Previous ${collection.name} item`}>←</button><span>{String(selected.position + 1).padStart(2, "0")} / {String(collection.items.length).padStart(2, "0")}</span><button type="button" onClick={() => step(1)} aria-label={`Next ${collection.name} item`}>→</button></div>
-    </div></div><div className="index-bottom"><span>Art Direction / Design / Creative Technology</span><a href="/#about">The practice <span aria-hidden="true">↗</span></a></div>
+      <div className="visual-controls"><button type="button" onClick={() => step(-1)} aria-label={`Previous ${collection.name} item`}>Prev</button><span>{String(selected.position + 1).padStart(2, "0")} / {String(collection.items.length).padStart(2, "0")}</span><button type="button" onClick={() => step(1)} aria-label={`Next ${collection.name} item`}>Next</button></div>
+    </div></div><div className="index-bottom"><span>Art Direction / Design / Creative Technology</span><a href="/#about">The practice</a></div>
   </section>;
 }
 
@@ -256,10 +256,10 @@ function SystemRow({ item, index }: { item: typeof systems[number]; index: numbe
   return <article className="system-row"><button type="button" aria-expanded={open} aria-controls={id} onClick={() => setOpen(!open)}><span className="system-number">{String(index + 1).padStart(2, "0")}</span><span className="system-name">{item.name}</span><span className="system-toggle" aria-hidden="true">{open ? "−" : "+"}</span></button><div className="system-panel" id={id} hidden={!open}><p className="system-short">{item.short}</p><p>{item.detail}</p><p>{item.outcome}</p></div></article>;
 }
 function DigitalWork() {
-  return <section className="systems-section digital-work" id="digital-work" aria-labelledby="systems-title"><div className="systems-header"><p className="eyebrow">Digital / Websites & systems</p><h2 id="systems-title">Digital work<span className="accent-dot">.</span></h2><p>This part of the portfolio is growing. It begins with this website and local tools built to organise creative work.</p></div><div className="systems-list"><a className="digital-site-link" href="/" aria-label="Explore the Corey Kavanagh portfolio website"><span className="digital-site-number">01</span><span className="digital-site-name">This portfolio</span><span className="digital-site-type">Website / ongoing</span><span className="digital-site-arrow" aria-hidden="true">↗</span></a>{systems.map((item, index) => <SystemRow key={item.name} item={item} index={index + 1} />)}<p className="digital-next">More websites and product work will appear here as they are built.</p></div></section>;
+  return <section className="systems-section digital-work" id="digital-work" aria-labelledby="systems-title"><div className="systems-header"><p className="eyebrow">Digital / Websites & systems</p><h2 id="systems-title">Digital work<span className="accent-dot">.</span></h2><p>This part of the portfolio is growing. It begins with this website and local tools built to organise creative work.</p></div><div className="systems-list"><a className="digital-site-link" href="/" aria-label="Explore the Corey Kavanagh portfolio website"><span className="digital-site-number">01</span><span className="digital-site-name">This portfolio</span><span className="digital-site-type">Website / ongoing</span></a>{systems.map((item, index) => <SystemRow key={item.name} item={item} index={index + 1} />)}<p className="digital-next">More websites and product work will appear here as they are built.</p></div></section>;
 }
 function Footer() {
-  return <footer className="site-footer" id="contact"><div><p className="eyebrow">Contact</p><h2>Tell me what you’re trying to create<span className="accent-dot">.</span></h2><p>Art direction, design, a website, or a tool that makes creative work easier.</p></div><div className="footer-bottom"><span>Art Direction / Design / Creative Technology</span><a href="#top">Back to top ↑</a></div></footer>;
+  return <footer className="site-footer" id="contact"><div><p className="eyebrow">Contact</p><h2>Tell me what you’re trying to create<span className="accent-dot">.</span></h2><p>Art direction, design, a website, or a tool that makes creative work easier.</p></div><div className="footer-bottom"><span>Art Direction / Design / Creative Technology</span><a href="#top">Back to top</a></div></footer>;
 }
 export default function App() {
   const page: Page = window.location.pathname.replace(/\/+$/, "") === "/work" ? "work" : "home";
