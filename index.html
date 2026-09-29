@@ -8,6 +8,20 @@
       content="Corey Kavanagh works across art direction, design and creative technology."
     />
     <meta name="theme-color" content="#ffffff" />
+    <script>
+      (() => {
+        try {
+          const savedTheme = localStorage.getItem("corey-theme");
+          const theme = savedTheme === "light" || savedTheme === "dark"
+            ? savedTheme
+            : matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+          document.documentElement.dataset.theme = theme;
+          document.querySelector('meta[name="theme-color"]').setAttribute("content", theme === "dark" ? "#0b0b0b" : "#ffffff");
+        } catch {
+          document.documentElement.dataset.theme = "light";
+        }
+      })();
+    </script>
     <title>COREY KAVANAGH | Art Direction / Design / Creative Technology</title>
   </head>
   <body>

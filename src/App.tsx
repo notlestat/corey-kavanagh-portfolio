@@ -1,7 +1,15 @@
-import { useEffect, useId, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState, type MouseEvent } from "react";
+import { flushSync } from "react-dom";
 import { collections, galleryItems } from "./portfolioData";
 
 type SelectedWork = { category: number; position: number };
+type Theme = "light" | "dark";
+type ViewTransitionDocument = Document & {
+  startViewTransition?: (update: () => void) => {
+    ready: Promise<void>;
+    finished: Promise<void>;
+  };
+};
 const systems = [
   { name: "Axis ad workflow", short: "Campaign development with evidence and approval gates.", detail: "Organises brand material, research, strategy, campaign concepts, art direction, storyboards and production handoffs in one local workflow.", outcome: "Sources, assumptions, decisions and approved work stay visible before anything moves into production." },
   { name: "Axis post-production workflow", short: "A local system for turning source footage into reviewed edits.", detail: "Handles source intake, transcripts, clip selection, longform edits, shorts, captions, motion graphics, rendering and technical checks.", outcome: "The repetitive work is organised. Editorial choices and final watch-and-listen approval stay with a person." },
@@ -15,15 +23,61 @@ const services = [
 
 function Header() {
   const [open, setOpen] = useState(false);
+  const [theme, setTheme] = useState<Theme>(() => document.documentElement.dataset.theme === "dark" ? "dark" : "light");
   const menuId = useId();
+  const themeButtonRef = useRef<HTMLButtonElement>(null);
+
+  const applyTheme = (nextTheme: Theme) => {
+    document.documentElement.dataset.theme = nextTheme;
+    document.querySelector('meta[name="theme-color"]')?.setAttribute("content", nextTheme === "dark" ? "#0b0b0b" : "#ffffff");
+    try { localStorage.setItem("corey-theme", nextTheme); } catch { /* Storage can be unavailable in private contexts. */ }
+    flushSync(() => setTheme(nextTheme));
+  };
+
+  const toggleTheme = (event: MouseEvent<HTMLButtonElement>) => {
+    const nextTheme: Theme = theme === "light" ? "dark" : "light";
+    const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const viewTransitionDocument = document as ViewTransitionDocument;
+
+    if (event.detail === 0 || reducedMotion || !viewTransitionDocument.startViewTransition || !themeButtonRef.current) {
+      applyTheme(nextTheme);
+      return;
+    }
+
+    const bounds = themeButtonRef.current.getBoundingClientRect();
+    const x = bounds.left + bounds.width / 2;
+    const y = bounds.top + bounds.height / 2;
+    const radius = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
+    const transition = viewTransitionDocument.startViewTransition(() => applyTheme(nextTheme));
+
+    transition.ready.then(() => {
+      const options: KeyframeAnimationOptions & { pseudoElement: string } = {
+        duration: 420,
+        easing: "cubic-bezier(0.77, 0, 0.175, 1)",
+        fill: "both",
+        pseudoElement: "::view-transition-new(root)",
+      };
+      document.documentElement.animate(
+        { clipPath: [`circle(0 at ${x}px ${y}px)`, `circle(${radius}px at ${x}px ${y}px)`] },
+        options,
+      );
+    });
+  };
+
   return <header className="site-header">
     <a className="wordmark" href="#top" aria-label="Corey Kavanagh, back to top"><img src="/ck-logo.png" alt="" width="320" height="180" /></a>
-    <button className="menu-button" type="button" aria-expanded={open} aria-controls={menuId} onClick={() => setOpen(!open)}>{open ? "Close" : "Menu"}</button>
-    <nav id={menuId} className={open ? "site-nav is-open" : "site-nav"} aria-label="Primary navigation">
-      <a href="#work-index" onClick={() => setOpen(false)}>Work</a>
-      <a href="#about" onClick={() => setOpen(false)}>Info</a>
-      <a href="https://github.com/notlestat" target="_blank" rel="noopener noreferrer" onClick={() => setOpen(false)}>GitHub <span aria-hidden="true">↗</span><span className="sr-only"> (opens in a new tab)</span></a>
-    </nav>
+    <div className="header-actions">
+      <button ref={themeButtonRef} className="theme-toggle" type="button" onClick={toggleTheme} aria-pressed={theme === "dark"} aria-label={`Switch to ${theme === "light" ? "dark" : "light"} mode`}>
+        <span className="theme-toggle-track" aria-hidden="true"><span className="theme-toggle-thumb" /></span>
+        <span className="theme-toggle-label" aria-hidden="true">{theme === "light" ? "Dark" : "Light"}</span>
+      </button>
+      <button className="menu-button" type="button" aria-expanded={open} aria-controls={menuId} onClick={() => setOpen(!open)}>{open ? "Close" : "Menu"}</button>
+      <nav id={menuId} className={open ? "site-nav is-open" : "site-nav"} aria-label="Primary navigation">
+        <a href="#work-index" onClick={() => setOpen(false)}>Work</a>
+        <a href="#about" onClick={() => setOpen(false)}>Info</a>
+        <a href="https://github.com/notlestat" target="_blank" rel="noopener noreferrer" onClick={() => setOpen(false)}>GitHub <span aria-hidden="true">↗</span><span className="sr-only"> (opens in a new tab)</span></a>
+      </nav>
+    </div>
   </header>;
 }
 
