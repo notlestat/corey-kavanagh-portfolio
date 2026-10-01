@@ -34,6 +34,7 @@ Run `npm run build` before `npm run preview`. There is no automated unit-test sc
 | [src/Conversation.tsx](src/Conversation.tsx) | Accessible conversation bubbles used on Home |
 | [src/portfolioData.ts](src/portfolioData.ts) | Collection names, years, image/video paths and gallery ordering |
 | [src/styles.css](src/styles.css) | Typography, layout, motion and responsive rules |
+| [src/visualTheme.css](src/visualTheme.css) | Helvetica-based type, muted surfaces and component styling for both themes |
 | [src/main.tsx](src/main.tsx) | React entry point |
 | `public/work/gallery/` | Local gallery images and video previews |
 | [vite.config.ts](vite.config.ts) | Vite configuration |

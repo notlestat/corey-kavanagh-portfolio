@@ -1,4 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
 :root{color-scheme:light;font-family:Archivo,Arial,sans-serif;font-synthesis:none;text-rendering:optimizeLegibility;--paper:#fff;--ink:#111;--muted:#666;--line:#e8e8e8;--blue:#2747ff;--surface:#f4f4f4;--surface-strong:#ddd;--control:#fff;--caption:rgb(255 255 255 / .92);--footer-bg:#111;--footer-ink:#fff;--footer-muted:#d6d6d6;--footer-subtle:#999;--footer-line:#3a3a3a;--ease:cubic-bezier(.22,1,.36,1);--ease-out:cubic-bezier(.23,1,.32,1);--ease-in-out:cubic-bezier(.77,0,.175,1)}
 :root[data-theme="dark"]{color-scheme:dark;--paper:#0b0b0b;--ink:#f2f2ee;--muted:#999;--line:#2a2a2a;--blue:#526aff;--surface:#121212;--surface-strong:#1d1d1d;--control:#111;--caption:rgb(11 11 11 / .9);--footer-bg:#050505;--footer-ink:#f2f2ee;--footer-muted:#b8b8b3;--footer-subtle:#858585;--footer-line:#303030}
 *{box-sizing:border-box}

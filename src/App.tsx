@@ -39,7 +39,7 @@ function Header({ page }: { page: Page }) {
 
   const applyTheme = (nextTheme: Theme) => {
     document.documentElement.dataset.theme = nextTheme;
-    document.querySelector('meta[name="theme-color"]')?.setAttribute("content", nextTheme === "dark" ? "#0b0b0b" : "#ffffff");
+    document.querySelector('meta[name="theme-color"]')?.setAttribute("content", nextTheme === "dark" ? "#191c19" : "#eeefeb");
     try { localStorage.setItem("corey-theme", nextTheme); } catch { /* Storage can be unavailable in private contexts. */ }
     flushSync(() => setTheme(nextTheme));
   };

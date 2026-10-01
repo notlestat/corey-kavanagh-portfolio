@@ -1,0 +1,209 @@
+/* A quieter Swiss typographic layer over the existing layouts and interactions. */
+:root {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --label-font: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  --paper: #eeefeb;
+  --ink: #2b302b;
+  --muted: #626a61;
+  --line: #cdd2c9;
+  --accent: #475044;
+  /* Existing interaction rules use this token. The accent is now graphite. */
+  --blue: var(--accent);
+  --surface: #e5e8e1;
+  --surface-strong: #d4d9cf;
+  --control: #eeefeb;
+  --caption: rgb(238 239 235 / .94);
+  --footer-bg: #e5e8e1;
+  --footer-ink: #2b302b;
+  --footer-muted: #626a61;
+  --footer-subtle: #626a61;
+  --footer-line: #c2c9bd;
+  --chat-question: #e1e5dc;
+  --chat-answer: #d2d9ca;
+  --chat-answer-ink: #2b302b;
+  --pin-shadow: 0 16px 34px rgb(33 40 31 / .14);
+}
+
+:root[data-theme="dark"] {
+  --paper: #191c19;
+  --ink: #e4e8df;
+  --muted: #a2aca0;
+  --line: #3c4539;
+  --accent: #c7d0bf;
+  --blue: var(--accent);
+  --surface: #232923;
+  --surface-strong: #354031;
+  --control: #1d231c;
+  --caption: rgb(25 28 25 / .94);
+  --footer-bg: #20261f;
+  --footer-ink: #e4e8df;
+  --footer-muted: #a2aca0;
+  --footer-subtle: #a2aca0;
+  --footer-line: #3c4539;
+  --chat-question: #292f27;
+  --chat-answer: #394433;
+  --chat-answer-ink: #e4e8df;
+  --pin-shadow: 0 16px 34px rgb(0 0 0 / .24);
+}
+
+::selection { background: var(--ink); color: var(--paper); }
+.accent-dot, .conversation-heading h2 span { color: inherit; }
+
+.eyebrow,
+.intro-topline,
+.conversation-label,
+.practice-top > span,
+.gallery-count,
+.index-count,
+.index-number,
+.system-number,
+.digital-site-number,
+.digital-site-type,
+.digital-next,
+.work-landing-bottom,
+.pinned-caption small,
+.visual-controls span,
+.footer-bottom {
+  font-family: var(--label-font);
+  font-weight: 400;
+  font-variant-numeric: tabular-nums;
+  font-size: 10px;
+  line-height: 1.5;
+  letter-spacing: .025em;
+}
+.eyebrow { letter-spacing: .065em; }
+
+.intro-sticky h1 {
+  font-weight: 400;
+  line-height: .94;
+  letter-spacing: -.06em;
+}
+.intro-roles {
+  gap: 2.5em;
+  font-size: clamp(22px, 2.15vw, 34px);
+  font-weight: 400;
+  letter-spacing: -.025em;
+}
+.intro-roles em {
+  font-size: inherit;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: inherit;
+}
+.intro-next,
+.conversation-links a,
+.gallery-actions a,
+.index-bottom a { font-weight: 400; }
+
+.conversation-heading h2 {
+  font-size: clamp(50px, 5.7vw, 92px);
+  font-weight: 400;
+  line-height: 1.02;
+  letter-spacing: -.05em;
+}
+.conversation-heading > p:last-child,
+.work-landing-copy > p:last-child,
+.systems-header > p:last-child { font-size: 16px; line-height: 1.5; }
+
+.practice-grid h2,
+.systems-header h2,
+.site-footer h2 {
+  font-size: clamp(44px, 5.2vw, 80px);
+  font-weight: 400;
+  line-height: 1.04;
+  letter-spacing: -.045em;
+  text-wrap: balance;
+}
+.practice-copy { font-size: 18px; line-height: 1.5; letter-spacing: -.015em; }
+.services-list h3,
+.system-name,
+.digital-site-name { font-weight: 400; letter-spacing: -.025em; line-height: 1.12; }
+.services-list p { font-size: 15px; line-height: 1.5; }
+.system-short { font-weight: 500; }
+
+.work-landing-copy h1 {
+  font-size: clamp(66px, 8vw, 128px);
+  font-weight: 400;
+  line-height: .96;
+  letter-spacing: -.06em;
+}
+.gallery-section .gallery-intro h2,
+.index-heading h2 {
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -.05em;
+}
+.gallery-section .gallery-intro h2 { font-size: clamp(48px, 5.4vw, 82px); }
+.index-heading h2 { font-size: 62px; }
+.gallery-card figcaption { font-size: 12px; font-weight: 400; }
+.index-name { font-weight: 400; letter-spacing: -.02em; }
+.index-item.is-selected { background: var(--surface); color: var(--ink); }
+.index-item.is-selected .index-name { font-weight: 500; }
+.index-item.is-selected .index-number { color: var(--ink); }
+
+.page-switch { background: transparent; }
+.page-switch-link.is-active { background: var(--surface-strong); box-shadow: none; }
+.page-switch-tip { border-radius: 2px; }
+.theme-toggle-label { font-family: var(--label-font); font-size: 10px; }
+.theme-toggle-track { background: transparent; }
+.conversation-content { font-size: 15px; line-height: 1.45; }
+.conversation-composer { background: transparent; }
+.conversation-send { font-weight: 500; }
+.conversation-composer[data-active="true"] .conversation-send { background: var(--ink); color: var(--paper); }
+.conversation-replay { font-family: var(--label-font); font-size: 10px; }
+
+.pinned-card { border-radius: 1px; }
+.pinned-card::before {
+  width: 9px;
+  height: 9px;
+  border: 1px solid var(--paper);
+  background: var(--ink);
+  box-shadow: 0 1px 3px rgb(0 0 0 / .2);
+}
+.pinned-caption { border-top: 1px solid var(--line); }
+.pinned-caption strong { font-weight: 400; letter-spacing: -.02em; }
+.pinned-digital-art {
+  background-color: #3a4435;
+  background-image: linear-gradient(rgb(225 234 216 / .06) 1px, transparent 1px), linear-gradient(90deg, rgb(225 234 216 / .06) 1px, transparent 1px);
+  background-size: 24px 24px;
+  color: #e5eade;
+}
+.pinned-digital-mark { font-weight: 300; letter-spacing: -.065em; line-height: .95; }
+.pinned-digital-mark span { color: inherit; opacity: .6; }
+.pinned-digital-lines { gap: 8px; }
+.pinned-digital-lines i { height: 1px; background: rgb(229 234 222 / .4); }
+.site-footer > div:first-child > p:not(.eyebrow) { font-size: 17px; line-height: 1.5; }
+.footer-bottom a:hover { color: var(--ink); text-decoration: underline; text-underline-offset: 4px; }
+.gallery-actions button:hover,
+.visual-controls button:hover { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+
+@media (hover: hover) and (pointer: fine) {
+  .pinned-card:hover { box-shadow: 0 22px 42px rgb(25 31 23 / .2); }
+}
+
+@media (min-width: 701px) {
+  .intro-sticky h1 { font-size: clamp(76px, 9.7vw, 148px); }
+}
+@media (max-width: 700px) {
+  .intro-sticky h1 { font-size: clamp(47px, 13.8vw, 76px); line-height: .96; letter-spacing: -.055em; }
+  .intro-roles { gap: 0; font-size: clamp(20px, 5.6vw, 27px); }
+  .intro-roles em { max-width: 20ch; }
+  .conversation-heading h2 { font-size: clamp(43px, 10.5vw, 68px); max-width: 13ch; }
+  .conversation-content { font-size: 14px; }
+  .conversation-heading > p:last-child,
+  .work-landing-copy > p:last-child,
+  .systems-header > p:last-child { font-size: 15px; }
+  .practice-grid h2,
+  .systems-header h2,
+  .site-footer h2 { font-size: clamp(40px, 10vw, 62px); }
+  .practice-copy { font-size: 16px; }
+  .work-landing-copy h1 { font-size: clamp(62px, 16vw, 100px); }
+  .gallery-section .gallery-intro h2 { font-size: clamp(43px, 11vw, 68px); }
+  .index-heading h2 { font-size: 58px; }
+  .services-list h3 { font-size: 25px; }
+  .pinned-caption strong { font-size: 13px; }
+  .pinned-caption small { font-size: 9px; }
+  .index-name { font-size: 19px; }
+  .site-footer > div:first-child > p:not(.eyebrow) { font-size: 16px; }
+}
