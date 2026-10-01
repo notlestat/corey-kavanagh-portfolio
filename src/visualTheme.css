@@ -18,9 +18,10 @@
   --footer-muted: #626a61;
   --footer-subtle: #626a61;
   --footer-line: #c2c9bd;
-  --chat-question: #e1e5dc;
-  --chat-answer: #d2d9ca;
-  --chat-answer-ink: #2b302b;
+  --chat-question: #e9e9eb;
+  --chat-question-ink: #191919;
+  --chat-answer: #0072e8;
+  --chat-answer-ink: #fff;
   --pin-shadow: 0 16px 34px rgb(33 40 31 / .14);
 }
 
@@ -40,9 +41,10 @@
   --footer-muted: #a2aca0;
   --footer-subtle: #a2aca0;
   --footer-line: #3c4539;
-  --chat-question: #292f27;
-  --chat-answer: #394433;
-  --chat-answer-ink: #e4e8df;
+  --chat-question: #303033;
+  --chat-question-ink: #fff;
+  --chat-answer: #0072e8;
+  --chat-answer-ink: #fff;
   --pin-shadow: 0 16px 34px rgb(0 0 0 / .24);
 }
 
@@ -147,10 +149,11 @@
 .page-switch-tip { border-radius: 2px; }
 .theme-toggle-label { font-family: var(--label-font); font-size: 10px; }
 .theme-toggle-track { background: transparent; }
-.conversation-content { font-size: 15px; line-height: 1.45; }
+.conversation-content { font-size: 15px; line-height: 1.45; color: var(--chat-question-ink); }
 .conversation-composer { background: transparent; }
+.conversation-caret { background: var(--chat-answer); }
 .conversation-send { font-weight: 500; }
-.conversation-composer[data-active="true"] .conversation-send { background: var(--ink); color: var(--paper); }
+.conversation-composer[data-active="true"] .conversation-send { background: var(--chat-answer); color: var(--chat-answer-ink); }
 .conversation-replay { font-family: var(--label-font); font-size: 10px; }
 
 .pinned-card { border-radius: 1px; }

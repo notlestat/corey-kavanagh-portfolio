@@ -5,6 +5,16 @@ export type ConversationMessage = {
   text: string;
 };
 
+function typingDelay(text: string, position: number) {
+  const character = text[position];
+  // Stable variation gives each reply a natural rhythm, including on replay.
+  const keystroke = 65 + ((character.charCodeAt(0) + position * 11) % 7) * 14;
+  if (/[.!?]/.test(character)) return keystroke + 360;
+  if (/[,;:]/.test(character)) return keystroke + 180;
+  if (/\s/.test(character)) return keystroke + 75;
+  return keystroke;
+}
+
 function wait(duration: number, signal: AbortSignal) {
   return new Promise<boolean>((resolve) => {
     if (signal.aborted) return resolve(false);
@@ -73,25 +83,26 @@ export function ConversationPlayback({ messages }: { messages: ConversationMessa
       setVisibleCount(0);
       setPhase("waiting");
       setDraft("");
-      if (!(await wait(300, controller.signal))) return;
+      if (!(await wait(700, controller.signal))) return;
 
       for (let index = 0; index < messages.length; index += 1) {
         const message = messages[index];
         if (message.align === "start") {
           setPhase("incoming");
-          if (!(await wait(650, controller.signal))) return;
+          if (!(await wait(1600, controller.signal))) return;
         } else {
+          if (!(await wait(900, controller.signal))) return;
           setPhase("composing");
           for (let character = 1; character <= message.text.length; character += 1) {
             setDraft(message.text.slice(0, character));
-            if (!(await wait(16, controller.signal))) return;
+            if (!(await wait(typingDelay(message.text, character - 1), controller.signal))) return;
           }
-          if (!(await wait(300, controller.signal))) return;
+          if (!(await wait(650, controller.signal))) return;
         }
         setVisibleCount(index + 1);
         setPhase("waiting");
         setDraft("");
-        if (!(await wait(340, controller.signal))) return;
+        if (index < messages.length - 1 && !(await wait(message.align === "end" ? 1800 : 1000, controller.signal))) return;
       }
       setPhase("done");
     };
@@ -123,7 +134,7 @@ export function ConversationPlayback({ messages }: { messages: ConversationMessa
         {phase === "incoming" && <div className="conversation-typing"><i /><i /><i /></div>}
       </div>
       <div className="conversation-composer" data-active={phase === "composing"}>
-        <span className="conversation-draft" ref={draftRef}>{draft || <span className="conversation-placeholder">Message</span>}{phase === "composing" && <span className="conversation-caret" />}</span>
+        <span className="conversation-draft" ref={draftRef}>{draft || <span className="conversation-placeholder">iMessage</span>}{phase === "composing" && <span className="conversation-caret" />}</span>
         <span className="conversation-send" aria-hidden="true">Send</span>
       </div>
     </div>

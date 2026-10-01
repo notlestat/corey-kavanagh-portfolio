@@ -55,6 +55,8 @@ Update collection metadata and item counts in `src/portfolioData.ts` when adding
 
 Home reuses `public/work/gallery/video/moving-09.mp4`, which matches the supplied source film. It loops inline without native playback controls. Playback attempts audio first and falls back to muted autoplay when the browser requires a user gesture. The sound switch enables or disables audio. With reduced motion enabled, the film remains still until the visitor enables sound; the conversation shows its complete transcript.
 
+The conversation uses iMessage-style blue outgoing and grey incoming bubbles in both themes. Replies type at a varied pace with thinking, punctuation and send pauses. Visitors can show every message immediately or replay the sequence.
+
 ## Before launching the website
 
 Confirm project credits and usage rights, add case-study detail where useful, and provide a verified contact route. Review video and image quality at full size. A Graphic Design source image was previously held out pending a publication decision; adding new media still requires editorial review.
