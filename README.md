@@ -1,6 +1,6 @@
 # Corey Kavanagh portfolio
 
-A React and TypeScript portfolio for art direction, design and creative technology. Home introduces the practice through a scroll-led type sequence and an interactive conversation. The Work page brings together a pinned entry index, image collections and current digital projects. In the image gallery, wheel scrolling moves an endless strip while the pointer is over it. On smaller screens and with reduced motion enabled, the strip becomes swipeable.
+A React and TypeScript portfolio for art direction, design and creative technology. Home is a quiet, film-led introduction with an animated conversation and clothing-button page navigation. The Work page brings together a pinned entry index, image collections and current digital projects. In the image gallery, wheel scrolling moves an endless strip while the pointer is over it. On smaller screens and with reduced motion enabled, the strip becomes swipeable.
 
 The source is published on GitHub. This README does not establish that a production website has been deployed.
 
@@ -31,10 +31,13 @@ Run `npm run build` before `npm run preview`. There is no automated unit-test sc
 | Location | Purpose |
 |---|---|
 | [src/App.tsx](src/App.tsx) | Home and Work pages, navigation, gallery, collection viewer and contact section |
+| [src/Home.tsx](src/Home.tsx) | Minimal Home, looping film, sound switch and conversation |
+| [src/Navigation.tsx](src/Navigation.tsx) | Clothing-button page links, shared theme control and Work header |
 | [src/Conversation.tsx](src/Conversation.tsx) | Accessible conversation bubbles used on Home |
 | [src/portfolioData.ts](src/portfolioData.ts) | Collection names, years, image/video paths and gallery ordering |
 | [src/styles.css](src/styles.css) | Typography, layout, motion and responsive rules |
 | [src/visualTheme.css](src/visualTheme.css) | Helvetica-based type, muted surfaces and component styling for both themes |
+| [src/home.css](src/home.css) | Home spacing, film controls and tactile navigation |
 | [src/main.tsx](src/main.tsx) | React entry point |
 | `public/work/gallery/` | Local gallery images and video previews |
 | [vite.config.ts](vite.config.ts) | Vite configuration |
@@ -49,6 +52,8 @@ Update collection metadata and item counts in `src/portfolioData.ts` when adding
 - Home introduces the full practice. Work holds the image archive and a growing digital section.
 - Navigation links to [the GitHub profile](https://github.com/notlestat).
 - No verified public contact route has been added yet.
+
+Home reuses `public/work/gallery/video/moving-09.mp4`, which matches the supplied source film. It loops inline without native playback controls. Playback attempts audio first and falls back to muted autoplay when the browser requires a user gesture. The sound switch enables or disables audio. With reduced motion enabled, the film remains still until the visitor enables sound; the conversation shows its complete transcript.
 
 ## Before launching the website
 
