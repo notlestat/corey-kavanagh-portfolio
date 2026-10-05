@@ -34,6 +34,7 @@ Run `npm run build` before `npm run preview`. There is no automated unit-test sc
 | [src/Home.tsx](src/Home.tsx) | Minimal Home, looping film, sound switch and conversation |
 | [src/Navigation.tsx](src/Navigation.tsx) | Clothing-button page links, shared theme control and Work header |
 | [src/Conversation.tsx](src/Conversation.tsx) | Accessible conversation bubbles used on Home |
+| [src/ToolRail.tsx](src/ToolRail.tsx) | Monochrome Home tool marks with hover, keyboard and tap labels |
 | [src/portfolioData.ts](src/portfolioData.ts) | Collection names, years, image/video paths and gallery ordering |
 | [src/styles.css](src/styles.css) | Typography, layout, motion and responsive rules |
 | [src/visualTheme.css](src/visualTheme.css) | Helvetica-based type, muted surfaces and component styling for both themes |
@@ -56,6 +57,8 @@ Update collection metadata and item counts in `src/portfolioData.ts` when adding
 Home reuses `public/work/gallery/video/moving-09.mp4`, which matches the supplied source film. It loops inline without native playback controls. Playback attempts audio first and falls back to muted autoplay when the browser requires a user gesture. The sound switch enables or disables audio. With reduced motion enabled, the film remains still until the visitor enables sound; the conversation shows its complete transcript.
 
 The conversation uses iMessage-style blue outgoing and grey incoming bubbles in both themes. Replies type at a varied pace with thinking, punctuation and send pauses. Visitors can show every message immediately or replay the sequence.
+
+Home also includes a small tools rail beside the introduction on desktop, moving beneath it on mobile. It identifies Photoshop, Illustrator, Figma, Paper Design, Claude Code and OpenAI Codex. Labels reveal on hover, keyboard focus or tap, and dismiss with Escape, focus leaving, or an outside tap. Ps/Ai are monochrome typographic tiles; Codex uses the OpenAI parent mark. Figma, Claude and OpenAI vector silhouettes come from [Simple Icons](https://github.com/simple-icons/simple-icons); Paper's mark comes from [Paper](https://paper.design/). The tool names describe the toolkit, not affiliations or certifications.
 
 ## Before launching the website
 

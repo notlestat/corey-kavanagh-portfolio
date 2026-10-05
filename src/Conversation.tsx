@@ -8,10 +8,10 @@ export type ConversationMessage = {
 function typingDelay(text: string, position: number) {
   const character = text[position];
   // Stable variation gives each reply a natural rhythm, including on replay.
-  const keystroke = 65 + ((character.charCodeAt(0) + position * 11) % 7) * 14;
-  if (/[.!?]/.test(character)) return keystroke + 360;
-  if (/[,;:]/.test(character)) return keystroke + 180;
-  if (/\s/.test(character)) return keystroke + 75;
+  const keystroke = 50 + ((character.charCodeAt(0) + position * 11) % 7) * 11;
+  if (/[.!?]/.test(character)) return keystroke + 270;
+  if (/[,;:]/.test(character)) return keystroke + 135;
+  if (/\s/.test(character)) return keystroke + 55;
   return keystroke;
 }
 
@@ -83,26 +83,26 @@ export function ConversationPlayback({ messages }: { messages: ConversationMessa
       setVisibleCount(0);
       setPhase("waiting");
       setDraft("");
-      if (!(await wait(700, controller.signal))) return;
+      if (!(await wait(500, controller.signal))) return;
 
       for (let index = 0; index < messages.length; index += 1) {
         const message = messages[index];
         if (message.align === "start") {
           setPhase("incoming");
-          if (!(await wait(1600, controller.signal))) return;
+          if (!(await wait(1200, controller.signal))) return;
         } else {
-          if (!(await wait(900, controller.signal))) return;
+          if (!(await wait(650, controller.signal))) return;
           setPhase("composing");
           for (let character = 1; character <= message.text.length; character += 1) {
             setDraft(message.text.slice(0, character));
             if (!(await wait(typingDelay(message.text, character - 1), controller.signal))) return;
           }
-          if (!(await wait(650, controller.signal))) return;
+          if (!(await wait(450, controller.signal))) return;
         }
         setVisibleCount(index + 1);
         setPhase("waiting");
         setDraft("");
-        if (index < messages.length - 1 && !(await wait(message.align === "end" ? 1800 : 1000, controller.signal))) return;
+        if (index < messages.length - 1 && !(await wait(message.align === "end" ? 1350 : 750, controller.signal))) return;
       }
       setPhase("done");
     };

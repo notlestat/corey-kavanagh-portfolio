@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { ConversationPlayback, type ConversationMessage } from "./Conversation";
 import { GithubIcon, PageNavigation, ThemeToggle } from "./Navigation";
+import { ToolRail } from "./ToolRail";
 
 const messages: ConversationMessage[] = [
   { align: "start", text: "What do you work on?" },
@@ -85,7 +86,7 @@ export default function Home() {
         <h1 id="home-title">Corey Kavanagh</h1>
         <p className="home-disciplines">Art Direction / Design / Creative Technology</p>
         <p className="home-description">An experimental designer working across images, identities and digital experiences. Drawn to fashion, industrial forms and the quieter side of design.</p>
-        <a className="home-work-link" href="/work">Selected work</a>
+        <ToolRail />
       </section>
       <section className="home-conversation" id="about" aria-labelledby="home-conversation-title">
         <h2 id="home-conversation-title">A short conversation</h2>
