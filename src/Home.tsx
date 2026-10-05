@@ -91,7 +91,6 @@ export default function Home() {
       <section className="home-conversation" id="about" aria-labelledby="home-conversation-title">
         <h2 id="home-conversation-title">A short conversation</h2>
         <ConversationPlayback messages={messages} />
-        <div className="conversation-links"><a href="/work#art-direction">Art direction</a><a href="/work#digital-work">Digital work</a></div>
       </section>
     </main>
     <footer className="home-footer"><span>London / New Zealand</span><a href="https://github.com/notlestat" target="_blank" rel="noopener noreferrer" aria-label="GitHub, opens in a new tab"><GithubIcon /></a><a href="#top">Back to top</a></footer>
