@@ -1,4 +1,4 @@
-import { useRef, useState, type MouseEvent } from "react";
+import { useEffect, useRef, useState, type MouseEvent } from "react";
 import { flushSync } from "react-dom";
 
 export type Page = "home" | "work";
@@ -15,7 +15,12 @@ export function GithubIcon() {
 }
 
 export function ThemeToggle() {
-  const [theme, setTheme] = useState<Theme>(() => document.documentElement.dataset.theme === "dark" ? "dark" : "light");
+  // Render the same initial markup on the server and client, then read the
+  // theme applied by the layout's early script once the island mounts.
+  const [theme, setTheme] = useState<Theme>("light");
+  useEffect(() => {
+    setTheme(document.documentElement.dataset.theme === "dark" ? "dark" : "light");
+  }, []);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const applyTheme = (nextTheme: Theme) => {
     document.documentElement.dataset.theme = nextTheme;
@@ -54,12 +59,4 @@ export function PageNavigation({ page }: { page: Page }) {
       <span className="garment-label">{item === "home" ? "Home" : "Work"}</span>
     </a>)}
   </nav>;
-}
-
-export function Header({ page }: { page: Page }) {
-  return <header className="site-header">
-    <a className="wordmark" href="/" aria-label="Corey Kavanagh, home"><img src="/ck-logo.png" alt="" width="320" height="180" /></a>
-    <PageNavigation page={page} />
-    <div className="header-actions"><ThemeToggle /><a className="github-link" href="https://github.com/notlestat" target="_blank" rel="noopener noreferrer" aria-label="GitHub, opens in a new tab"><GithubIcon /></a></div>
-  </header>;
 }

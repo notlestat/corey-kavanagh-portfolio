@@ -1,15 +1,25 @@
+---
+import "../styles.css";
+import "../visualTheme.css";
+import "../home.css";
+import type { Page } from "../Navigation";
+
+interface Props {
+  title: string;
+  page: Page;
+}
+
+const { title, page } = Astro.props;
+---
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/png" href="/ck-logo.png" />
-    <meta
-      name="description"
-      content="Corey Kavanagh works across art direction, design and creative technology."
-    />
+    <meta name="description" content="Corey Kavanagh works across art direction, design and creative technology." />
     <meta name="theme-color" content="#eeefeb" />
-    <script>
+    <script is:inline>
       (() => {
         try {
           const savedTheme = localStorage.getItem("corey-theme");
@@ -23,10 +33,9 @@
         }
       })();
     </script>
-    <title>COREY KAVANAGH | Art Direction / Design / Creative Technology</title>
+    <title>{title}</title>
   </head>
   <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
+    <div id="top" class={`site-shell page-${page}`}><slot /></div>
   </body>
 </html>

@@ -1,16 +1,7 @@
 import { useEffect, useRef, useState } from "react";
-import { ConversationPlayback, type ConversationMessage } from "./Conversation";
-import { GithubIcon, PageNavigation, ThemeToggle } from "./Navigation";
-import { ToolRail } from "./ToolRail";
+import { ThemeToggle } from "./Navigation";
 
-const messages: ConversationMessage[] = [
-  { align: "start", text: "What do you work on?" },
-  { align: "end", text: "Art direction, images and identities. I also design and build digital experiences." },
-  { align: "start", text: "Where should I start?" },
-  { align: "end", text: "The work. There are images, films and experiments in there." },
-];
-
-function HomeFilm() {
+export default function HomeFilm() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [soundOn, setSoundOn] = useState(true);
   const [error, setError] = useState(false);
@@ -74,25 +65,4 @@ function HomeFilm() {
       {audioError && <p className="film-audio-error" role="status">Audio could not start. Try sound again.</p>}
     </div>
   </div>;
-}
-
-export default function Home() {
-  return <>
-    <a className="home-skip" href="#home-introduction">Skip to introduction</a>
-    <div className="home-navigation"><PageNavigation page="home" /></div>
-    <main className="minimal-home">
-      <HomeFilm />
-      <section className="home-introduction" id="home-introduction" aria-labelledby="home-title">
-        <h1 id="home-title">Corey Kavanagh</h1>
-        <p className="home-disciplines">Art Direction / Design / Creative Technology</p>
-        <p className="home-description">An experimental designer working across images, identities and digital experiences. Drawn to fashion, industrial forms and the quieter side of design.</p>
-        <ToolRail />
-      </section>
-      <section className="home-conversation" id="about" aria-labelledby="home-conversation-title">
-        <h2 id="home-conversation-title">A short conversation</h2>
-        <ConversationPlayback messages={messages} />
-      </section>
-    </main>
-    <footer className="home-footer"><span>London / New Zealand</span><a href="https://github.com/notlestat" target="_blank" rel="noopener noreferrer" aria-label="GitHub, opens in a new tab"><GithubIcon /></a><a href="#top">Back to top</a></footer>
-  </>;
 }

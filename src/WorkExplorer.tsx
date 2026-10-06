@@ -1,14 +1,7 @@
-import { useEffect, useId, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { collections, galleryItems } from "./portfolioData";
-import Home from "./Home";
-import { Header, type Page } from "./Navigation";
 
 type SelectedWork = { category: number; position: number };
-const systems = [
-  { name: "Axis ad workflow", short: "Campaign development with evidence and approval gates.", detail: "Organises brand material, research, strategy, campaign concepts, art direction, storyboards and production handoffs in one local workflow.", outcome: "Sources, assumptions, decisions and approved work stay visible before anything moves into production." },
-  { name: "Axis post-production workflow", short: "A local system for turning source footage into reviewed edits.", detail: "Handles source intake, transcripts, clip selection, longform edits, shorts, captions, motion graphics, rendering and technical checks.", outcome: "The repetitive work is organised. Editorial choices and final watch-and-listen approval stay with a person." },
-  { name: "Axis creative agency", short: "A Codex-first creative workflow for brands, artists and releases.", detail: "Moves a project through intake, research, creative opportunities, concepts, art direction, copy, storyboards and a controlled production package.", outcome: "Recommendations never become approvals by accident. Facts, inferences and unknowns stay separate." },
-];
 
 function WorkLanding({ onChoose }: { onChoose: (category: number, position: number) => void }) {
   return <section className="work-landing" aria-labelledby="work-landing-title">
@@ -102,25 +95,8 @@ function WorkIndex({ selected, onChoose }: { selected: SelectedWork; onChoose: (
   </section>;
 }
 
-function SystemRow({ item, index }: { item: typeof systems[number]; index: number }) {
-  const [open, setOpen] = useState(false), id = useId();
-  return <article className="system-row"><button type="button" aria-expanded={open} aria-controls={id} onClick={() => setOpen(!open)}><span className="system-number">{String(index + 1).padStart(2, "0")}</span><span className="system-name">{item.name}</span><span className="system-toggle" aria-hidden="true">{open ? "−" : "+"}</span></button><div className="system-panel" id={id} hidden={!open}><p className="system-short">{item.short}</p><p>{item.detail}</p><p>{item.outcome}</p></div></article>;
-}
-function DigitalWork() {
-  return <section className="systems-section digital-work" id="digital-work" aria-labelledby="systems-title"><div className="systems-header"><p className="eyebrow">Digital / Websites & systems</p><h2 id="systems-title">Digital work<span className="accent-dot">.</span></h2><p>This part of the portfolio is growing. It begins with this website and local tools built to organise creative work.</p></div><div className="systems-list"><a className="digital-site-link" href="/" aria-label="Explore the Corey Kavanagh portfolio website"><span className="digital-site-number">01</span><span className="digital-site-name">This portfolio</span><span className="digital-site-type">Website / ongoing</span></a>{systems.map((item, index) => <SystemRow key={item.name} item={item} index={index + 1} />)}<p className="digital-next">More websites and product work will appear here as they are built.</p></div></section>;
-}
-function Footer() {
-  return <footer className="site-footer" id="contact"><div><p className="eyebrow">Contact</p><h2>Tell me what you’re trying to create<span className="accent-dot">.</span></h2><p>Art direction, design, a website, or a tool that makes creative work easier.</p></div><div className="footer-bottom"><span>Art Direction / Design / Creative Technology</span><a href="#top">Back to top</a></div></footer>;
-}
-export default function App() {
-  const page: Page = window.location.pathname.replace(/\/+$/, "") === "/work" ? "work" : "home";
+export default function WorkExplorer() {
   const [selected, setSelected] = useState<SelectedWork>({ category: 1, position: 0 });
   const choose = (category: number, position: number) => setSelected({ category, position });
-  useEffect(() => { document.title = page === "work" ? "Work | Corey Kavanagh" : "COREY KAVANAGH | Art Direction / Design / Creative Technology"; }, [page]);
-  useEffect(() => {
-    if (!window.location.hash) return;
-    const frame = requestAnimationFrame(() => document.getElementById(decodeURIComponent(window.location.hash.slice(1)))?.scrollIntoView());
-    return () => cancelAnimationFrame(frame);
-  }, [page]);
-  return <div id="top" className={`site-shell page-${page}`}>{page === "home" ? <Home /> : <><Header page={page} /><main><WorkLanding onChoose={choose} /><Gallery onChoose={choose} /><WorkIndex selected={selected} onChoose={choose} /><DigitalWork /></main><Footer /></>}</div>;
+  return <><WorkLanding onChoose={choose} /><Gallery onChoose={choose} /><WorkIndex selected={selected} onChoose={choose} /></>;
 }

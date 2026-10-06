@@ -1,0 +1,5 @@
+export const systems = [
+  { name: "Axis ad workflow", short: "Campaign development with evidence and approval gates.", detail: "Organises brand material, research, strategy, campaign concepts, art direction, storyboards and production handoffs in one local workflow.", outcome: "Sources, assumptions, decisions and approved work stay visible before anything moves into production." },
+  { name: "Axis post-production workflow", short: "A local system for turning source footage into reviewed edits.", detail: "Handles source intake, transcripts, clip selection, longform edits, shorts, captions, motion graphics, rendering and technical checks.", outcome: "The repetitive work is organised. Editorial choices and final watch-and-listen approval stay with a person." },
+  { name: "Axis creative agency", short: "A Codex-first creative workflow for brands, artists and releases.", detail: "Moves a project through intake, research, creative opportunities, concepts, art direction, copy, storyboards and a controlled production package.", outcome: "Recommendations never become approvals by accident. Facts, inferences and unknowns stay separate." },
+];

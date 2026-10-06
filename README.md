@@ -1,12 +1,12 @@
 # Corey Kavanagh portfolio
 
-A React and TypeScript portfolio for art direction, design and creative technology. Home is a quiet, film-led introduction with an animated conversation and clothing-button page navigation. The Work page brings together a pinned entry index, image collections and current digital projects. In the image gallery, wheel scrolling moves an endless strip while the pointer is over it. On smaller screens and with reduced motion enabled, the strip becomes swipeable.
+An Astro portfolio with React and TypeScript for art direction, design and creative technology. Home is a quiet, film-led introduction with an animated conversation and clothing-button page navigation. The Work page brings together a pinned entry index, image collections and current digital projects. In the image gallery, wheel scrolling moves an endless strip while the pointer is over it. On smaller screens and with reduced motion enabled, the strip becomes swipeable.
 
-The source is published on GitHub. This README does not establish that a production website has been deployed.
+Version 0.2.0 migrates the existing visual system to Astro. Both routes generate HTML during the build; React hydrates the interactive components. The source is published on GitHub and the existing Vercel project hosts the site at [corey-kavanagh-portfolio.vercel.app](https://corey-kavanagh-portfolio.vercel.app/).
 
 ## Run locally
 
-Use Node.js 20.19+ or 22.12+ with npm, matching the checked-in Vite dependency requirements.
+Use a supported even-numbered Node.js release at version 22.12 or higher, with npm.
 
 ```sh
 git clone https://github.com/notlestat/corey-kavanagh-portfolio.git
@@ -15,12 +15,12 @@ npm ci
 npm run dev
 ```
 
-Open the local address printed by Vite.
+Open the local address printed by Astro, usually `http://localhost:4321`. If the learning project is already running there, Astro will use the next available port, or run `npm run dev -- --port 4322` explicitly.
 
 | Command | Purpose |
 |---|---|
-| `npm run dev` | Start the Vite development server |
-| `npm run check` | Check TypeScript project references |
+| `npm run dev` | Start the Astro development server |
+| `npm run check` | Check Astro and TypeScript files |
 | `npm run build` | Check types and create `dist/` |
 | `npm run preview` | Serve the existing production build locally |
 
@@ -30,21 +30,33 @@ Run `npm run build` before `npm run preview`. There is no automated unit-test sc
 
 | Location | Purpose |
 |---|---|
-| [src/App.tsx](src/App.tsx) | Home and Work pages, navigation, gallery, collection viewer and contact section |
-| [src/Home.tsx](src/Home.tsx) | Minimal Home, looping film, sound switch and conversation |
-| [src/Navigation.tsx](src/Navigation.tsx) | Clothing-button page links, shared theme control and Work header |
+| [src/pages/index.astro](src/pages/index.astro) | Home page structure, introduction and conversation content |
+| [src/pages/work.astro](src/pages/work.astro) | Work route, header, gallery, digital section and footer |
+| [src/layouts/BaseLayout.astro](src/layouts/BaseLayout.astro) | Shared HTML, metadata, global styles and early theme restoration |
+| [src/HomeFilm.tsx](src/HomeFilm.tsx) | Looping film, sound switch and Home theme control |
+| [src/WorkExplorer.tsx](src/WorkExplorer.tsx) | Pinned work, gallery and collection viewer with shared React state |
+| [src/Navigation.tsx](src/Navigation.tsx) | Clothing-button page links, shared theme control and GitHub icon |
+| [src/components/Header.astro](src/components/Header.astro) | Work header with an interactive theme control |
+| [src/components/DigitalWork.astro](src/components/DigitalWork.astro) | Static digital-project section with interactive system rows |
+| [src/SystemRow.tsx](src/SystemRow.tsx) | Expandable system details |
+| [src/systemData.ts](src/systemData.ts) | Existing digital-system descriptions |
 | [src/Conversation.tsx](src/Conversation.tsx) | Accessible conversation bubbles used on Home |
 | [src/ToolRail.tsx](src/ToolRail.tsx) | Monochrome Home tool marks with hover, keyboard and tap labels |
 | [src/portfolioData.ts](src/portfolioData.ts) | Collection names, years, image/video paths and gallery ordering |
 | [src/styles.css](src/styles.css) | Typography, layout, motion and responsive rules |
 | [src/visualTheme.css](src/visualTheme.css) | Helvetica-based type, muted surfaces and component styling for both themes |
 | [src/home.css](src/home.css) | Home spacing, film controls and tactile navigation |
-| [src/main.tsx](src/main.tsx) | React entry point |
 | `public/work/gallery/` | Local gallery images and video previews |
-| [vite.config.ts](vite.config.ts) | Vite configuration |
-| [vercel.json](vercel.json) | Direct `/work` route rewrite for Vercel |
+| [astro.config.mjs](astro.config.mjs) | Static output and React integration |
+| [vercel.json](vercel.json) | Astro preset, build command and output directory for Vercel |
 
 Update collection metadata and item counts in `src/portfolioData.ts` when adding or removing media. Gallery paths are root-relative; a deployment under a URL subdirectory needs a path review.
+
+## Rendering and deployment
+
+The Home introduction, navigation, page metadata, Work header, digital-section text and footers are generated by Astro. `client:load` attaches React to film controls, tool labels, conversation playback, the connected Work explorer and system rows. Initial React markup is deterministic during server rendering; browser preferences are read after hydration. The saved theme is applied by a head script before the page paints.
+
+The build generates `dist/index.html` and `dist/work/index.html`, alongside the existing assets. `/work` is a real static page and no longer rewrites to the Home HTML. Vercel uses the repository's Astro framework preset, `npm run build` and `dist` output directory. No server-rendering adapter is needed for this static site. Pushes to the connected production branch trigger a production deployment; verify both routes and their interactions after publishing.
 
 ## Current content
 
@@ -58,7 +70,7 @@ Home reuses `public/work/gallery/video/moving-09.mp4`, which matches the supplie
 
 The conversation uses iMessage-style blue outgoing and grey incoming bubbles in both themes. Replies type at a varied pace with thinking, punctuation and send pauses. Visitors can show every message immediately or replay the sequence.
 
-Home also includes a small tools and skills row beneath the name and bio, before the conversation. It becomes a compact grid on narrow phones. It identifies Photoshop, Illustrator, Figma, Paper Design, Claude Code, OpenAI Codex and HTML. Labels reveal on hover, keyboard focus or tap, and dismiss with Escape, focus leaving, or an outside tap. Ps/Ai are monochrome typographic tiles; Codex uses the OpenAI parent mark. Figma, Claude, OpenAI and HTML vector silhouettes come from [Simple Icons](https://github.com/simple-icons/simple-icons); Paper's mark comes from [Paper](https://paper.design/). The names describe the toolkit and skills, not affiliations or certifications.
+Home also includes a small tools and skills row beneath the name and bio, before the conversation. It becomes a compact grid on narrow phones. It identifies Photoshop, Illustrator, Figma, Paper Design, Claude Code, OpenAI Codex, HTML and Astro. Labels reveal on hover, keyboard focus or tap, and dismiss with Escape, focus leaving, or an outside tap. Ps/Ai are monochrome typographic tiles; Codex uses the OpenAI parent mark. Figma, Claude, OpenAI, HTML and Astro vector silhouettes come from [Simple Icons](https://github.com/simple-icons/simple-icons); Paper's mark comes from [Paper](https://paper.design/). The names describe the toolkit and skills, not affiliations or certifications.
 
 ## Before launching the website
 

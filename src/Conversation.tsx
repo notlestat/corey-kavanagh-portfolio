@@ -35,7 +35,7 @@ export function ConversationPlayback({ messages }: { messages: ConversationMessa
   const draftRef = useRef<HTMLSpanElement>(null);
   const playbackController = useRef<AbortController | null>(null);
   const [inView, setInView] = useState(false);
-  const [reducedMotion, setReducedMotion] = useState(() => window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+  const [reducedMotion, setReducedMotion] = useState(false);
   const [playback, setPlayback] = useState(0);
   const [visibleCount, setVisibleCount] = useState(reducedMotion ? messages.length : 0);
   const [phase, setPhase] = useState<"waiting" | "incoming" | "composing" | "done">(reducedMotion ? "done" : "waiting");
@@ -48,6 +48,7 @@ export function ConversationPlayback({ messages }: { messages: ConversationMessa
   useEffect(() => {
     const preference = window.matchMedia("(prefers-reduced-motion: reduce)");
     const update = () => setReducedMotion(preference.matches);
+    update();
     preference.addEventListener("change", update);
     return () => preference.removeEventListener("change", update);
   }, []);
