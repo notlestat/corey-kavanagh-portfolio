@@ -54,7 +54,7 @@
 .home-description { max-width: 39ch; font-size: 16px; font-weight: 400; line-height: 1.6; letter-spacing: -.01em; margin: 31px 0 25px; text-wrap: pretty; }
 .home-tools { margin-top: 36px; color: var(--muted); }
 .home-tools-heading { margin: 0 0 11px; font: 400 9px/1.5 var(--label-font); letter-spacing: .02em; }
-.home-tool-marks { display: grid; grid-template-columns: repeat(6, 44px); gap: 13px; width: max-content; max-width: 100%; margin-left: -9px; }
+.home-tool-marks { display: grid; grid-template-columns: repeat(7, 44px); gap: 13px; width: max-content; max-width: 100%; margin-left: -9px; }
 .home-tool-mark { position: relative; display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 0; background: transparent; color: var(--muted); cursor: pointer; }
 .home-tool-mark svg { width: 23px; height: 23px; }
 .home-tool-tile { display: grid; place-items: center; width: 25px; height: 25px; border: 1px solid currentColor; border-radius: 3px; font: 500 14px/1 Arial, sans-serif; letter-spacing: -.045em; }
@@ -102,9 +102,9 @@
   .home-conversation .conversation-bubble { max-width: 92%; }
   .home-footer { margin-top: 80px; padding-bottom: 32px; gap: 20px; }
 }
-@media (max-width: 360px) {
-  .home-tool-marks { grid-template-columns: repeat(3, 44px); gap: 8px 19px; }
-  .home-tool-mark:nth-child(3n + 1) .home-tool-name { left: 0; transform: none; }
+@media (max-width: 400px) {
+  .home-tool-marks { grid-template-columns: repeat(4, 44px); gap: 8px 13px; }
+  .home-tool-mark:nth-child(4n + 1) .home-tool-name { left: 0; transform: none; }
 }
 @media (prefers-reduced-motion: reduce) {
   .home-tool-name { transition: none; }

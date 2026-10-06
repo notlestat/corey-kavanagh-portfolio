@@ -58,7 +58,7 @@ Home reuses `public/work/gallery/video/moving-09.mp4`, which matches the supplie
 
 The conversation uses iMessage-style blue outgoing and grey incoming bubbles in both themes. Replies type at a varied pace with thinking, punctuation and send pauses. Visitors can show every message immediately or replay the sequence.
 
-Home also includes a small tools row beneath the name and bio, before the conversation. It becomes a compact grid on narrow phones. It identifies Photoshop, Illustrator, Figma, Paper Design, Claude Code and OpenAI Codex. Labels reveal on hover, keyboard focus or tap, and dismiss with Escape, focus leaving, or an outside tap. Ps/Ai are monochrome typographic tiles; Codex uses the OpenAI parent mark. Figma, Claude and OpenAI vector silhouettes come from [Simple Icons](https://github.com/simple-icons/simple-icons); Paper's mark comes from [Paper](https://paper.design/). The tool names describe the toolkit, not affiliations or certifications.
+Home also includes a small tools and skills row beneath the name and bio, before the conversation. It becomes a compact grid on narrow phones. It identifies Photoshop, Illustrator, Figma, Paper Design, Claude Code, OpenAI Codex and HTML. Labels reveal on hover, keyboard focus or tap, and dismiss with Escape, focus leaving, or an outside tap. Ps/Ai are monochrome typographic tiles; Codex uses the OpenAI parent mark. Figma, Claude, OpenAI and HTML vector silhouettes come from [Simple Icons](https://github.com/simple-icons/simple-icons); Paper's mark comes from [Paper](https://paper.design/). The names describe the toolkit and skills, not affiliations or certifications.
 
 ## Before launching the website
 
