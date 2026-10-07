@@ -1,0 +1,19 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "./Header.astro";
+import "../work.css";
+
+interface Props { discipline: string; description: string; }
+const { discipline, description } = Astro.props;
+---
+<BaseLayout title={`${discipline} | Corey Kavanagh`} page="work">
+  <a class="work-skip" href="#upcoming-content">Skip to upcoming studies</a>
+  <Header page="work" />
+  <main class="work-refresh upcoming-studies work-container" id="upcoming-content">
+    <a class="case-back" href="/work">All work</a>
+    <header class="case-page-heading"><p class="work-label">Upcoming case studies</p><h1>{discipline}.</h1><p>{description}</p></header>
+    <p class="upcoming-note">Case studies coming soon.</p>
+    <a class="case-read-link" href="/work/art-direction">Explore art direction</a>
+  </main>
+  <footer class="work-footer work-container"><span>Corey Kavanagh</span><a href="/work">Back to Work</a></footer>
+</BaseLayout>

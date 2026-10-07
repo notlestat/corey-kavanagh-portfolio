@@ -24,7 +24,7 @@ export function ThemeToggle() {
   const buttonRef = useRef<HTMLButtonElement>(null);
   const applyTheme = (nextTheme: Theme) => {
     document.documentElement.dataset.theme = nextTheme;
-    document.querySelector('meta[name="theme-color"]')?.setAttribute("content", nextTheme === "dark" ? "#191c19" : "#eeefeb");
+    document.querySelector('meta[name="theme-color"]')?.setAttribute("content", nextTheme === "dark" ? "#000000" : "#eeefeb");
     try { localStorage.setItem("corey-theme", nextTheme); } catch { /* Storage may be unavailable. */ }
     flushSync(() => setTheme(nextTheme));
   };

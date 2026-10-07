@@ -36,7 +36,7 @@
 .minimal-home { width: min(560px, calc(100% - 48px)); margin: 0 auto; }
 .home-film-wrap { position: relative; }
 .home-film { position: relative; margin: 0; width: 100%; aspect-ratio: 1112 / 720; }
-.home-film video { display: block; width: 100%; height: 100%; object-fit: contain; background: #151715; border-radius: 2px; }
+.home-film video { display: block; width: 100%; height: 100%; object-fit: contain; background: transparent; border-radius: 2px; }
 .home-film-controls { position: absolute; left: calc(100% + 28px); top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; align-items: start; gap: 5px; }
 .home-film-controls .theme-toggle { min-height: 44px; padding: 8px 0; gap: 9px; }
 .home-film-controls .theme-toggle-label { display: inline; min-width: 32px; font-size: 10px; }

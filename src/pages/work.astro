@@ -1,14 +1,16 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Header from "../components/Header.astro";
-import DigitalWork from "../components/DigitalWork.astro";
+import WorkLanding from "../components/WorkLanding.astro";
 import WorkExplorer from "../WorkExplorer";
+import "../work.css";
 ---
 <BaseLayout title="Work | Corey Kavanagh" page="work">
+  <a class="work-skip" href="#work-content">Skip to work</a>
   <Header page="work" />
-  <main>
+  <main class="work-refresh" id="work-content">
+    <WorkLanding />
     <WorkExplorer client:load />
-    <DigitalWork />
   </main>
-  <footer class="site-footer" id="contact"><div><p class="eyebrow">Contact</p><h2>Tell me what you’re trying to create<span class="accent-dot">.</span></h2><p>Art direction, design, a website, or a tool that makes creative work easier.</p></div><div class="footer-bottom"><span>Art Direction / Design / Creative Technology</span><a href="#top">Back to top</a></div></footer>
+  <footer class="work-footer work-container"><span>Corey Kavanagh / Art Direction &amp; Design</span><a href="#top">Back to top</a></footer>
 </BaseLayout>

@@ -26,21 +26,21 @@
 }
 
 :root[data-theme="dark"] {
-  --paper: #191c19;
-  --ink: #e4e8df;
-  --muted: #a2aca0;
-  --line: #3c4539;
-  --accent: #c7d0bf;
+  --paper: #000000;
+  --ink: #eeeeee;
+  --muted: #a6a6a6;
+  --line: #303030;
+  --accent: #cccccc;
   --blue: var(--accent);
-  --surface: #232923;
-  --surface-strong: #354031;
-  --control: #1d231c;
-  --caption: rgb(25 28 25 / .94);
-  --footer-bg: #20261f;
-  --footer-ink: #e4e8df;
-  --footer-muted: #a2aca0;
-  --footer-subtle: #a2aca0;
-  --footer-line: #3c4539;
+  --surface: #141414;
+  --surface-strong: #252525;
+  --control: #000000;
+  --caption: rgb(0 0 0 / .94);
+  --footer-bg: #000000;
+  --footer-ink: #eeeeee;
+  --footer-muted: #a6a6a6;
+  --footer-subtle: #a6a6a6;
+  --footer-line: #303030;
   --chat-question: #303033;
   --chat-question-ink: #fff;
   --chat-answer: #0072e8;

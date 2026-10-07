@@ -1,0 +1,7 @@
+---
+import { caseStudies } from "../caseStudyData";
+---
+<section class="art-case-index" id="case-studies" aria-labelledby="case-list-title">
+  <h2 id="case-list-title" class="work-label">Selected case studies</h2>
+  <ol class="art-case-list">{caseStudies.map((study, index) => <li><a href={`/work/${study.slug}`}><span class="work-label">{String(index + 1).padStart(2, "0")}</span><div><h3>{study.name}</h3><p>{study.role}</p></div><span class="work-label">{study.period}</span></a></li>)}</ol>
+</section>

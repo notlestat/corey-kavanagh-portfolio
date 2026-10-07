@@ -1,0 +1,30 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Header from "../../components/Header.astro";
+import { caseStudies } from "../../caseStudyData";
+import "../../work.css";
+
+export function getStaticPaths() {
+  return caseStudies.map((study, index) => ({ params: { slug: study.slug }, props: { study, next: caseStudies[(index + 1) % caseStudies.length] } }));
+}
+const { study, next } = Astro.props;
+---
+<BaseLayout title={`${study.name} | Corey Kavanagh`} page="work">
+  <a class="work-skip" href="#case-content">Skip to case study</a>
+  <Header page="work" />
+  <main class="work-refresh case-page" id="case-content">
+    <div class="work-container">
+      <a class="case-back" href="/work/art-direction">All case studies</a>
+      <header class="case-page-heading"><p class="work-label">Selected project / {study.period}</p><h1>{study.name}</h1><p>{study.summary}</p></header>
+      <figure class="case-hero"><img src={study.media[0].src} alt={study.media[0].alt} fetchpriority="high" /><figcaption>Selected imagery / {study.name}</figcaption></figure>
+      <section class="case-story" aria-labelledby="case-context-title">
+        <aside><p class="work-label">My role</p><p>{study.role}</p><p class="work-label">Period</p><p>{study.period}</p></aside>
+        <div><h2 id="case-context-title">Context</h2><p>{study.context}</p><h2>My contribution</h2><ul>{study.contribution.map(item => <li>{item}</li>)}</ul><h2>Approach</h2><p>{study.approach}</p></div>
+      </section>
+      <div class="case-image-sequence">{study.media.slice(1).map((item, index) => <figure><img src={item.src} alt={item.alt} loading="lazy" /><figcaption>{String(index + 2).padStart(2, "0")} / Selected imagery</figcaption></figure>)}</div>
+      <p class="case-draft-note">Draft case study. Copy is based on my CV; the image selection and detailed project credits are being reviewed.</p>
+      <nav class="case-next" aria-label="Case study navigation"><a href="/work/art-direction">All case studies</a><a href={`/work/${next.slug}`}><span class="work-label">Next project</span><span>{next.name}</span></a></nav>
+    </div>
+  </main>
+  <footer class="work-footer work-container"><span>Corey Kavanagh</span><a href="#top">Back to top</a></footer>
+</BaseLayout>
