@@ -674,6 +674,7 @@ function updateSoundMuted(muted: boolean, trustedToggle = false) {
   notify(wasMuted && !muted && trustedToggle);
 }
 
+// Retain the event argument for compatibility without accepting replayable cue provenance.
 export function setSoundMuted(muted: boolean, _source?: Event) {
   updateSoundMuted(muted);
 }

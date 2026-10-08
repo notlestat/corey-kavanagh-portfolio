@@ -93,7 +93,7 @@ The earlier Work refresh was approved for publication on 7 October 2026. The fol
 
 ## Folder and sound
 
-Unmute feedback belongs to one trusted local setting change and is consumed once. The shared setting notifier clears that feedback for storage updates, volume changes and programmatic setting changes, so background updates cannot reuse a previous button press.
+Unmute feedback belongs to one trusted local `SoundToggle` press and is consumed once. The public `setSoundMuted` API is always silent, including when passed a saved native event; its optional event argument is retained only for compatibility. The shared setting notifier clears pending feedback for storage updates, volume changes and programmatic setting changes, so background updates cannot reuse a previous button press.
 
 The folder uses native button/navigation elements, `aria-expanded`, inert closed links, Escape dismissal and a no-JavaScript link fallback. Its 240ms opening transition explains where the three paper entries come from; keyboard activation and reduced-motion mode skip the transition. Grain and fragmented lettering interpret the supplied paper reference and [Raygun archive](https://designreviewed.com/series/raygun/) without using its cover artwork.
 
