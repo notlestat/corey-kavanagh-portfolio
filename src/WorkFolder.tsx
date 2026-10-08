@@ -1,36 +1,30 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 
-const disciplines = [
-  {
-    number: "01",
-    name: "Art direction",
-    href: "/work/art-direction",
-    note: "Images / campaigns",
-  },
-  {
-    number: "02",
-    name: "Graphic design",
-    href: "/work/graphic-design",
-    note: "Identity / image",
-  },
-  {
-    number: "03",
-    name: "Design engineering",
-    href: "/work/design-engineering",
-    note: "Sites / systems",
-  },
-];
+import { dispatchFolderStateChange } from "./lib/folder-events";
+import { workDisciplines } from "./workDisciplines";
 
 export default function WorkFolder() {
   const [open, setOpen] = useState(false);
   const [keyed, setKeyed] = useState(false);
   const trigger = useRef<HTMLButtonElement>(null);
   const stage = useRef<HTMLDivElement>(null);
+  const changeSource = useRef<Event | null>(null);
+  const previousOpen = useRef(open);
+
+  useLayoutEffect(() => {
+    if (previousOpen.current === open) return;
+    previousOpen.current = open;
+    const source = changeSource.current;
+    changeSource.current = null;
+    if (!source || !trigger.current) return;
+    dispatchFolderStateChange(trigger.current, source, open);
+  }, [open]);
 
   useEffect(() => {
     if (!open) return;
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key !== "Escape") return;
+      changeSource.current = event;
       setKeyed(true);
       setOpen(false);
       trigger.current?.focus();
@@ -40,6 +34,7 @@ export default function WorkFolder() {
         event.target instanceof Node &&
         !stage.current?.contains(event.target)
       ) {
+        changeSource.current = event;
         setKeyed(false);
         setOpen(false);
       }
@@ -73,6 +68,7 @@ export default function WorkFolder() {
           aria-controls="folder-categories"
           aria-label={open ? "Close work folder" : "Open work folder"}
           onClick={(event) => {
+            changeSource.current = event.nativeEvent;
             setKeyed(event.detail === 0);
             setOpen(!open);
           }}
@@ -89,7 +85,7 @@ export default function WorkFolder() {
             <span className="folder-stamp">
               Art direction
               <br />
-              Design / Technology
+              Interaction / Technology
             </span>
           </span>
         </button>
@@ -100,7 +96,7 @@ export default function WorkFolder() {
           inert={!open}
           aria-hidden={!open}
         >
-          {disciplines.map((item) => (
+          {workDisciplines.map((item) => (
             <a
               key={item.number}
               href={item.href}
@@ -123,7 +119,7 @@ export default function WorkFolder() {
       <noscript>
         <style>{".folder-stage { display: none; }"}</style>
         <nav className="folder-fallback" aria-label="Work categories">
-          {disciplines.map((item) => (
+          {workDisciplines.map((item) => (
             <a key={item.href} href={item.href}>
               {item.name}
             </a>

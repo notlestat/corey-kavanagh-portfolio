@@ -2,8 +2,26 @@ import { flushSync } from "react-dom";
 import { createRoot } from "react-dom/client";
 import * as currentSound from "../src/components/sound";
 
+export { currentSound as soundAPI };
+
 function expect(condition: boolean, message: string): asserts condition {
   if (!condition) throw new Error(message);
+}
+
+export function mountSoundScopeRegression(scope: "all" | "folder") {
+  const container = document.createElement("div");
+  container.id = "sound-scope-regression";
+  document.body.prepend(container);
+  const root = createRoot(container);
+  flushSync(() => root.render(
+    <currentSound.SoundEffects scope={scope}>
+      <currentSound.SoundToggle />
+    </currentSound.SoundEffects>,
+  ));
+  return () => {
+    flushSync(() => root.unmount());
+    container.remove();
+  };
 }
 
 export function checkMobileHeader() {

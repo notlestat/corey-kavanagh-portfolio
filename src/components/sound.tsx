@@ -5,11 +5,13 @@ import { SoundProvider, usePatch } from "@web-kits/audio/react";
 import { useEffect, useId, useRef, useSyncExternalStore } from "react";
 
 import { cn } from "../lib/utils";
+import { FOLDER_STATE_CHANGE, consumeFolderStateChange } from "../lib/folder-events";
 
 const STORAGE_KEY = "kobra-sound-muted";
 const VOLUME_KEY = "kobra-sound-volume";
 const DEFAULT_VOLUME = 0.5;
 let interacted = false;
+let unmuteCuePending = false;
 const fallbackSettings = new Map<string, string | null>([
   [STORAGE_KEY, "0"],
   [VOLUME_KEY, String(DEFAULT_VOLUME)],
@@ -421,7 +423,7 @@ function sliderRange(el: HTMLElement) {
   };
 }
 
-function SoundEffectListener() {
+function SoundEffectListener({ folderOnly }: { folderOnly: boolean }) {
   const patch = usePatch(PATCH);
   const muted = useSoundMuted();
 
@@ -429,11 +431,20 @@ function SoundEffectListener() {
   useEffect(() => {
     const cameBack = wasMuted.current && !muted;
     wasMuted.current = muted;
-    if (cameBack && interacted) play(patch, { sound: "swoosh" });
+    const trustedUnmute = cameBack && unmuteCuePending;
+    if (cameBack) unmuteCuePending = false;
+    if (trustedUnmute) play(patch, { sound: "swoosh" });
   }, [muted, patch]);
 
   useEffect(() => {
     if (!patch.ready) return;
+
+    const cueForPress = (target: Element, keyed = false): Cue | null => {
+      if (!folderOnly) return soundFor(target, keyed);
+      return target.closest('[data-slot="sound-toggle"]')
+        ? { sound: "swoosh" }
+        : null;
+    };
 
     const TICK_GAP_MS = 28;
     const TICK_LAG_MS = 60;
@@ -489,7 +500,7 @@ function SoundEffectListener() {
       )
         return;
       interacted = true;
-      const cue = soundFor(event.target);
+      const cue = cueForPress(event.target);
       if (!cue) return;
       if (cue.sound === "tick")
         grab = { x: event.clientX, y: event.clientY, dragged: false };
@@ -506,7 +517,7 @@ function SoundEffectListener() {
         event.key === "Enter" && event.target.closest(".command-overlay");
       if (typing && !driving) return;
       interacted = true;
-      const cue = soundFor(event.target, true);
+      const cue = cueForPress(event.target, true);
       if (cue) play(patch, cue);
     };
 
@@ -525,12 +536,14 @@ function SoundEffectListener() {
     };
 
     const onContextMenu = (event: MouseEvent) => {
+      if (folderOnly) return;
       if (!event.isTrusted) return;
       interacted = true;
       play(patch, { sound: "open" });
     };
 
     const onInput = (event: Event) => {
+      if (folderOnly) return;
       if (!event.isTrusted) return;
       interacted = true;
       const el = event.target;
@@ -545,6 +558,13 @@ function SoundEffectListener() {
         sound: "key",
         detune: el.value.length * 45 - (deleting ? 260 : 0),
       });
+    };
+
+    const onFolderStateChange = (event: Event) => {
+      const change = consumeFolderStateChange(event);
+      if (!change) return;
+      interacted = true;
+      play(patch, { sound: change.open ? "open" : "close" });
     };
 
     const observer = new MutationObserver((records) => {
@@ -592,12 +612,16 @@ function SoundEffectListener() {
       }
     });
 
-    observer.observe(document.body, {
-      subtree: true,
-      attributes: true,
-      attributeOldValue: true,
-      attributeFilter: ["aria-valuenow", "aria-invalid", "data-success"],
-    });
+    if (folderOnly) {
+      document.addEventListener(FOLDER_STATE_CHANGE, onFolderStateChange);
+    } else {
+      observer.observe(document.body, {
+        subtree: true,
+        attributes: true,
+        attributeOldValue: true,
+        attributeFilter: ["aria-valuenow", "aria-invalid", "data-success"],
+      });
+    }
 
     document.addEventListener("pointerdown", onPointerDown, true);
     document.addEventListener("pointermove", onPointerMove, true);
@@ -608,6 +632,7 @@ function SoundEffectListener() {
     document.addEventListener("input", onInput, true);
     return () => {
       observer.disconnect();
+      document.removeEventListener(FOLDER_STATE_CHANGE, onFolderStateChange);
       stopTicking();
       document.removeEventListener("pointerdown", onPointerDown, true);
       document.removeEventListener("pointermove", onPointerMove, true);
@@ -617,7 +642,7 @@ function SoundEffectListener() {
       document.removeEventListener("contextmenu", onContextMenu, true);
       document.removeEventListener("input", onInput, true);
     };
-  }, [patch]);
+  }, [patch, folderOnly]);
 
   return null;
 }
@@ -626,20 +651,32 @@ const listeners = new Set<() => void>();
 
 function subscribeMuted(onChange: () => void) {
   listeners.add(onChange);
-  window.addEventListener("storage", onChange);
+  if (listeners.size === 1) window.addEventListener("storage", onSoundStorage);
   return () => {
     listeners.delete(onChange);
-    window.removeEventListener("storage", onChange);
+    if (listeners.size === 0)
+      window.removeEventListener("storage", onSoundStorage);
   };
 }
 
-function notify() {
+function onSoundStorage() {
+  notify();
+}
+
+function notify(trustedUnmute = false) {
+  unmuteCuePending = trustedUnmute;
   for (const onChange of listeners) onChange();
 }
 
-export function setSoundMuted(muted: boolean) {
+function updateSoundMuted(muted: boolean, trustedToggle = false) {
+  const wasMuted = readSoundSetting(STORAGE_KEY) === "1";
   writeSoundSetting(STORAGE_KEY, muted ? "1" : "0");
-  notify();
+  notify(wasMuted && !muted && trustedToggle);
+}
+
+// Retain the event argument for compatibility without accepting replayable cue provenance.
+export function setSoundMuted(muted: boolean, _source?: Event) {
+  updateSoundMuted(muted);
 }
 
 export function useSoundMuted() {
@@ -673,13 +710,19 @@ export function useSoundVolume() {
   );
 }
 
-export function SoundEffects({ children }: { children: React.ReactNode }) {
+export function SoundEffects({
+  children,
+  scope = "all",
+}: {
+  children: React.ReactNode;
+  scope?: "all" | "folder";
+}) {
   const muted = useSoundMuted();
   const volume = useSoundVolume();
 
   return (
     <SoundProvider enabled={!muted} volume={volume}>
-      <SoundEffectListener />
+      <SoundEffectListener folderOnly={scope === "folder"} />
       {children}
     </SoundProvider>
   );
@@ -706,10 +749,16 @@ export function SoundToggle({
       aria-pressed={muted}
       onClick={(event) => {
         onClick?.(event);
-        if (!event.defaultPrevented) setSoundMuted(!muted);
+        if (!event.defaultPrevented)
+          updateSoundMuted(
+            !muted,
+            event.nativeEvent.isTrusted &&
+              event.nativeEvent.eventPhase !== Event.NONE,
+          );
       }}
 
       data-sound="swoosh"
+      data-slot="sound-toggle"
       {...props}
       className={cn(
         "flex size-7 cursor-pointer items-center justify-center rounded text-shell-fg-faint transition-[transform,box-shadow] duration-100 ease-out outline-none hover:bg-foreground/5 hover:text-shell-fg-muted focus-visible:ring-2 focus-visible:ring-ring active:scale-[0.96] motion-reduce:transition-none",
