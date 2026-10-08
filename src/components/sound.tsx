@@ -5,7 +5,7 @@ import { SoundProvider, usePatch } from "@web-kits/audio/react";
 import { useEffect, useId, useRef, useSyncExternalStore } from "react";
 
 import { cn } from "../lib/utils";
-import { FOLDER_STATE_CHANGE, type FolderStateChange } from "../lib/folder-events";
+import { FOLDER_STATE_CHANGE, consumeFolderStateChange } from "../lib/folder-events";
 
 const STORAGE_KEY = "kobra-sound-muted";
 const VOLUME_KEY = "kobra-sound-volume";
@@ -560,17 +560,8 @@ function SoundEffectListener({ folderOnly }: { folderOnly: boolean }) {
     };
 
     const onFolderStateChange = (event: Event) => {
-      if (!(event instanceof CustomEvent)) return;
-      const change = event.detail as FolderStateChange | null;
-      if (
-        !(change?.source instanceof Event) ||
-        !change.source.isTrusted ||
-        typeof change.open !== "boolean" ||
-        !(event.target instanceof HTMLElement) ||
-        event.target.dataset.slot !== "folder-trigger" ||
-        event.target.getAttribute("aria-expanded") !== String(change.open)
-      )
-        return;
+      const change = consumeFolderStateChange(event);
+      if (!change) return;
       interacted = true;
       play(patch, { sound: change.open ? "open" : "close" });
     };

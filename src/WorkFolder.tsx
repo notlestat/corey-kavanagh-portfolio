@@ -1,6 +1,6 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 
-import { FOLDER_STATE_CHANGE, type FolderStateChange } from "./lib/folder-events";
+import { dispatchFolderStateChange } from "./lib/folder-events";
 import { workDisciplines } from "./workDisciplines";
 
 export default function WorkFolder() {
@@ -17,12 +17,7 @@ export default function WorkFolder() {
     const source = changeSource.current;
     changeSource.current = null;
     if (!source || !trigger.current) return;
-    trigger.current.dispatchEvent(
-      new CustomEvent<FolderStateChange>(FOLDER_STATE_CHANGE, {
-        bubbles: true,
-        detail: { source, open },
-      }),
-    );
+    dispatchFolderStateChange(trigger.current, source, open);
   }, [open]);
 
   useEffect(() => {
