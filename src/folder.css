@@ -94,7 +94,6 @@
   .page-work:has(.folder-page) .header-actions { gap: 6px; }
   .page-work:has(.folder-page) .wordmark { width: 44px; }
   .page-work:has(.folder-page) .wordmark img { width: 44px; }
-  .page-work:has(.folder-page) .github-link { display: none; }
   .folder-room { padding-block: 40px; }
   .folder-stage { transform: none; }
   .folder-footer { padding-inline: 20px; font-size: 8px; }

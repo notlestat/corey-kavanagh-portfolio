@@ -10,8 +10,32 @@ const STORAGE_KEY = "kobra-sound-muted";
 const VOLUME_KEY = "kobra-sound-volume";
 const DEFAULT_VOLUME = 0.5;
 let interacted = false;
-let fallbackMuted = false;
-let fallbackVolume = DEFAULT_VOLUME;
+const fallbackSettings = new Map<string, string | null>([
+  [STORAGE_KEY, "0"],
+  [VOLUME_KEY, String(DEFAULT_VOLUME)],
+]);
+const unavailableSettings = new Set<string>();
+
+function readSoundSetting(key: string) {
+  if (!unavailableSettings.has(key)) {
+    try {
+      fallbackSettings.set(key, localStorage.getItem(key));
+    } catch {
+      unavailableSettings.add(key);
+    }
+  }
+  return fallbackSettings.get(key) ?? null;
+}
+
+function writeSoundSetting(key: string, value: string) {
+  fallbackSettings.set(key, value);
+  if (unavailableSettings.has(key)) return;
+  try {
+    localStorage.setItem(key, value);
+  } catch {
+    unavailableSettings.add(key);
+  }
+}
 
 const PATCH = {
   name: "kobra-ui",
@@ -614,37 +638,21 @@ function notify() {
 }
 
 export function setSoundMuted(muted: boolean) {
-  fallbackMuted = muted;
-  try {
-    localStorage.setItem(STORAGE_KEY, muted ? "1" : "0");
-  } catch {
-    /* Private storage can be unavailable. */
-  }
+  writeSoundSetting(STORAGE_KEY, muted ? "1" : "0");
   notify();
 }
 
 export function useSoundMuted() {
   return useSyncExternalStore(
     subscribeMuted,
-    () => {
-      try {
-        return localStorage.getItem(STORAGE_KEY) === "1";
-      } catch {
-        return fallbackMuted;
-      }
-    },
+    () => readSoundSetting(STORAGE_KEY) === "1",
     () => false,
   );
 }
 
 export function setSoundVolume(volume: number) {
   if (!Number.isFinite(volume)) return;
-  fallbackVolume = Math.min(1, Math.max(0, volume));
-  try {
-    localStorage.setItem(VOLUME_KEY, String(fallbackVolume));
-  } catch {
-    /* Use the in-memory value. */
-  }
+  writeSoundSetting(VOLUME_KEY, String(Math.min(1, Math.max(0, volume))));
   notify();
 }
 
@@ -652,18 +660,14 @@ export function useSoundVolume() {
   return useSyncExternalStore(
     subscribeMuted,
     () => {
-      try {
-        const raw = localStorage.getItem(VOLUME_KEY);
-        const stored = Number(raw);
-        return raw !== null &&
-          Number.isFinite(stored) &&
-          stored >= 0 &&
-          stored <= 1
-          ? stored
-          : DEFAULT_VOLUME;
-      } catch {
-        return fallbackVolume;
-      }
+      const raw = readSoundSetting(VOLUME_KEY);
+      const stored = Number(raw);
+      return raw !== null &&
+        Number.isFinite(stored) &&
+        stored >= 0 &&
+        stored <= 1
+        ? stored
+        : DEFAULT_VOLUME;
     },
     () => DEFAULT_VOLUME,
   );
