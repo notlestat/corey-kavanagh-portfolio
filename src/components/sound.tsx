@@ -421,7 +421,7 @@ function sliderRange(el: HTMLElement) {
   };
 }
 
-function SoundEffectListener() {
+function SoundEffectListener({ folderOnly }: { folderOnly: boolean }) {
   const patch = usePatch(PATCH);
   const muted = useSoundMuted();
 
@@ -434,6 +434,14 @@ function SoundEffectListener() {
 
   useEffect(() => {
     if (!patch.ready) return;
+
+    const cueForPress = (target: Element, keyed = false): Cue | null => {
+      if (!folderOnly) return soundFor(target, keyed);
+      // Folder cues follow its actual open state below, including Escape/outside dismissal.
+      return target.closest('[data-slot="sound-toggle"]')
+        ? { sound: "swoosh" }
+        : null;
+    };
 
     const TICK_GAP_MS = 28;
     const TICK_LAG_MS = 60;
@@ -489,7 +497,7 @@ function SoundEffectListener() {
       )
         return;
       interacted = true;
-      const cue = soundFor(event.target);
+      const cue = cueForPress(event.target);
       if (!cue) return;
       if (cue.sound === "tick")
         grab = { x: event.clientX, y: event.clientY, dragged: false };
@@ -506,7 +514,7 @@ function SoundEffectListener() {
         event.key === "Enter" && event.target.closest(".command-overlay");
       if (typing && !driving) return;
       interacted = true;
-      const cue = soundFor(event.target, true);
+      const cue = cueForPress(event.target, true);
       if (cue) play(patch, cue);
     };
 
@@ -525,12 +533,14 @@ function SoundEffectListener() {
     };
 
     const onContextMenu = (event: MouseEvent) => {
+      if (folderOnly) return;
       if (!event.isTrusted) return;
       interacted = true;
       play(patch, { sound: "open" });
     };
 
     const onInput = (event: Event) => {
+      if (folderOnly) return;
       if (!event.isTrusted) return;
       interacted = true;
       const el = event.target;
@@ -555,6 +565,18 @@ function SoundEffectListener() {
         const el = record.target;
         if (!(el instanceof HTMLElement)) continue;
         const value = el.getAttribute(record.attributeName ?? "");
+
+        if (folderOnly) {
+          if (
+            record.attributeName === "aria-expanded" &&
+            el.dataset.slot === "folder-trigger" &&
+            record.oldValue !== null &&
+            value !== record.oldValue
+          ) {
+            play(patch, { sound: value === "true" ? "open" : "close" });
+          }
+          continue;
+        }
 
         const entered =
           value !== null && value !== "false" && value !== record.oldValue;
@@ -596,7 +618,9 @@ function SoundEffectListener() {
       subtree: true,
       attributes: true,
       attributeOldValue: true,
-      attributeFilter: ["aria-valuenow", "aria-invalid", "data-success"],
+      attributeFilter: folderOnly
+        ? ["aria-expanded"]
+        : ["aria-valuenow", "aria-invalid", "data-success"],
     });
 
     document.addEventListener("pointerdown", onPointerDown, true);
@@ -617,7 +641,7 @@ function SoundEffectListener() {
       document.removeEventListener("contextmenu", onContextMenu, true);
       document.removeEventListener("input", onInput, true);
     };
-  }, [patch]);
+  }, [patch, folderOnly]);
 
   return null;
 }
@@ -673,13 +697,19 @@ export function useSoundVolume() {
   );
 }
 
-export function SoundEffects({ children }: { children: React.ReactNode }) {
+export function SoundEffects({
+  children,
+  scope = "all",
+}: {
+  children: React.ReactNode;
+  scope?: "all" | "folder";
+}) {
   const muted = useSoundMuted();
   const volume = useSoundVolume();
 
   return (
     <SoundProvider enabled={!muted} volume={volume}>
-      <SoundEffectListener />
+      <SoundEffectListener folderOnly={scope === "folder"} />
       {children}
     </SoundProvider>
   );
@@ -710,6 +740,7 @@ export function SoundToggle({
       }}
 
       data-sound="swoosh"
+      data-slot="sound-toggle"
       {...props}
       className={cn(
         "flex size-7 cursor-pointer items-center justify-center rounded text-shell-fg-faint transition-[transform,box-shadow] duration-100 ease-out outline-none hover:bg-foreground/5 hover:text-shell-fg-muted focus-visible:ring-2 focus-visible:ring-ring active:scale-[0.96] motion-reduce:transition-none",

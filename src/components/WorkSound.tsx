@@ -1,9 +1,9 @@
 import { SoundEffects, SoundToggle } from "./sound";
 
-// One listener per Astro Work document; it also hears presses in other islands.
+// Only the Work folder and this sound switch have interface cues.
 export default function WorkSound() {
   return (
-    <SoundEffects>
+    <SoundEffects scope="folder">
       <SoundToggle className="size-11 border-0 bg-transparent" />
     </SoundEffects>
   );
