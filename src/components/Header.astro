@@ -1,5 +1,6 @@
 ---
 import { GithubIcon, PageNavigation, ThemeToggle, type Page } from "../Navigation";
+import WorkSound from "./WorkSound";
 
 interface Props {
   page: Page;
@@ -8,7 +9,7 @@ interface Props {
 const { page } = Astro.props;
 ---
 <header class="site-header">
-  <a class="wordmark" href="/" aria-label="Corey Kavanagh, home"><img src="/ck-logo.png" alt="" width="320" height="180" /></a>
+  {page !== "work" && <a class="wordmark" href="/" aria-label="Corey Kavanagh, home"><img src="/ck-logo.png" alt="" width="320" height="180" /></a>}
   <PageNavigation page={page} />
-  <div class="header-actions"><ThemeToggle client:load /><a class="github-link" href="https://github.com/notlestat" target="_blank" rel="noopener noreferrer" aria-label="GitHub, opens in a new tab"><GithubIcon /></a></div>
+  <div class="header-actions">{page === "work" && <WorkSound client:load />}<ThemeToggle client:load /><a class="github-link" href="https://github.com/notlestat" target="_blank" rel="noopener noreferrer" aria-label="GitHub, opens in a new tab"><GithubIcon /></a></div>
 </header>

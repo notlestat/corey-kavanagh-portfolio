@@ -2,15 +2,20 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Header from "../../components/Header.astro";
 import CaseStudies from "../../components/CaseStudies.astro";
+import WorkGallery from "../../WorkGallery";
+import { artDirectionGalleryItems } from "../../portfolioData";
 import "../../work.css";
 ---
 <BaseLayout title="Art direction | Corey Kavanagh" page="work">
-  <a class="work-skip" href="#art-content">Skip to case studies</a>
+  <a class="work-skip" href="#case-studies">Skip to case studies</a>
   <Header page="work" />
-  <main class="work-refresh discipline-page work-container" id="art-content">
-    <a class="case-back" href="/work">All work</a>
-    <header class="case-page-heading"><p class="work-label">Art direction / Case studies</p><h1>Behind the images.</h1><p>A closer look at my role, the context and the work.</p></header>
-    <CaseStudies />
+  <main class="work-refresh discipline-page discipline-with-gallery" id="art-content">
+    <div class="work-container"><a class="case-back" href="/work">All work</a><h1 class="discipline-gallery-heading">Art direction.</h1></div>
+    <WorkGallery items={artDirectionGalleryItems} title="Art direction / Personal work / Film" id="art-gallery" autoPlay indexHref="#case-studies" client:load />
+    <div class="work-container discipline-studies">
+      <header class="case-page-heading"><p class="work-label">Art direction / Case studies</p><h2>Behind the images.</h2><p>A closer look at my role, the context and the work.</p></header>
+      <CaseStudies />
+    </div>
   </main>
   <footer class="work-footer work-container"><span>Corey Kavanagh</span><a href="/work">Back to Work</a></footer>
 </BaseLayout>

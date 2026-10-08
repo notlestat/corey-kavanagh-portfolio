@@ -1,4 +1,20 @@
 ---
-import UpcomingStudies from "../../components/UpcomingStudies.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Header from "../../components/Header.astro";
+import WorkGallery from "../../WorkGallery";
+import { graphicDesignGalleryItems } from "../../portfolioData";
+import "../../work.css";
 ---
-<UpcomingStudies discipline="Graphic design" description="Identity, typography and image-making. A space for the thinking behind the design work." />
+<BaseLayout title="Graphic design | Corey Kavanagh" page="work">
+  <a class="work-skip" href="#graphic-content">Skip to graphic design</a>
+  <Header page="work" />
+  <main class="work-refresh discipline-page discipline-with-gallery" id="graphic-content">
+    <div class="work-container"><a class="case-back" href="/work">All work</a><h1 class="discipline-gallery-heading">Graphic design.</h1></div>
+    <WorkGallery items={graphicDesignGalleryItems} title="Graphic design / Selected images" id="graphic-gallery" autoPlay indexHref="#case-studies" client:load />
+    <section class="work-container discipline-studies" id="case-studies" aria-labelledby="graphic-studies-title">
+      <header class="case-page-heading"><p class="work-label">Graphic design / Case studies</p><h2 id="graphic-studies-title">Behind the design.</h2><p>Identity, typography and image-making. A space for the thinking behind the design work.</p></header>
+      <p class="upcoming-note">Case studies coming soon.</p>
+    </section>
+  </main>
+  <footer class="work-footer work-container"><span>Corey Kavanagh</span><a href="/work">Back to Work</a></footer>
+</BaseLayout>

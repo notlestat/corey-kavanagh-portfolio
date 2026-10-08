@@ -62,10 +62,6 @@
 .home-tool-mark[data-open="true"] .home-tool-name { opacity: 1; visibility: visible; }
 .home-tool-mark[data-instant="true"] .home-tool-name { transition: none; }
 .home-tool-mark:focus-visible { outline: 1px solid var(--ink); outline-offset: 3px; border-radius: 2px; }
-.home-conversation { width: min(400px, 100%); margin: 112px auto 0; scroll-margin-top: 45px; }
-.home-conversation h2 { margin: 0 0 28px; font-family: var(--label-font); font-size: 10px; font-weight: 400; line-height: 1.5; color: var(--muted); letter-spacing: .025em; }
-.home-conversation .conversation-stage { min-height: 330px; gap: 24px; }
-.home-conversation .conversation-content { font-size: 14px; line-height: 1.5; padding: 12px 16px; }
 .home-footer { width: min(400px, calc(100% - 48px)); margin: 104px auto 0; padding: 0 0 55px; display: flex; align-items: center; gap: 23px; color: var(--muted); font-family: var(--label-font); font-size: 10px; line-height: 1.5; }
 .home-footer > span { margin-right: auto; }
 .home-footer a { display: inline-flex; align-items: center; min-height: 44px; text-decoration: none; }
@@ -96,9 +92,6 @@
   .home-introduction h1 { font-size: 22px; }
   .home-disciplines { font-size: 9px; max-width: 32ch; letter-spacing: 0; }
   .home-description { font-size: 15px; margin-top: 26px; }
-  .home-conversation { width: min(400px, calc(100% - 12px)); margin-top: 87px; }
-  .home-conversation .conversation-stage { min-height: 350px; }
-  .home-conversation .conversation-bubble { max-width: 92%; }
   .home-footer { margin-top: 80px; padding-bottom: 32px; gap: 20px; }
 }
 @media (max-width: 480px) {

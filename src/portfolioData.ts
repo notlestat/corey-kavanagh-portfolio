@@ -46,7 +46,11 @@ const used = collections.map(() => 0);
 
 function addNext(category: number) {
   const position = used[category];
-  galleryItems.push({ ...collections[category].items[position], category, position });
+  galleryItems.push({
+    ...collections[category].items[position],
+    category,
+    position,
+  });
   used[category] += 1;
 }
 
@@ -54,12 +58,29 @@ function addNext(category: number) {
 // across the entire strip so the later stretch is not only Personal work.
 collections.forEach((_, category) => addNext(category));
 
-while (galleryItems.length < collections.reduce((total, collection) => total + collection.items.length, 0)) {
+while (
+  galleryItems.length <
+  collections.reduce((total, collection) => total + collection.items.length, 0)
+) {
   const remaining = collections
-    .map((collection, category) => ({ category, progress: used[category] / collection.items.length }))
-    .filter(({ category }) => used[category] < collections[category].items.length)
+    .map((collection, category) => ({
+      category,
+      progress: used[category] / collection.items.length,
+    }))
+    .filter(
+      ({ category }) => used[category] < collections[category].items.length,
+    )
     .sort((a, b) => a.progress - b.progress || a.category - b.category);
   const last = galleryItems.at(-1)?.category;
-  const next = remaining.find(item => item.category !== last) ?? remaining[0];
+  const next = remaining.find((item) => item.category !== last) ?? remaining[0];
   addNext(next.category);
 }
+
+// Discipline filters keep the original collection/position IDs for the viewer.
+// Future engineering images can use the same slider once real media is supplied.
+export const graphicDesignGalleryItems = galleryItems.filter(
+  (item) => collections[item.category].name === "Graphic Design",
+);
+export const artDirectionGalleryItems = galleryItems.filter(
+  (item) => collections[item.category].name !== "Graphic Design",
+);

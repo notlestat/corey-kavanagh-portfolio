@@ -1,4 +1,11 @@
 /* Work refresh: image archive retained, with a quieter editorial case-study layer. */
+.page-work .site-header { justify-content: flex-end; }
+@media (max-width: 600px) {
+  /* Keep the additional sound control away from the centre navigation. */
+  .page-work .site-header { height: 138px; align-items: flex-start; padding-top: 20px; }
+  .page-work .site-header > .garment-navigation { top: 93px; }
+  .page-work .header-actions { align-items: center; }
+}
 .work-container { width: min(1200px, calc(100% - 96px)); margin-inline: auto; }
 .work-refresh { padding-top: 1px; }
 .work-label { font: 400 10px/1.6 var(--label-font); letter-spacing: .035em; color: var(--muted); margin: 0; }
@@ -32,6 +39,20 @@
 .work-text-list li > a:hover .work-text-name, .work-text-list li > button:hover .work-text-name { text-decoration: underline; text-underline-offset: 6px; text-decoration-thickness: 1px; }
 .discipline-page { padding-block: 52px 100px; min-height: calc(100dvh - 210px); }
 .art-case-index { margin-top: 70px; }
+.discipline-gallery-heading { margin: 32px 0 48px; font-size: clamp(35px, 4vw, 54px); font-weight: 400; line-height: 1.05; letter-spacing: -.045em; }
+.discipline-with-gallery .discipline-studies { padding-top: 55px; }
+.discipline-studies .case-page-heading { margin: 30px 0 50px; }
+.discipline-studies .case-page-heading h2 { font: 400 clamp(32px, 4vw, 54px)/1.05 "Helvetica Neue", Helvetica, Arial, sans-serif; letter-spacing: -.045em; margin: 20px 0 25px; }
+.discipline-studies .art-case-index { margin-top: 0; }
+.discipline-gallery .gallery-pause:disabled { display: none; }
+.gallery-track { position: relative; }
+@media (max-width: 700px) {
+  .discipline-gallery-heading { margin: 20px 0 30px; font-size: 34px; }
+  .discipline-with-gallery .discipline-studies { padding-top: 35px; }
+  .work-refresh .discipline-gallery .gallery-footer { height: auto; min-height: 68px; gap: 12px; flex-wrap: wrap; padding-block: 10px; }
+  .discipline-gallery .gallery-pause { display: none; }
+}
+@media (prefers-reduced-motion: reduce) { .discipline-gallery .gallery-pause { display: none; } }
 .art-case-index > h2 { margin-bottom: 24px; }
 .art-case-list a { display: grid; grid-template-columns: 44px minmax(0, 1fr) 95px; gap: 16px; align-items: center; padding: 30px 0; color: var(--ink); text-decoration: none; }
 .art-case-list h3 { font-size: clamp(25px, 3vw, 38px); font-weight: 400; line-height: 1.1; letter-spacing: -.03em; margin: 0 0 12px; }
