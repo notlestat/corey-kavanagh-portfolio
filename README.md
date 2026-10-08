@@ -2,7 +2,7 @@
 
 An Astro portfolio with React and TypeScript for art direction, design and creative technology. Home is a quiet, film-led introduction with a bio, tools and skills, and clothing-button page navigation. Work is a single centred folder that opens Art direction at `/work/art-direction`, Graphic design at `/work/graphic-design` and Design engineering at `/work/design-engineering`. The existing image-only scrolling archive and text-only collection index are retained at `/work/archive`. See [Folder and sound](#folder-and-sound) for discipline galleries, case studies and interaction details. Design engineering opens the portfolio and local creative-workflow list, with a GitHub profile logo link beside its title. Images have no visible captions and use the page background without tinted mounts; dark mode uses black with neutral grey controls and text.
 
-Version 0.3.0 includes the Work interactions described below, removes Home's conversation and adds fitted favicon exports. Version 0.2.2 grouped the two Adobe product tiles into one monochrome Adobe icon with the label "Adobe". Version 0.2.1 refreshed Work with discipline pages, a caption-free archive and a text-only index, following the Astro migration in 0.2.0. See [Rendering and deployment](#rendering-and-deployment) for how pages and React islands are served. The source is published on GitHub and the existing Vercel project hosts the site at [corey-kavanagh-portfolio.vercel.app](https://corey-kavanagh-portfolio.vercel.app/).
+Version 0.3.1 adds STUDY 01 to Design engineering and the full work index, with a visual-first project page, real application captures and plain Live / Source links. Version 0.3.0 includes the Work interactions described below, removes Home's conversation and adds fitted favicon exports. Version 0.2.2 grouped the two Adobe product tiles into one monochrome Adobe icon with the label "Adobe". Version 0.2.1 refreshed Work with discipline pages, a caption-free archive and a text-only index, following the Astro migration in 0.2.0. See [Rendering and deployment](#rendering-and-deployment) for how pages and React islands are served. The source is published on GitHub and the existing Vercel project hosts the site at [corey-kavanagh-portfolio.vercel.app](https://corey-kavanagh-portfolio.vercel.app/).
 
 ## Run locally
 
@@ -40,10 +40,11 @@ Run `npm run build` before `npm run preview`. There is no automated unit-test sc
 | [src/components/sound.tsx](src/components/sound.tsx) | Supplied Web Kits cue library, delegated listener and exported sound controls |
 | [src/components/WorkSound.tsx](src/components/WorkSound.tsx) | One sound wrapper/listener and mute control per Work document |
 | [src/components/UpcomingStudies.astro](src/components/UpcomingStudies.astro) | Retained upcoming-study layout, no longer rendered by a route |
-| [src/caseStudyData.ts](src/caseStudyData.ts) | Draft case copy grounded in the supplied CV and existing archive imagery |
+| [src/caseStudyData.ts](src/caseStudyData.ts) | Existing draft cases and visual-first authored projects with optional live/source links |
 | [src/work.css](src/work.css) | Work-only layout, case-study pages and archive viewer |
 | [src/layouts/BaseLayout.astro](src/layouts/BaseLayout.astro) | Shared HTML, metadata, global styles and early theme restoration |
 | [scripts/generate-favicons.mjs](scripts/generate-favicons.mjs) | Square web-icon exports from the retained CK artwork |
+| [scripts/prepare-study-media.mjs](scripts/prepare-study-media.mjs) | WebP crops from real STUDY 01 browser captures |
 | [src/HomeFilm.tsx](src/HomeFilm.tsx) | Looping film, sound switch and Home theme control |
 | [src/WorkExplorer.tsx](src/WorkExplorer.tsx) | Scrolling archive and modal media viewer with shared React state |
 | [src/WorkGallery.tsx](src/WorkGallery.tsx) | Shared discipline slider, automatic loop and retained image/video viewer |
@@ -74,7 +75,7 @@ The build generates static HTML for Home, Work, the archive, the discipline page
 
 ## Current content
 
-- Ten collections contain 141 gallery items. Ten video items have local playable previews.
+- Eleven collections contain 144 gallery items. Ten video items have local playable previews.
 - Individual source file names are not shown in the interface.
 - The draft BSTROY, Jimi Vain and Stem Player case-study routes remain `/work/bstroy`, `/work/jimi-vain` and `/work/stem-player`.
 - Navigation links to [the GitHub profile](https://github.com/notlestat).
@@ -98,8 +99,16 @@ There is one `SoundEffects` wrapper in each Work document's header. Its delegate
 
 The discipline pages put imagery above case studies. Art direction includes art-direction, personal-work and video items above its existing draft case studies, excluding Graphic Design. Graphic design has its own slider, followed by the existing coming-soon case-study state. [src/portfolioData.ts](src/portfolioData.ts) owns collection membership and discipline filters; gallery counts are derived from those arrays in the interface. Collection and image-position IDs are preserved so the viewer opens the correct original image or playable video.
 
-The discipline sliders drift at a linear 24px/s on desktop and wrap seamlessly. They pause on hover, keyboard focus, an open viewer, a hidden tab or when offscreen; a persistent Pause/Resume control lets visitors stop them themselves. The full archive uses the same gallery without automatic drift. Wheel input moves an endless strip while the pointer is over it; Prev/Next also work. Keyboard stepping is instant. Phones and reduced-motion mode retain native swipe/scroll without an automatic loop. Design engineering keeps its existing content until real project imagery is supplied; it can use the same `WorkGallery` component without adding a placeholder carousel.
+The discipline sliders drift at a linear 24px/s on desktop and wrap seamlessly. They pause on hover, keyboard focus, an open viewer, a hidden tab or when offscreen; a persistent Pause/Resume control lets visitors stop them themselves. The full archive uses the same gallery without automatic drift. Wheel input moves an endless strip while the pointer is over it; Prev/Next also work. Keyboard stepping is instant. Phones and reduced-motion mode retain native swipe/scroll without an automatic loop. Design engineering uses the same gallery for its three real STUDY 01 compositions, above the project and retained workflow list. Short collections repeat enough times to cover a desktop viewport at the loop boundary. Duplicate copies are hidden from assistive technology and keyboard navigation.
 
 Click-to-open viewing is retained. Bringing a card into view is restricted to Tab navigation with visible keyboard focus, not pointer focus or programmatic focus restoration. This prevents a clicked image moving out from under the pointer before the click completes, and keeps the strip in place when the viewer closes.
 
 Confirm project credits and usage rights, add case-study detail where useful, and provide a verified contact route. Review video and image quality at full size. A Graphic Design source image was previously held out pending a publication decision; adding new media still requires editorial review.
+
+## STUDY 01 integration
+
+Version 0.3.1 integration, approved for publication on 8 October 2026. STUDY 01 appears in the Design engineering project list and the full archive, with a visual-first page at `/work/study-01`. It uses the shared case-study data and page layout with optional discipline, attribution, media-dimension and live/source fields. The three existing Art direction cases retain their copy, draft labels and next-project navigation; Home and the Work folder are unchanged.
+
+The [live instrument](https://study-01-nu.vercel.app/) and [source](https://github.com/notlestat/study-01) were checked on 8 October 2026 against source revision `735d6fc`. The four local WebP assets in `public/work/study-01/` are real captures of that application, not reconstructed interfaces: an ORDER workspace plus ORDER seed 4, SILENCE seed 10 and TENSION seed 4 compositions. These use the application's built-in geometric sample, the title "Composition is a system." and Corey Kavanagh metadata, not client imagery. Mobile loads the composition crop instead of the small desktop controls. The full application remains separate, reached through plain Live and Source links; no app engine or iframe is loaded by the portfolio, and the STUDY 01 repository is unchanged.
+
+`node scripts/prepare-study-media.mjs <order-capture> <silence-capture> <tension-capture>` regenerates the media from matching 2880 × 2000 browser captures. The crop coordinates are specific to those captures and should be reviewed if the live interface changes. Gallery membership is 134 Art direction items, seven Graphic design items and three Design engineering items.

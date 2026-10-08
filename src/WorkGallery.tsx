@@ -31,6 +31,7 @@ export function Gallery({
   const suspendedRef = useRef(suspended);
   const [paused, setPaused] = useState(false);
   const [canLoop, setCanLoop] = useState(false);
+  const [repeatCount, setRepeatCount] = useState(2);
 
   useEffect(() => {
     suspendedRef.current = suspended;
@@ -161,6 +162,8 @@ export function Gallery({
     };
     const resize = new ResizeObserver(() => {
       width = Math.max(1, cycle.offsetWidth);
+      // Short collections need enough copies to cover the viewport at the wrap.
+      setRepeatCount(Math.max(2, Math.ceil(viewport.offsetWidth / width) + 1));
       if (!interactive.matches) {
         current = 0;
         target = 0;
@@ -182,6 +185,7 @@ export function Gallery({
     interactive.addEventListener("change", onModeChange);
     setCanLoop(interactive.matches);
     resize.observe(cycle);
+    resize.observe(viewport);
     intersection.observe(viewport);
     return () => {
       cancelAnimationFrame(frame);
@@ -200,8 +204,9 @@ export function Gallery({
     };
   }, [autoPlay, items]);
 
-  const renderCycle = (duplicate: boolean) => (
+  const renderCycle = (duplicate: boolean, key = "original") => (
     <div
+      key={key}
       className="gallery-cycle"
       ref={duplicate ? undefined : cycleRef}
       aria-hidden={duplicate || undefined}
@@ -222,6 +227,8 @@ export function Gallery({
           <figure>
             <img
               src={item.image}
+              width={item.width}
+              height={item.height}
               alt={
                 duplicate
                   ? ""
@@ -259,7 +266,7 @@ export function Gallery({
       >
         <div className="gallery-track" ref={trackRef}>
           {renderCycle(false)}
-          {renderCycle(true)}
+          {Array.from({ length: repeatCount - 1 }, (_, index) => renderCycle(true, `copy-${index}`))}
         </div>
       </div>
       <div className="gallery-footer">
@@ -404,6 +411,8 @@ export function ArchiveViewer({
             <img
               src={item.image}
               alt={`${collection.name}, archive image ${selected.position + 1}`}
+              width={item.width}
+              height={item.height}
             />
           )}
         </div>

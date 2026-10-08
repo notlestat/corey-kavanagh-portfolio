@@ -4,14 +4,21 @@ export type CaseStudy = {
   period: string;
   role: string;
   summary: string;
-  context: string;
-  contribution: string[];
-  approach: string;
-  media: { src: string; alt: string }[];
+  context?: string;
+  contribution?: string[];
+  approach?: string;
+  category?: "design-engineering";
+  presentation?: "visual";
+  disciplines?: string[];
+  liveUrl?: string;
+  sourceUrl?: string;
+  credit?: string;
+  note?: string;
+  media: { src: string; alt: string; mobileSrc?: string; width?: number; height?: number; caption?: string }[];
 };
 
-// Draft copy grounded in the user-supplied cv.pdf. Media comes from the
-// matching existing archive, not a newly verified campaign or production.
+// The first three cases remain CV-grounded drafts using the existing archive.
+// Authored digital projects use verified application captures and optional links.
 export const caseStudies: CaseStudy[] = [
   {
     slug: "bstroy",
@@ -69,6 +76,26 @@ export const caseStudies: CaseStudy[] = [
       { src: "/work/gallery/stem-01.jpg", alt: "Stem Player archive: rounded product form against a blue and green setting" },
       { src: "/work/gallery/stem-02.jpg", alt: "Stem Player selected archive image 2" },
       { src: "/work/gallery/stem-03.jpg", alt: "Stem Player selected archive image 3" },
+    ],
+  },
+  {
+    slug: "study-01",
+    name: "STUDY 01",
+    period: "2026",
+    role: "Design / Development / Creative technology",
+    category: "design-engineering",
+    presentation: "visual",
+    disciplines: ["Creative coding", "Design engineering", "Experimental typography"],
+    summary: "A browser-based composition instrument for image and type. ORDER, SILENCE and TENSION set the starting rules; seeds and selective locks develop variations.",
+    liveUrl: "https://study-01-nu.vercel.app/",
+    sourceUrl: "https://github.com/notlestat/study-01",
+    credit: "Art direction and design by Corey Kavanagh. Built with Codex.",
+    note: "One source, three visual systems. These compositions were generated in the live instrument using its built-in sample. The full application also includes material treatments, saved studies and PNG / SVG export.",
+    media: [
+      { src: "/work/study-01/interface.webp", mobileSrc: "/work/study-01/order.webp", width: 2000, height: 1389, alt: "An ORDER composition generated in STUDY 01, combining large aligned typography with geometric imagery", caption: "The instrument / ORDER, seed 4" },
+      { src: "/work/study-01/order.webp", width: 840, height: 1120, alt: "ORDER composition: large title aligned above a geometric image and small metadata", caption: "01 / ORDER / Seed 4" },
+      { src: "/work/study-01/silence.webp", width: 840, height: 1120, alt: "SILENCE composition: restrained typography and geometric imagery separated by generous empty space", caption: "02 / SILENCE / Seed 10" },
+      { src: "/work/study-01/tension.webp", width: 840, height: 1120, alt: "TENSION composition: a narrow title block opposed by a dense image column", caption: "03 / TENSION / Seed 4" },
     ],
   },
 ];

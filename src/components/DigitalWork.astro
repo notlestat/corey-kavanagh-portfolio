@@ -1,5 +1,15 @@
 ---
 import { systems } from "../systemData";
 import SystemRow from "../SystemRow";
+import { caseStudies } from "../caseStudyData";
+const projects = caseStudies.filter(study => study.category === "design-engineering");
 ---
-<section class="engineering-systems" id="digital-work" aria-labelledby="systems-title"><h2 class="work-label" id="systems-title">Websites &amp; creative workflows</h2><div class="systems-list"><a class="digital-site-link" href="/" aria-label="Explore the Corey Kavanagh portfolio website"><span class="digital-site-number">01</span><span class="digital-site-name">This portfolio</span><span class="digital-site-type">Website / ongoing</span></a>{systems.map((item, index) => <SystemRow item={item} index={index + 1} client:load />)}<p class="digital-next">More interfaces and project studies will appear here as they develop.</p></div></section>
+<section class="engineering-systems" id="digital-work" aria-labelledby="systems-title">
+  <h2 class="work-label" id="systems-title">Websites &amp; creative workflows</h2>
+  <div class="systems-list">
+    {projects.map((project, index) => <a class="digital-site-link editorial-project-link" href={`/work/${project.slug}`}><span class="digital-site-number">{String(index + 1).padStart(2, "0")}</span><span class="digital-site-name">{project.name}<small>{project.role}</small></span><span class="digital-site-type">{project.period}</span></a>)}
+    <a class="digital-site-link" href="/" aria-label="Explore the Corey Kavanagh portfolio website"><span class="digital-site-number">{String(projects.length + 1).padStart(2, "0")}</span><span class="digital-site-name">This portfolio</span><span class="digital-site-type">Website / ongoing</span></a>
+    {systems.map((item, index) => <SystemRow item={item} index={index + projects.length + 1} client:load />)}
+    <p class="digital-next">More interfaces and project studies will appear here as they develop.</p>
+  </div>
+</section>

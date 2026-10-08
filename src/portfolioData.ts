@@ -1,11 +1,14 @@
 export type PortfolioItem = {
   image: string;
   video?: string;
+  width?: number;
+  height?: number;
 };
 
 export type Collection = {
   name: string;
   year?: string;
+  category?: "design-engineering";
   items: PortfolioItem[];
 };
 
@@ -34,6 +37,11 @@ export const collections: Collection[] = [
   { name: "Graphic Design", items: images("graphic", 7) },
   { name: "Personal work", items: images("personal", 85) },
   { name: "Video", items: movingImage },
+  { name: "STUDY 01", year: "2026", category: "design-engineering", items: [
+    { image: "/work/study-01/order.webp", width: 840, height: 1120 },
+    { image: "/work/study-01/silence.webp", width: 840, height: 1120 },
+    { image: "/work/study-01/tension.webp", width: 840, height: 1120 },
+  ] },
 ];
 
 export type GalleryItem = PortfolioItem & {
@@ -82,5 +90,9 @@ export const graphicDesignGalleryItems = galleryItems.filter(
   (item) => collections[item.category].name === "Graphic Design",
 );
 export const artDirectionGalleryItems = galleryItems.filter(
-  (item) => collections[item.category].name !== "Graphic Design",
+  (item) => collections[item.category].name !== "Graphic Design" && collections[item.category].category !== "design-engineering",
+);
+
+export const designEngineeringGalleryItems = galleryItems.filter(
+  (item) => collections[item.category].category === "design-engineering",
 );

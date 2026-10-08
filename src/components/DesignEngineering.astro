@@ -3,15 +3,20 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import Header from "./Header.astro";
 import DigitalWork from "./DigitalWork.astro";
 import { GithubIcon } from "../Navigation";
+import WorkGallery from "../WorkGallery";
+import { designEngineeringGalleryItems } from "../portfolioData";
 import "../work.css";
 ---
 <BaseLayout title="Design engineering | Corey Kavanagh" page="work">
   <a class="work-skip" href="#engineering-content">Skip to design engineering</a>
   <Header page="work" />
-  <main class="work-refresh discipline-page work-container" id="engineering-content">
-    <a class="case-back" href="/work">All work</a>
-    <header class="case-page-heading engineering-heading"><p class="work-label">Design / Code / Creative technology</p><div><h1>Design engineering.</h1><a class="engineering-github" href="https://github.com/notlestat" target="_blank" rel="noopener noreferrer" aria-label="Corey Kavanagh on GitHub, opens in a new tab"><GithubIcon /></a></div><p>An evolving practice in interfaces, code and tools for creative work. Current websites and local workflows.</p></header>
-    <DigitalWork />
+  <main class="work-refresh discipline-page discipline-with-gallery" id="engineering-content">
+    <div class="work-container">
+      <a class="case-back" href="/work">All work</a>
+      <header class="case-page-heading engineering-heading"><p class="work-label">Design / Code / Creative technology</p><div><h1>Design engineering.</h1><a class="engineering-github" href="https://github.com/notlestat" target="_blank" rel="noopener noreferrer" aria-label="Corey Kavanagh on GitHub, opens in a new tab"><GithubIcon /></a></div><p>An evolving practice in interfaces, code and tools for creative work.</p></header>
+    </div>
+    <WorkGallery items={designEngineeringGalleryItems} title="Design engineering / Selected work" id="engineering-gallery" autoPlay indexHref="#digital-work" client:load />
+    <div class="work-container discipline-studies"><DigitalWork /></div>
   </main>
   <footer class="work-footer work-container"><span>Corey Kavanagh</span><a href="/work">Back to Work</a></footer>
 </BaseLayout>

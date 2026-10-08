@@ -7,9 +7,10 @@ import type { Page } from "../Navigation";
 interface Props {
   title: string;
   page: Page;
+  description?: string;
 }
 
-const { title, page } = Astro.props;
+const { title, page, description = "Corey Kavanagh works across art direction, design and creative technology." } = Astro.props;
 ---
 <!doctype html>
 <html lang="en">
@@ -21,7 +22,7 @@ const { title, page } = Astro.props;
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
     <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-    <meta name="description" content="Corey Kavanagh works across art direction, design and creative technology." />
+    <meta name="description" content={description} />
     <meta name="theme-color" content="#eeefeb" />
     <script is:inline>
       (() => {

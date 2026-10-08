@@ -5,25 +5,49 @@ import { caseStudies } from "../../caseStudyData";
 import "../../work.css";
 
 export function getStaticPaths() {
-  return caseStudies.map((study, index) => ({ params: { slug: study.slug }, props: { study, next: caseStudies[(index + 1) % caseStudies.length] } }));
+  return caseStudies.map(study => {
+    const siblings = caseStudies.filter(item => item.category === study.category);
+    const index = siblings.findIndex(item => item.slug === study.slug);
+    return { params: { slug: study.slug }, props: { study, next: siblings.length > 1 ? siblings[(index + 1) % siblings.length] : undefined } };
+  });
 }
 const { study, next } = Astro.props;
+const visual = study.presentation === "visual";
+const backHref = study.category === "design-engineering" ? "/work/design-engineering" : "/work/art-direction";
+const backLabel = study.category === "design-engineering" ? "Design engineering" : "All case studies";
+const hero = study.media[0];
 ---
-<BaseLayout title={`${study.name} | Corey Kavanagh`} page="work">
+<BaseLayout title={`${study.name} | Corey Kavanagh`} description={study.summary} page="work">
   <a class="work-skip" href="#case-content">Skip to case study</a>
   <Header page="work" />
-  <main class="work-refresh case-page" id="case-content">
+  <main class:list={["work-refresh case-page", { "case-page-visual": visual }]} id="case-content">
     <div class="work-container">
-      <a class="case-back" href="/work/art-direction">All case studies</a>
-      <header class="case-page-heading"><p class="work-label">Selected project / {study.period}</p><h1>{study.name}</h1><p>{study.summary}</p></header>
-      <figure class="case-hero"><img src={study.media[0].src} alt={study.media[0].alt} fetchpriority="high" /><figcaption>Selected imagery / {study.name}</figcaption></figure>
-      <section class="case-story" aria-labelledby="case-context-title">
+      <a class="case-back" href={backHref}>{backLabel}</a>
+      <header class="case-page-heading">
+        <p class="work-label">Selected project / {study.period}</p><h1>{study.name}</h1>
+        {visual && <p class="project-disciplines">{study.disciplines?.join(" / ")}</p>}
+        <p>{study.summary}</p>
+        {visual && <nav class="project-external-links" aria-label="Project links">
+          {study.liveUrl && <a href={study.liveUrl} target="_blank" rel="noopener noreferrer" aria-label={`Open ${study.name}, opens in a new tab`}>Live</a>}
+          {study.sourceUrl && <a href={study.sourceUrl} target="_blank" rel="noopener noreferrer" aria-label={`${study.name} source on GitHub, opens in a new tab`}>Source</a>}
+        </nav>}
+      </header>
+      <figure class="case-hero">
+        <picture>
+          {hero.mobileSrc && <source media="(max-width: 700px)" srcset={hero.mobileSrc} width="840" height="1120" />}
+          <img src={hero.src} alt={hero.alt} width={hero.width} height={hero.height} fetchpriority="high" />
+        </picture>
+        <figcaption>{hero.caption ?? `Selected imagery / ${study.name}`}</figcaption>
+      </figure>
+      {visual ? <section class="project-note" aria-label="About these studies">
+        <p>{study.note}</p><p class="project-credit">{study.credit}</p>
+      </section> : <section class="case-story" aria-labelledby="case-context-title">
         <aside><p class="work-label">My role</p><p>{study.role}</p><p class="work-label">Period</p><p>{study.period}</p></aside>
-        <div><h2 id="case-context-title">Context</h2><p>{study.context}</p><h2>My contribution</h2><ul>{study.contribution.map(item => <li>{item}</li>)}</ul><h2>Approach</h2><p>{study.approach}</p></div>
-      </section>
-      <div class="case-image-sequence">{study.media.slice(1).map((item, index) => <figure><img src={item.src} alt={item.alt} loading="lazy" /><figcaption>{String(index + 2).padStart(2, "0")} / Selected imagery</figcaption></figure>)}</div>
-      <p class="case-draft-note">Draft case study. Copy is based on my CV; the image selection and detailed project credits are being reviewed.</p>
-      <nav class="case-next" aria-label="Case study navigation"><a href="/work/art-direction">All case studies</a><a href={`/work/${next.slug}`}><span class="work-label">Next project</span><span>{next.name}</span></a></nav>
+        <div><h2 id="case-context-title">Context</h2><p>{study.context}</p><h2>My contribution</h2><ul>{study.contribution?.map(item => <li>{item}</li>)}</ul><h2>Approach</h2><p>{study.approach}</p></div>
+      </section>}
+      <div class:list={["case-image-sequence", { "project-study-sequence": visual }]}>{study.media.slice(1).map((item, index) => <figure><img src={item.src} alt={item.alt} width={item.width} height={item.height} loading="lazy" /><figcaption>{item.caption ?? `${String(index + 2).padStart(2, "0")} / Selected imagery`}</figcaption></figure>)}</div>
+      {!visual && <p class="case-draft-note">Draft case study. Copy is based on my CV; the image selection and detailed project credits are being reviewed.</p>}
+      <nav class="case-next" aria-label="Case study navigation"><a href={backHref}>{backLabel}</a>{next ? <a href={`/work/${next.slug}`}><span class="work-label">Next project</span><span>{next.name}</span></a> : <a href="/work">All work</a>}</nav>
     </div>
   </main>
   <footer class="work-footer work-container"><span>Corey Kavanagh</span><a href="#top">Back to top</a></footer>
