@@ -433,9 +433,8 @@ function SoundEffectListener({ folderOnly }: { folderOnly: boolean }) {
     wasMuted.current = muted;
     const trustedUnmute = cameBack && unmuteCuePending;
     if (cameBack) unmuteCuePending = false;
-    if (cameBack && interacted && (!folderOnly || trustedUnmute))
-      play(patch, { sound: "swoosh" });
-  }, [muted, patch, folderOnly]);
+    if (trustedUnmute) play(patch, { sound: "swoosh" });
+  }, [muted, patch]);
 
   useEffect(() => {
     if (!patch.ready) return;
@@ -669,10 +668,14 @@ function notify(trustedUnmute = false) {
   for (const onChange of listeners) onChange();
 }
 
-export function setSoundMuted(muted: boolean, source?: Event) {
+function updateSoundMuted(muted: boolean, trustedToggle = false) {
   const wasMuted = readSoundSetting(STORAGE_KEY) === "1";
   writeSoundSetting(STORAGE_KEY, muted ? "1" : "0");
-  notify(wasMuted && !muted && source?.isTrusted === true);
+  notify(wasMuted && !muted && trustedToggle);
+}
+
+export function setSoundMuted(muted: boolean, _source?: Event) {
+  updateSoundMuted(muted);
 }
 
 export function useSoundMuted() {
@@ -745,7 +748,12 @@ export function SoundToggle({
       aria-pressed={muted}
       onClick={(event) => {
         onClick?.(event);
-        if (!event.defaultPrevented) setSoundMuted(!muted, event.nativeEvent);
+        if (!event.defaultPrevented)
+          updateSoundMuted(
+            !muted,
+            event.nativeEvent.isTrusted &&
+              event.nativeEvent.eventPhase !== Event.NONE,
+          );
       }}
 
       data-sound="swoosh"
