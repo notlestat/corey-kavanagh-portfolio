@@ -11,7 +11,7 @@ const STORAGE_KEY = "kobra-sound-muted";
 const VOLUME_KEY = "kobra-sound-volume";
 const DEFAULT_VOLUME = 0.5;
 let interacted = false;
-let unmuteSource: Event | undefined;
+let unmuteCuePending = false;
 const fallbackSettings = new Map<string, string | null>([
   [STORAGE_KEY, "0"],
   [VOLUME_KEY, String(DEFAULT_VOLUME)],
@@ -431,7 +431,9 @@ function SoundEffectListener({ folderOnly }: { folderOnly: boolean }) {
   useEffect(() => {
     const cameBack = wasMuted.current && !muted;
     wasMuted.current = muted;
-    if (cameBack && interacted && (!folderOnly || unmuteSource?.isTrusted))
+    const trustedUnmute = cameBack && unmuteCuePending;
+    if (cameBack) unmuteCuePending = false;
+    if (cameBack && interacted && (!folderOnly || trustedUnmute))
       play(patch, { sound: "swoosh" });
   }, [muted, patch, folderOnly]);
 
@@ -650,21 +652,27 @@ const listeners = new Set<() => void>();
 
 function subscribeMuted(onChange: () => void) {
   listeners.add(onChange);
-  window.addEventListener("storage", onChange);
+  if (listeners.size === 1) window.addEventListener("storage", onSoundStorage);
   return () => {
     listeners.delete(onChange);
-    window.removeEventListener("storage", onChange);
+    if (listeners.size === 0)
+      window.removeEventListener("storage", onSoundStorage);
   };
 }
 
-function notify() {
+function onSoundStorage() {
+  notify();
+}
+
+function notify(trustedUnmute = false) {
+  unmuteCuePending = trustedUnmute;
   for (const onChange of listeners) onChange();
 }
 
 export function setSoundMuted(muted: boolean, source?: Event) {
-  unmuteSource = muted ? undefined : source;
+  const wasMuted = readSoundSetting(STORAGE_KEY) === "1";
   writeSoundSetting(STORAGE_KEY, muted ? "1" : "0");
-  notify();
+  notify(wasMuted && !muted && source?.isTrusted === true);
 }
 
 export function useSoundMuted() {

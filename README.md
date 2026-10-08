@@ -93,6 +93,8 @@ The earlier Work refresh was approved for publication on 7 October 2026. The fol
 
 ## Folder and sound
 
+Unmute feedback belongs to one trusted local setting change and is consumed once. The shared setting notifier clears that feedback for storage updates, volume changes and programmatic setting changes, so background updates cannot reuse a previous button press.
+
 The folder uses native button/navigation elements, `aria-expanded`, inert closed links, Escape dismissal and a no-JavaScript link fallback. Its 240ms opening transition explains where the three paper entries come from; keyboard activation and reduced-motion mode skip the transition. Grain and fragmented lettering interpret the supplied paper reference and [Raygun archive](https://designreviewed.com/series/raygun/) without using its cover artwork.
 
 The attached `sound.tsx` reference was used directly rather than running the shadcn registry generator. Its cue definitions, exported API, `data-slot`/`data-sound` wiring, SVG and exact SoundToggle utility string are retained. Differences: relative imports match this repository; Tailwind v4 runs through Astro's Vite integration with only theme/utilities and explicit sound-file sources, no Preflight reset; the supplied CSS dark tokens also recognise the site's existing `data-theme="dark"` selector; extra foreground/ring tokens map to the existing ink. The mute control overrides its outer hit area to 44px with `cn`, leaving the 17px glyph intact. If reading or writing a sound setting fails, that setting uses memory for the rest of the document's lifetime, even if later reads would succeed. Volume is clamped to 0–1, including zero.
