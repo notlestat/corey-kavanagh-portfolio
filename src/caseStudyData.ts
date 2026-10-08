@@ -23,6 +23,25 @@ export type CaseStudy = {
 // Authored digital projects use verified application captures and optional links.
 export const caseStudies: CaseStudy[] = [
   {
+    slug: "sourcelink",
+    name: "SourceLink",
+    period: "Live website",
+    role: "Website design",
+    category: "interaction-design",
+    presentation: "visual",
+    disciplines: ["Website design", "Interaction design"],
+    summary: "A website for clothing supplier intelligence, with sourcing reports, manufacturer guides and an interactive savings calculator.",
+    liveUrl: "https://sourcelink.solutions/",
+    credit: "Website design by Corey Kavanagh.",
+    note: "Cream backgrounds, dark green panels and editorial typography give the sourcing information a consistent visual language. The site brings report comparisons, free guides and a savings calculator into one browsing experience. These screenshots show the live website on desktop and mobile.",
+    media: [
+      { src: "/work/sourcelink/home-desktop.webp", width: 1440, height: 1000, alt: "SourceLink desktop homepage with an editorial headline and dark green supplier report preview on a cream background", caption: "Homepage / Desktop" },
+      { src: "/work/sourcelink/home-mobile.webp", width: 390, height: 844, alt: "SourceLink mobile homepage with the sourcing headline and Browse reports button", caption: "01 / Homepage / Mobile" },
+      { src: "/work/sourcelink/reports-tablet.webp", width: 753, height: 789, alt: "SourceLink report comparison with Starter and Established pricing cards", caption: "02 / Report selection / Tablet" },
+      { src: "/work/sourcelink/savings-mobile.webp", width: 390, height: 844, alt: "SourceLink mobile savings calculator with unit price and order size inputs", caption: "03 / Savings calculator / Mobile" },
+    ],
+  },
+  {
     slug: "bstroy",
     name: "BSTROY",
     period: "2022–2024",
