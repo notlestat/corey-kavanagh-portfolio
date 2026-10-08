@@ -39,11 +39,6 @@ export const collections: Collection[] = [
   { name: "Graphic Design", items: images("graphic", 7) },
   { name: "Personal work", items: images("personal", 85) },
   { name: "Video", items: movingImage },
-  { name: "STUDY 01", year: "2026", category: "creative-technology", items: [
-    { image: "/work/study-01/order.webp", width: 840, height: 1120 },
-    { image: "/work/study-01/silence.webp", width: 840, height: 1120 },
-    { image: "/work/study-01/tension.webp", width: 840, height: 1120 },
-  ] },
 ];
 
 export type GalleryItem = PortfolioItem & {

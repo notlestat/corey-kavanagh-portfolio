@@ -60,6 +60,35 @@
 .art-case-list p { font: 400 11px/1.7 var(--label-font); color: var(--muted); margin: 0; }
 .art-case-list a > span:last-child { text-align: right; }
 .art-case-list a:hover h3 { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 6px; }
+.art-case-list a:focus-visible { outline: 1px solid var(--ink); outline-offset: 6px; }
+.art-case-list a:focus-visible h3 { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 6px; }
+.site-preview { display: block; margin-top: 40px; color: var(--ink); text-decoration: none; border: 1px solid var(--line); min-width: 0; }
+.site-preview-window { position: relative; overflow: hidden; aspect-ratio: 1440 / 900; background: #f4f3ee; }
+.site-preview-window iframe { display: block; position: absolute; top: 0; left: 0; width: 1440px; height: 900px; max-width: none; border: 0; transform-origin: top left; pointer-events: none; }
+.site-preview-bar { display: flex; justify-content: space-between; align-items: center; gap: 20px; min-height: 56px; padding: 16px 20px; border-top: 1px solid var(--line); font: 400 11px/1.6 var(--label-font); }
+.site-preview-bar > span { min-width: 0; overflow-wrap: anywhere; }
+.site-preview-action { display: inline-flex; gap: 10px; align-items: center; flex-shrink: 0; }
+.site-preview-action > span { display: inline-block; }
+.site-preview:focus-visible { outline: 2px solid var(--ink); outline-offset: 6px; }
+.site-preview:focus-visible .site-preview-action { text-decoration: underline; text-underline-offset: 5px; }
+.site-project-description { margin: 45px 0 100px; max-width: 54ch; }
+.site-project-description h1 { font-size: clamp(30px, 4vw, 48px); line-height: 1.1; font-weight: 400; letter-spacing: -.035em; margin: 0 0 20px; }
+.site-project-description p { color: var(--muted); font-size: 16px; line-height: 1.75; margin: 0; }
+@media (hover: hover) and (pointer: fine) {
+  .site-preview { transition: transform 200ms var(--ease-out); }
+  .site-preview-action > span { transition: transform 160ms var(--ease-out); }
+  .site-preview:hover { transform: translateY(-4px); }
+  .site-preview:hover .site-preview-action { text-decoration: underline; text-underline-offset: 5px; }
+  .site-preview:hover .site-preview-action > span { transform: translate(2px, -2px); }
+}
+@media (max-width: 700px) {
+  .site-preview-bar { padding: 12px; gap: 12px; font-size: 10px; }
+  .site-project-description { margin: 32px 0 65px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .site-preview, .site-preview-action > span { transition: none; }
+  .site-preview:hover, .site-preview:hover .site-preview-action > span { transform: none; }
+}
 .case-page-heading.engineering-heading { max-width: 900px; }
 .engineering-heading > div { display: flex; align-items: center; gap: 24px; }
 .engineering-heading h1 { min-width: 0; }

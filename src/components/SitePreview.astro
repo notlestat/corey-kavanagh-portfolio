@@ -1,0 +1,21 @@
+---
+interface Props { name: string; url: string; scripts?: boolean; }
+const { name, url, scripts = false } = Astro.props;
+const hostname = new URL(url).hostname;
+---
+<a class="site-preview" href={url} target="_blank" rel="noopener noreferrer" aria-label={`Visit ${name}, opens in a new tab`}>
+  <div class="site-preview-window" data-site-preview>
+    <iframe src={url} title={`${name} homepage preview`} width="1440" height="900" tabindex="-1" aria-hidden="true" inert sandbox={scripts ? "allow-scripts allow-same-origin" : ""} referrerpolicy="no-referrer" loading="eager"></iframe>
+  </div>
+  <span class="site-preview-bar"><span>{hostname}</span><span class="site-preview-action">Visit site <span aria-hidden="true">↗</span></span></span>
+</a>
+<script>
+  // Scale the live homepage, keeping the same desktop viewport on every screen.
+  document.querySelectorAll<HTMLElement>("[data-site-preview]").forEach(window => {
+    const frame = window.querySelector("iframe");
+    if (!frame) return;
+    const resize = () => { frame.style.transform = `scale(${window.clientWidth / 1440})`; };
+    resize();
+    new ResizeObserver(resize).observe(window);
+  });
+</script>

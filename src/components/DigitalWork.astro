@@ -8,10 +8,12 @@ const creative = category === "creative-technology";
 const projects = caseStudies.filter(study => study.category === category);
 ---
 <section class="engineering-systems" id="digital-work" aria-labelledby="systems-title">
-  <h2 class="work-label" id="systems-title">{creative ? "Creative software & workflows" : "Websites & digital experiences"}</h2>
+  <h2 class="work-label" id="systems-title">Selected case studies</h2>
   <div class="systems-list">
-    {projects.map((project, index) => <a class="digital-site-link editorial-project-link" href={`/work/${project.slug}`}><span class="digital-site-number">{String(index + 1).padStart(2, "0")}</span><span class="digital-site-name">{project.name}<small>{project.role}</small></span><span class="digital-site-type">{project.period}</span></a>)}
-    {!creative && <a class="digital-site-link" href="/" aria-label="Explore the Corey Kavanagh portfolio website"><span class="digital-site-number">{String(projects.length + 1).padStart(2, "0")}</span><span class="digital-site-name">This portfolio</span><span class="digital-site-type">Website / ongoing</span></a>}
+    <ol class="art-case-list">
+      {projects.map((project, index) => <li><a href={`/work/${project.slug}`}><span class="work-label">{String(index + 1).padStart(2, "0")}</span><div><h3>{project.name}</h3><p>{project.role}</p></div><span class="work-label">{project.period}</span></a></li>)}
+      {!creative && <li><a href="/" aria-label="Explore the Corey Kavanagh portfolio website"><span class="work-label">{String(projects.length + 1).padStart(2, "0")}</span><div><h3>This portfolio</h3><p>Website design</p></div><span class="work-label">Ongoing</span></a></li>}
+    </ol>
     {creative && systems.map((item, index) => <SystemRow item={item} index={index + projects.length} client:load />)}
     <p class="digital-next">{creative ? "More creative tools and project studies will appear here as they develop." : "More interfaces and project studies will appear here as they develop."}</p>
   </div>

@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Header from "../../components/Header.astro";
+import SitePreview from "../../components/SitePreview.astro";
 import { caseStudies } from "../../caseStudyData";
 import { workDisciplines } from "../../workDisciplines";
 import "../../work.css";
@@ -14,6 +15,7 @@ export function getStaticPaths() {
 }
 const { study, next } = Astro.props;
 const visual = study.presentation === "visual";
+const website = study.presentation === "website";
 const discipline = workDisciplines.find(item => item.id === (study.category ?? "art-direction")) ?? workDisciplines[0];
 const backHref = discipline.href;
 const backLabel = discipline.id === "art-direction" ? "All case studies" : discipline.name;
@@ -22,9 +24,13 @@ const hero = study.media[0];
 <BaseLayout title={`${study.name} | Corey Kavanagh`} description={study.summary} page="work">
   <a class="work-skip" href="#case-content">Skip to case study</a>
   <Header page="work" />
-  <main class:list={["work-refresh case-page", { "case-page-visual": visual }]} id="case-content">
+  <main class:list={["work-refresh case-page", { "case-page-visual": visual, "case-page-website": website }]} id="case-content">
     <div class="work-container">
       <a class="case-back" href={backHref}>{backLabel}</a>
+      {website && study.liveUrl ? <>
+        <SitePreview name={study.name} url={study.liveUrl} scripts={study.previewScripts} />
+        <header class="site-project-description"><h1>{study.name}</h1><p>{study.summary}</p></header>
+      </> : <>
       <header class="case-page-heading">
         <p class="work-label">Selected project / {study.period}</p><h1>{study.name}</h1>
         {visual && <p class="project-disciplines">{study.disciplines?.join(" / ")}</p>}
@@ -50,6 +56,7 @@ const hero = study.media[0];
       <div class:list={["case-image-sequence", { "project-study-sequence": visual }]}>{study.media.slice(1).map((item, index) => <figure><img src={item.src} alt={item.alt} width={item.width} height={item.height} loading="lazy" /><figcaption>{item.caption ?? `${String(index + 2).padStart(2, "0")} / Selected imagery`}</figcaption></figure>)}</div>
       {!visual && <p class="case-draft-note">Draft case study. Copy is based on my CV; the image selection and detailed project credits are being reviewed.</p>}
       <nav class="case-next" aria-label="Case study navigation"><a href={backHref}>{backLabel}</a>{next ? <a href={`/work/${next.slug}`}><span class="work-label">Next project</span><span>{next.name}</span></a> : <a href="/work">All work</a>}</nav>
+      </>}
     </div>
   </main>
   <footer class="work-footer work-container"><span>Corey Kavanagh</span><a href="#top">Back to top</a></footer>

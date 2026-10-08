@@ -10,7 +10,8 @@ export type CaseStudy = {
   contribution?: string[];
   approach?: string;
   category?: WorkDiscipline;
-  presentation?: "visual";
+  presentation?: "visual" | "website";
+  previewScripts?: boolean;
   disciplines?: string[];
   liveUrl?: string;
   sourceUrl?: string;
@@ -20,7 +21,7 @@ export type CaseStudy = {
 };
 
 // The first three cases remain CV-grounded drafts using the existing archive.
-// Authored digital projects use verified application captures and optional links.
+// Website and app projects use live homepage previews with a short description.
 export const caseStudies: CaseStudy[] = [
   {
     slug: "sourcelink",
@@ -28,18 +29,12 @@ export const caseStudies: CaseStudy[] = [
     period: "Live website",
     role: "Website design",
     category: "interaction-design",
-    presentation: "visual",
+    presentation: "website",
     disciplines: ["Website design", "Interaction design"],
     summary: "A website for clothing supplier intelligence, with sourcing reports, manufacturer guides and an interactive savings calculator.",
     liveUrl: "https://sourcelink.solutions/",
     credit: "Website design by Corey Kavanagh.",
-    note: "Cream backgrounds, dark green panels and editorial typography give the sourcing information a consistent visual language. The site brings report comparisons, free guides and a savings calculator into one browsing experience. These screenshots show the live website on desktop and mobile.",
-    media: [
-      { src: "/work/sourcelink/home-desktop.webp", width: 1440, height: 1000, alt: "SourceLink desktop homepage with an editorial headline and dark green supplier report preview on a cream background", caption: "Homepage / Desktop" },
-      { src: "/work/sourcelink/home-mobile.webp", width: 390, height: 844, alt: "SourceLink mobile homepage with the sourcing headline and Browse reports button", caption: "01 / Homepage / Mobile" },
-      { src: "/work/sourcelink/reports-tablet.webp", width: 753, height: 789, alt: "SourceLink report comparison with Starter and Established pricing cards", caption: "02 / Report selection / Tablet" },
-      { src: "/work/sourcelink/savings-mobile.webp", width: 390, height: 844, alt: "SourceLink mobile savings calculator with unit price and order size inputs", caption: "03 / Savings calculator / Mobile" },
-    ],
+    media: [],
   },
   {
     slug: "bstroy",
@@ -105,18 +100,13 @@ export const caseStudies: CaseStudy[] = [
     period: "2026",
     role: "Design / Development / Creative technology",
     category: "creative-technology",
-    presentation: "visual",
+    presentation: "website",
+    previewScripts: true,
     disciplines: ["Creative coding", "Design engineering", "Experimental typography"],
     summary: "A browser-based composition instrument for image and type. ORDER, SILENCE and TENSION set the starting rules; seeds and selective locks develop variations.",
     liveUrl: "https://study-01-nu.vercel.app/",
     sourceUrl: "https://github.com/notlestat/study-01",
     credit: "Art direction and design by Corey Kavanagh. Built with Codex.",
-    note: "One source, three visual systems. These compositions were generated in the live instrument using its built-in sample. The full application also includes material treatments, saved studies and PNG / SVG export.",
-    media: [
-      { src: "/work/study-01/interface.webp", mobileSrc: "/work/study-01/order.webp", width: 2000, height: 1389, alt: "An ORDER composition generated in STUDY 01, combining large aligned typography with geometric imagery", caption: "The instrument / ORDER, seed 4" },
-      { src: "/work/study-01/order.webp", width: 840, height: 1120, alt: "ORDER composition: large title aligned above a geometric image and small metadata", caption: "01 / ORDER / Seed 4" },
-      { src: "/work/study-01/silence.webp", width: 840, height: 1120, alt: "SILENCE composition: restrained typography and geometric imagery separated by generous empty space", caption: "02 / SILENCE / Seed 10" },
-      { src: "/work/study-01/tension.webp", width: 840, height: 1120, alt: "TENSION composition: a narrow title block opposed by a dense image column", caption: "03 / TENSION / Seed 4" },
-    ],
+    media: [],
   },
 ];
