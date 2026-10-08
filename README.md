@@ -1,8 +1,8 @@
 # Corey Kavanagh portfolio
 
-An Astro portfolio with React and TypeScript for art direction, design and creative technology. Home is a quiet, film-led introduction with an animated conversation and clothing-button page navigation. Work contains pinned discipline links, an image-only scrolling archive and a text-only index of the ten collections. Art direction opens “Behind the images” at `/work/art-direction`, linking to the individual case studies. Graphic design opens an upcoming-study page. Design engineering opens the portfolio and local creative-workflow list at `/work/design-engineering`, with a GitHub profile logo link beside its title. Images use the page background without tinted mounts, and dark mode uses black with neutral grey controls and text. In the image gallery, wheel scrolling moves an endless strip while the pointer is over it. On smaller screens and with reduced motion enabled, the strip becomes swipeable.
+An Astro portfolio with React and TypeScript for art direction, design and creative technology. Home is a quiet, film-led introduction with a bio, tools and skills, and clothing-button page navigation. Work is a single centred folder: a press opens three discipline links with a quiet audio cue. The existing image-only scrolling archive and text-only index of ten collections are retained at `/work/archive`. Art direction opens “Behind the images” at `/work/art-direction`, linking to the individual case studies. Graphic design has a design-only slider above its upcoming-study section. Design engineering opens the portfolio and local creative-workflow list at `/work/design-engineering`, with a GitHub profile logo link beside its title. Images use the page background without tinted mounts, and dark mode uses black with neutral grey controls and text. In the image gallery, wheel scrolling moves an endless strip while the pointer is over it. On smaller screens and with reduced motion enabled, the strip becomes swipeable.
 
-Version 0.2.2 groups the two Adobe product tiles into one monochrome Adobe icon with the label "Adobe". Version 0.2.1 refreshed Work with discipline pages, a caption-free archive and a text-only index, following the Astro migration in 0.2.0. Every route generates HTML during the build; React hydrates the interactive components. The source is published on GitHub and the existing Vercel project hosts the site at [corey-kavanagh-portfolio.vercel.app](https://corey-kavanagh-portfolio.vercel.app/).
+Version 0.3.0 introduces the minimal Work folder, press-only sound cues, separate looping discipline galleries, a conversation-free Home page and fitted favicon exports. Image clicks open the viewer without shifting the slider. Version 0.2.2 grouped the two Adobe product tiles into one monochrome Adobe icon with the label "Adobe". Version 0.2.1 refreshed Work with discipline pages, a caption-free archive and a text-only index, following the Astro migration in 0.2.0. Every route generates HTML during the build; React hydrates the interactive components. The source is published on GitHub and the existing Vercel project hosts the site at [corey-kavanagh-portfolio.vercel.app](https://corey-kavanagh-portfolio.vercel.app/).
 
 ## Run locally
 
@@ -30,23 +30,29 @@ Run `npm run build` before `npm run preview`. There is no automated unit-test sc
 
 | Location | Purpose |
 |---|---|
-| [src/pages/index.astro](src/pages/index.astro) | Home page structure, introduction and conversation content |
-| [src/pages/work.astro](src/pages/work.astro) | Work route, pinned navigation, image archive, text index and footer |
+| [src/pages/index.astro](src/pages/index.astro) | Home page structure, introduction and tools |
+| [src/pages/work.astro](src/pages/work.astro) | Minimal Work folder, discipline navigation and archive link |
 | [src/pages/work/[slug].astro](src/pages/work/[slug].astro) | Static case-study routes |
 | [src/components/CaseStudies.astro](src/components/CaseStudies.astro) | Text-only case-study index on the Art direction page |
-| [src/components/WorkLanding.astro](src/components/WorkLanding.astro) | Pinned links to Art direction, Graphic design and Design engineering |
+| [src/WorkFolder.tsx](src/WorkFolder.tsx) | Minimal folder disclosure with the three existing discipline links |
+| [src/folder.css](src/folder.css) | Folder material, fragmented type, responsive layout and restrained opening motion |
+| [src/pages/work/archive.astro](src/pages/work/archive.astro) | Preserved image scroll and ten-collection work list |
+| [src/components/sound.tsx](src/components/sound.tsx) | Supplied Web Kits cue library, delegated listener and exported sound controls |
+| [src/components/WorkSound.tsx](src/components/WorkSound.tsx) | One sound wrapper/listener and mute control per Work document |
 | [src/components/UpcomingStudies.astro](src/components/UpcomingStudies.astro) | Shared upcoming-study page layout |
 | [src/caseStudyData.ts](src/caseStudyData.ts) | Draft case copy grounded in the supplied CV and existing archive imagery |
 | [src/work.css](src/work.css) | Work-only layout, case-study pages and archive viewer |
 | [src/layouts/BaseLayout.astro](src/layouts/BaseLayout.astro) | Shared HTML, metadata, global styles and early theme restoration |
+| [scripts/generate-favicons.mjs](scripts/generate-favicons.mjs) | Square web-icon exports from the retained CK artwork |
 | [src/HomeFilm.tsx](src/HomeFilm.tsx) | Looping film, sound switch and Home theme control |
 | [src/WorkExplorer.tsx](src/WorkExplorer.tsx) | Scrolling archive and modal media viewer with shared React state |
+| [src/WorkGallery.tsx](src/WorkGallery.tsx) | Shared discipline slider, automatic loop and retained image/video viewer |
 | [src/Navigation.tsx](src/Navigation.tsx) | Clothing-button page links, shared theme control and GitHub icon |
-| [src/components/Header.astro](src/components/Header.astro) | Work header with an interactive theme control |
+| [src/components/Header.astro](src/components/Header.astro) | Logo-free Work header with page links, sound and theme controls |
 | [src/components/DigitalWork.astro](src/components/DigitalWork.astro) | Static digital-project section with interactive system rows |
 | [src/SystemRow.tsx](src/SystemRow.tsx) | Expandable system details |
 | [src/systemData.ts](src/systemData.ts) | Existing digital-system descriptions |
-| [src/Conversation.tsx](src/Conversation.tsx) | Accessible conversation bubbles used on Home |
+| [src/Conversation.tsx](src/Conversation.tsx) | Retained conversation component, no longer rendered on Home |
 | [src/ToolRail.tsx](src/ToolRail.tsx) | Monochrome Home tool marks with hover, keyboard and tap labels |
 | [src/portfolioData.ts](src/portfolioData.ts) | Collection names, years, image/video paths and gallery ordering |
 | [src/styles.css](src/styles.css) | Typography, layout, motion and responsive rules |
@@ -58,9 +64,11 @@ Run `npm run build` before `npm run preview`. There is no automated unit-test sc
 
 Update collection metadata and item counts in `src/portfolioData.ts` when adding or removing media. Gallery paths are root-relative; a deployment under a URL subdirectory needs a path review.
 
+Favicons use the intact CK mark on the site's light neutral background, with tight browser padding and additional Apple home-screen padding. The CK artwork and favicon assets are retained; Work headers no longer display the logo. PNG exports are 16, 32, 48 and 96px square; `favicon.ico` contains 16/32/48px bitmaps and `apple-touch-icon.png` is 180px square. The shared layout declares sizes and types on every route. The 96px icon follows [Google's square favicon recommendation](https://developers.google.com/search/docs/appearance/favicon-in-search); the Apple export follows [Safari's touch-icon declaration](https://developer.apple.com/library/archive/documentation/AppleApplications/Reference/SafariWebContent/ConfiguringWebApplications/ConfiguringWebApplications.html). Regenerate with `node scripts/generate-favicons.mjs` or pass a higher-resolution CK PNG as its first argument. This uses the sharp image tooling installed by Astro. Only the exported icons belong in public assets, not private source paths. Favicons may remain cached after publication, and Google decides whether and when to show them in search.
+
 ## Rendering and deployment
 
-The Home introduction, navigation, page metadata, Work header, case-study text and footers are generated by Astro. `client:load` attaches React to film controls, tool labels, conversation playback, the Work archive/list viewer and workflow disclosures on Design engineering. The workflow section is not rendered on the main Work page. Initial React markup is deterministic during server rendering; browser preferences are read after hydration. The saved theme is applied by a head script before the page paints.
+The Home introduction, navigation, page metadata, Work header, case-study text and footers are generated by Astro. `client:load` attaches React to film controls, tool labels, the Work folder, sound controls, archive/list viewer and workflow disclosures on Design engineering. The workflow section is not rendered on the main Work page. Initial React markup is deterministic during server rendering; browser preferences are read after hydration. The saved theme is applied by a head script before the page paints.
 
 The build generates static HTML for Home, Work, the discipline pages and individual case studies, alongside the existing assets. `/work` is a real static page and no longer rewrites to the Home HTML. Vercel uses the repository's Astro framework preset, `npm run build` and `dist` output directory. No server-rendering adapter is needed for this static site. Pushes to the connected production branch trigger a production deployment; verify the routes and their interactions after publishing.
 
@@ -72,14 +80,28 @@ The build generates static HTML for Home, Work, the discipline pages and individ
 - Navigation links to [the GitHub profile](https://github.com/notlestat).
 - No verified public contact route has been added yet.
 
-Home reuses `public/work/gallery/video/moving-09.mp4`, which matches the supplied source film. It loops inline without native playback controls. Playback attempts audio first and falls back to muted autoplay when the browser requires a user gesture. The sound switch enables or disables audio. With reduced motion enabled, the film remains still until the visitor enables sound; the conversation shows its complete transcript.
+Home reuses `public/work/gallery/video/moving-09.mp4`, which matches the supplied source film. It loops inline without native playback controls. Playback attempts audio first and falls back to muted autoplay when the browser requires a user gesture. The sound switch enables or disables audio. With reduced motion enabled, the film remains still until the visitor enables sound.
 
-The conversation uses iMessage-style blue outgoing and grey incoming bubbles in both themes. Replies type at a varied pace with thinking, punctuation and send pauses. Visitors can show every message immediately or replay the sequence.
+The local Home page no longer renders the conversation, its message data or its playback island. The film, introduction, seven tool marks and footer remain.
 
-Home also includes a small tools and skills row beneath the name and bio, before the conversation. It becomes a compact grid on narrow phones. A single Adobe mark groups Photoshop and Illustrator, alongside Figma, Paper Design, Claude Code, OpenAI Codex, HTML and Astro. Labels reveal on hover, keyboard focus or tap, and dismiss with Escape, focus leaving, or an outside tap. All seven marks are monochrome; Codex uses the OpenAI parent mark. Adobe's vector silhouette comes from [Simple Icons v13](https://github.com/simple-icons/simple-icons/blob/13.0.0/icons/adobe.svg). Figma, Claude, OpenAI, HTML and Astro silhouettes also come from [Simple Icons](https://github.com/simple-icons/simple-icons); Paper's mark comes from [Paper](https://paper.design/). The names describe the toolkit and skills, not affiliations or certifications.
+Home also includes a small tools and skills row beneath the name and bio. It becomes a compact grid on narrow phones. A single Adobe mark groups Photoshop and Illustrator, alongside Figma, Paper Design, Claude Code, OpenAI Codex, HTML and Astro. Labels reveal on hover, keyboard focus or tap, and dismiss with Escape, focus leaving, or an outside tap. All seven marks are monochrome; Codex uses the OpenAI parent mark. Adobe's vector silhouette comes from [Simple Icons v13](https://github.com/simple-icons/simple-icons/blob/13.0.0/icons/adobe.svg). Figma, Claude, OpenAI, HTML and Astro silhouettes also come from [Simple Icons](https://github.com/simple-icons/simple-icons); Paper's mark comes from [Paper](https://paper.design/). The names describe the toolkit and skills, not affiliations or certifications.
 
 ## Editorial review
 
-The Work refresh was approved for publication on 7 October 2026. The individual case studies remain visibly labelled as drafts while detailed image selections and credits are reviewed. Responsibilities and periods come from the user-supplied `cv.pdf`; media comes from matching existing archive folders. Confirm exact project image selections, collaborator credits, publication permissions and any additional process evidence before removing the draft labels. No campaign titles, analytics or new production outcomes have been invented. The private CV itself is not copied into public assets. Existing `/work#work-index` links reach the text-only work list. The workflow descriptions are retained with neutral project names, without Axis branding. `/work/digital-work` remains an alias of the Design engineering page.
+The earlier Work refresh was approved for publication on 7 October 2026. The folder, discipline sliders, Home removals and image-click fix were approved for publication on 8 October 2026. The individual case studies remain visibly labelled as drafts while detailed image selections and credits are reviewed. Responsibilities and periods come from the user-supplied `cv.pdf`; media comes from matching existing archive folders. Confirm exact project image selections, collaborator credits, publication permissions and any additional process evidence before removing the draft labels. No campaign titles, analytics or new production outcomes have been invented. The private CV itself is not copied into public assets. Existing `/work#work-index` links redirect to the preserved list at `/work/archive#work-index`. The workflow descriptions are retained with neutral project names, without Axis branding. `/work/digital-work` remains an alias of the Design engineering page.
+
+## Folder and sound
+
+The folder uses native button/navigation elements, `aria-expanded`, inert closed links, Escape dismissal and a no-JavaScript link fallback. Its 240ms opening transition explains where the three paper entries come from; keyboard activation and reduced-motion mode skip the transition. Grain and fragmented lettering interpret the supplied paper reference and [Raygun archive](https://designreviewed.com/series/raygun/) without using its cover artwork.
+
+The attached `sound.tsx` reference was used directly rather than running the shadcn registry generator. Its cue definitions, exported API, `data-slot`/`data-sound` wiring, SVG and exact SoundToggle utility string are retained. Differences: relative imports match this repository; Tailwind v4 runs through Astro's Vite integration with only theme/utilities and explicit sound-file sources, no Preflight reset; the supplied CSS dark tokens also recognise the site's existing `data-theme="dark"` selector; extra foreground/ring tokens map to the existing ink. The mute control overrides its outer hit area to 44px with `cn`, leaving the 17px glyph intact. Storage failures fall back to memory, volume is clamped to 0–1 (including zero), and synthetic events/startup mutations cannot initiate audio.
+
+There is one `SoundEffects` wrapper in each Work document's header. Its delegated listener can hear the other React islands and Astro controls without converting the whole page into React. Home has no interface-sound listener. The later local edit removes its conversation without changing the film or tools. No cue plays on load or hover. The mute preference and volume are saved locally; Web Kits also suppresses cues for reduced-motion users. This interface mute is separate from Home's film soundtrack.
+
+The local discipline pages now put imagery above case studies. Art direction contains all 134 art-direction, personal-work and video items, excluding the seven Graphic Design images. Graphic design has its own seven-image slider, followed by the existing truthful coming-soon case-study state. Collection and image-position IDs are preserved so the viewer opens the correct original image or playable video. Images have no visible captions and sit directly on the page background.
+
+The shared slider drifts at a linear 24px/s on desktop and wraps seamlessly. It pauses on hover, keyboard focus, an open viewer, a hidden tab or when offscreen; a persistent Pause/Resume control lets visitors stop it themselves. Wheel input and Prev/Next still work. Keyboard stepping is instant. Phones and reduced-motion mode retain native swipe/scroll without an automatic loop. Design engineering keeps its existing content until real project imagery is supplied; it can use the same `WorkGallery` component without adding a placeholder carousel.
+
+Click-to-open viewing is retained. Bringing a card into view is restricted to Tab navigation with visible keyboard focus, not pointer focus or programmatic focus restoration. This prevents a clicked image moving out from under the pointer before the click completes, and keeps the strip in place when the viewer closes.
 
 Confirm project credits and usage rights, add case-study detail where useful, and provide a verified contact route. Review video and image quality at full size. A Graphic Design source image was previously held out pending a publication decision; adding new media still requires editorial review.

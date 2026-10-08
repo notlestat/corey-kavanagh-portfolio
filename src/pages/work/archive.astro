@@ -1,0 +1,15 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Header from "../../components/Header.astro";
+import WorkExplorer from "../../WorkExplorer";
+import "../../work.css";
+---
+<BaseLayout title="Image archive | Corey Kavanagh" page="work">
+  <a class="work-skip" href="#archive-content">Skip to archive</a>
+  <Header page="work" />
+  <main class="work-refresh" id="archive-content">
+    <div class="work-container archive-heading"><a class="case-back" href="/work">Back to Work</a><p class="work-label">Image archive / Full work index</p></div>
+    <WorkExplorer client:load />
+  </main>
+  <footer class="work-footer work-container"><span>Corey Kavanagh / Art Direction &amp; Design</span><a href="/work">Back to Work</a></footer>
+</BaseLayout>
