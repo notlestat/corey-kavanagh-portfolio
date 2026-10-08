@@ -40,6 +40,7 @@
 .discipline-page { padding-block: 52px 100px; min-height: calc(100dvh - 210px); }
 .art-case-index { margin-top: 70px; }
 .discipline-gallery-heading { margin: 32px 0 48px; font-size: clamp(35px, 4vw, 54px); font-weight: 400; line-height: 1.05; letter-spacing: -.045em; }
+.discipline-description { max-width: 48ch; margin: -24px 0 36px; color: var(--muted); font-size: 16px; line-height: 1.6; }
 .discipline-with-gallery .discipline-studies { padding-top: 55px; }
 .discipline-studies .case-page-heading { margin: 30px 0 50px; }
 .discipline-studies .case-page-heading h2 { font: 400 clamp(32px, 4vw, 54px)/1.05 "Helvetica Neue", Helvetica, Arial, sans-serif; letter-spacing: -.045em; margin: 20px 0 25px; }
@@ -107,6 +108,12 @@
 .case-next a:last-child { display: flex; flex-direction: column; gap: 10px; text-align: right; font-size: 25px; letter-spacing: -.025em; }
 .case-next a:hover { text-decoration: underline; text-underline-offset: 5px; }
 .editorial-project-link .digital-site-name small { display: block; margin-top: 12px; font: 400 10px/1.7 var(--label-font); letter-spacing: 0; color: var(--muted); }
+.project-preview { display: block; padding-block: 28px; color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--line); }
+.project-preview figure { margin: 0; }
+.project-preview img { display: block; width: 100%; height: auto; }
+.project-preview figcaption { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-top: 20px; }
+.project-preview:hover .digital-site-name { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 6px; }
+.project-preview:focus-visible { outline: 1px solid var(--ink); outline-offset: 6px; }
 .case-page-visual .case-page-heading { max-width: 760px; }
 .case-page-visual .case-page-heading > p:not(.work-label):not(.project-disciplines) { max-width: 47ch; font-size: 18px; line-height: 1.6; color: var(--muted); margin-top: 28px; }
 .project-disciplines { font: 400 10px/1.8 var(--label-font); color: var(--muted); }
@@ -132,6 +139,7 @@
   .work-text-name { font-size: 22px; overflow-wrap: anywhere; }
   .work-text-meta { display: none; }
   .discipline-page { padding-block: 30px 75px; }
+  .discipline-description { margin-top: -12px; }
   .art-case-list a { grid-template-columns: 24px minmax(0, 1fr); gap: 12px; }
   .art-case-list a > span:last-child { grid-column: 2; text-align: left; }
   .engineering-heading > div { gap: 10px; }

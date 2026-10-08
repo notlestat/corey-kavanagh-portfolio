@@ -2,19 +2,21 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Header from "../../components/Header.astro";
 import { caseStudies } from "../../caseStudyData";
+import { workDisciplines } from "../../workDisciplines";
 import "../../work.css";
 
 export function getStaticPaths() {
   return caseStudies.map(study => {
-    const siblings = caseStudies.filter(item => item.category === study.category);
+    const siblings = caseStudies.filter(item => (item.category ?? "art-direction") === (study.category ?? "art-direction"));
     const index = siblings.findIndex(item => item.slug === study.slug);
     return { params: { slug: study.slug }, props: { study, next: siblings.length > 1 ? siblings[(index + 1) % siblings.length] : undefined } };
   });
 }
 const { study, next } = Astro.props;
 const visual = study.presentation === "visual";
-const backHref = study.category === "design-engineering" ? "/work/design-engineering" : "/work/art-direction";
-const backLabel = study.category === "design-engineering" ? "Design engineering" : "All case studies";
+const discipline = workDisciplines.find(item => item.id === (study.category ?? "art-direction")) ?? workDisciplines[0];
+const backHref = discipline.href;
+const backLabel = discipline.id === "art-direction" ? "All case studies" : discipline.name;
 const hero = study.media[0];
 ---
 <BaseLayout title={`${study.name} | Corey Kavanagh`} description={study.summary} page="work">

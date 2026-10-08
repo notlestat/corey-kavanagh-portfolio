@@ -1,6 +1,6 @@
 ---
 import { caseStudies } from "../caseStudyData";
-const artStudies = caseStudies.filter(study => study.category !== "design-engineering");
+const artStudies = caseStudies.filter(study => (study.category ?? "art-direction") === "art-direction");
 ---
 <section class="art-case-index" id="case-studies" aria-labelledby="case-list-title">
   <h2 id="case-list-title" class="work-label">Selected case studies</h2>

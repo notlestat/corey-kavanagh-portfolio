@@ -7,4 +7,9 @@ export default defineConfig({
   vite: { plugins: [tailwindcss()] },
   output: "static",
   trailingSlash: "never",
+  redirects: {
+    "/work/graphic-design": "/work/art-direction",
+    "/work/design-engineering": "/work/creative-technology",
+    "/work/digital-work": "/work/creative-technology",
+  },
 });

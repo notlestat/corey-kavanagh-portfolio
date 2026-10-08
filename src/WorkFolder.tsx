@@ -1,27 +1,7 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 
 import { FOLDER_STATE_CHANGE, type FolderStateChange } from "./lib/folder-events";
-
-const disciplines = [
-  {
-    number: "01",
-    name: "Art direction",
-    href: "/work/art-direction",
-    note: "Images / campaigns",
-  },
-  {
-    number: "02",
-    name: "Graphic design",
-    href: "/work/graphic-design",
-    note: "Identity / image",
-  },
-  {
-    number: "03",
-    name: "Design engineering",
-    href: "/work/design-engineering",
-    note: "Sites / systems",
-  },
-];
+import { workDisciplines } from "./workDisciplines";
 
 export default function WorkFolder() {
   const [open, setOpen] = useState(false);
@@ -110,7 +90,7 @@ export default function WorkFolder() {
             <span className="folder-stamp">
               Art direction
               <br />
-              Design / Technology
+              Interaction / Technology
             </span>
           </span>
         </button>
@@ -121,7 +101,7 @@ export default function WorkFolder() {
           inert={!open}
           aria-hidden={!open}
         >
-          {disciplines.map((item) => (
+          {workDisciplines.map((item) => (
             <a
               key={item.number}
               href={item.href}
@@ -144,7 +124,7 @@ export default function WorkFolder() {
       <noscript>
         <style>{".folder-stage { display: none; }"}</style>
         <nav className="folder-fallback" aria-label="Work categories">
-          {disciplines.map((item) => (
+          {workDisciplines.map((item) => (
             <a key={item.href} href={item.href}>
               {item.name}
             </a>

@@ -1,3 +1,5 @@
+import type { WorkDiscipline } from "./workDisciplines";
+
 export type CaseStudy = {
   slug: string;
   name: string;
@@ -7,7 +9,7 @@ export type CaseStudy = {
   context?: string;
   contribution?: string[];
   approach?: string;
-  category?: "design-engineering";
+  category?: WorkDiscipline;
   presentation?: "visual";
   disciplines?: string[];
   liveUrl?: string;
@@ -83,7 +85,7 @@ export const caseStudies: CaseStudy[] = [
     name: "STUDY 01",
     period: "2026",
     role: "Design / Development / Creative technology",
-    category: "design-engineering",
+    category: "creative-technology",
     presentation: "visual",
     disciplines: ["Creative coding", "Design engineering", "Experimental typography"],
     summary: "A browser-based composition instrument for image and type. ORDER, SILENCE and TENSION set the starting rules; seeds and selective locks develop variations.",

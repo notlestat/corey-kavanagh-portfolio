@@ -2,14 +2,25 @@
 import { systems } from "../systemData";
 import SystemRow from "../SystemRow";
 import { caseStudies } from "../caseStudyData";
-const projects = caseStudies.filter(study => study.category === "design-engineering");
+interface Props { category: "interaction-design" | "creative-technology"; }
+const { category } = Astro.props;
+const creative = category === "creative-technology";
+const projects = caseStudies.filter(study => study.category === category);
 ---
 <section class="engineering-systems" id="digital-work" aria-labelledby="systems-title">
-  <h2 class="work-label" id="systems-title">Websites &amp; creative workflows</h2>
+  <h2 class="work-label" id="systems-title">{creative ? "Creative software & workflows" : "Websites & digital experiences"}</h2>
   <div class="systems-list">
-    {projects.map((project, index) => <a class="digital-site-link editorial-project-link" href={`/work/${project.slug}`}><span class="digital-site-number">{String(index + 1).padStart(2, "0")}</span><span class="digital-site-name">{project.name}<small>{project.role}</small></span><span class="digital-site-type">{project.period}</span></a>)}
-    <a class="digital-site-link" href="/" aria-label="Explore the Corey Kavanagh portfolio website"><span class="digital-site-number">{String(projects.length + 1).padStart(2, "0")}</span><span class="digital-site-name">This portfolio</span><span class="digital-site-type">Website / ongoing</span></a>
-    {systems.map((item, index) => <SystemRow item={item} index={index + projects.length + 1} client:load />)}
-    <p class="digital-next">More interfaces and project studies will appear here as they develop.</p>
+    {projects.map((project, index) => creative ? <a class="project-preview" href={`/work/${project.slug}`} aria-label={`Explore ${project.name}`}>
+      <figure>
+        <picture>
+          {project.media[0].mobileSrc && <source media="(max-width: 700px)" srcset={project.media[0].mobileSrc} width="840" height="1120" />}
+          <img src={project.media[0].src} alt={project.media[0].alt} width={project.media[0].width} height={project.media[0].height} fetchpriority="high" />
+        </picture>
+        <figcaption><span class="digital-site-name">{project.name}</span><span class="work-label">{project.period} / {project.role}</span></figcaption>
+      </figure>
+    </a> : <a class="digital-site-link editorial-project-link" href={`/work/${project.slug}`}><span class="digital-site-number">{String(index + 1).padStart(2, "0")}</span><span class="digital-site-name">{project.name}<small>{project.role}</small></span><span class="digital-site-type">{project.period}</span></a>)}
+    {!creative && <a class="digital-site-link" href="/" aria-label="Explore the Corey Kavanagh portfolio website"><span class="digital-site-number">{String(projects.length + 1).padStart(2, "0")}</span><span class="digital-site-name">This portfolio</span><span class="digital-site-type">Website / ongoing</span></a>}
+    {creative && systems.map((item, index) => <SystemRow item={item} index={index + projects.length} client:load />)}
+    <p class="digital-next">{creative ? "More creative tools and project studies will appear here as they develop." : "More interfaces and project studies will appear here as they develop."}</p>
   </div>
 </section>
