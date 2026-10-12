@@ -4,25 +4,73 @@ export type CaseStudy = {
   slug: string;
   name: string;
   period: string;
+  periodLabel?: string;
   role: string;
   summary: string;
   context?: string;
   contribution?: string[];
   approach?: string;
   category?: WorkDiscipline;
-  presentation?: "visual" | "website";
+  presentation?: "visual" | "website" | "artwork";
+  editorialNote?: string;
   previewScripts?: boolean;
   disciplines?: string[];
   liveUrl?: string;
   sourceUrl?: string;
   credit?: string;
   note?: string;
-  media: { src: string; alt: string; mobileSrc?: string; width?: number; height?: number; caption?: string }[];
+  media: { src: string; alt: string; mobileSrc?: string; srcSet?: string; width?: number; height?: number; caption?: string }[];
 };
 
-// The first three cases remain CV-grounded drafts using the existing archive.
+function albumArtwork(name: string, alt: string, caption: string, height = 2000): CaseStudy["media"][number] {
+  const base = `/work/album-artwork/${name}`;
+  return {
+    src: `${base}-2000.webp`,
+    srcSet: `${base}-640.webp 640w, ${base}-1200.webp 1200w, ${base}-2000.webp 2000w`,
+    width: 2000,
+    height,
+    alt,
+    caption,
+  };
+}
+
+// BSTROY, Jimi Vain and Stem Player remain CV-grounded drafts using the archive.
 // Website and app projects use live homepage previews with a short description.
 export const caseStudies: CaseStudy[] = [
+  {
+    slug: "vory-lord-lift-me-up",
+    name: "Vory / Lord Lift Me Up",
+    period: "2025",
+    periodLabel: "Release",
+    role: "Art direction / Cover design",
+    category: "art-direction",
+    presentation: "artwork",
+    summary: "Official cover artwork for Vory's Lord Lift Me Up, featuring Ye.",
+    credit: "Cover artwork by Corey Kavanagh.",
+    editorialNote: "",
+    media: [albumArtwork("vory-lord-lift-me-up", "Lord Lift Me Up cover for Vory featuring Ye: a distressed black-and-white figure, divided at the waist, with vertical title lettering", "Lord Lift Me Up / Official cover / 2025")],
+  },
+  {
+    slug: "unreleased-artwork",
+    name: "Unreleased artwork",
+    period: "Unused concepts",
+    periodLabel: "Status",
+    role: "Graphic design / Album artwork",
+    category: "art-direction",
+    presentation: "artwork",
+    summary: "Unused album artwork for clients.",
+    credit: "Artwork by Corey Kavanagh.",
+    editorialNote: "",
+    media: [
+      albumArtwork("unreleased-portrait", "Faded portrait over a pale blue grid with distressed paper texture", "Unused cover concept / Portrait"),
+      albumArtwork("unreleased-envelope", "Silver-grey envelope on black with layered lettering and a scattered tracklist", "Unused cover concept / Envelope"),
+      albumArtwork("unreleased-light", "Blue-white light crossing a dark textured composition with a small tracklist", "Unused cover concept / Light"),
+      albumArtwork("unreleased-letterforms", "Repeated blurred letterforms and thin typography over off-white paper", "Unused cover concept / Letterforms"),
+      albumArtwork("unreleased-collage", "Monochrome street-scene collage with overlapping grain and fragmented type", "Unused cover concept / Collage", 2109),
+      albumArtwork("unreleased-rollout", "Large faded typographic forms and a small tracklist on textured pale paper", "Unused artwork / Rollout concept"),
+      albumArtwork("unreleased-silhouette", "Soft grey silhouette with torn green paper layers and dark flowing letterforms", "Unused cover concept / Silhouette"),
+    ],
+  },
   {
     slug: "sourcelink",
     name: "SourceLink",
