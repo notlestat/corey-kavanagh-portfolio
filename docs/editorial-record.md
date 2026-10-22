@@ -1,0 +1,15 @@
+# Portfolio editorial record
+
+These notes retain the project-specific evidence and publication decisions from the previous README. See [the repository overview](../README.md) for the current entry point.
+
+## Editorial review
+
+The earlier Work refresh was approved for publication on 7 October 2026. The folder, discipline sliders, Home removals and image-click fix were approved for publication on 8 October 2026. The BSTROY, Jimi Vain and Stem Player case studies remain visibly labelled as drafts while detailed image selections and credits are reviewed. Responsibilities and periods come from the user-supplied `cv.pdf`; media comes from matching existing archive folders. Confirm exact project image selections, collaborator credits, publication permissions and any additional process evidence before removing the draft labels. No campaign titles, analytics or new production outcomes have been invented. The private CV itself is not copied into public assets. Existing `/work#work-index` links redirect to the preserved list at `/work/archive#work-index`. The workflow descriptions use neutral project names.
+
+## Album artwork, approved for publication on 12 October 2026
+
+Corey identified `IMG_0611.PNG` as the official Vory cover featuring Ye and confirmed a 2025 release during the 12 October 2026 review. `/work/vory-lord-lift-me-up` uses the title printed on the supplied artwork, "Lord Lift Me Up". Corey associated it with Donda 2; album attribution is left out of the public copy pending an exact release link. His private `cv.pdf`, page 2, supports the broader Vory role, not project-specific process, a brief, collaborators or campaign results. Corey explicitly requested GitHub and Vercel publication after reviewing the simplified pages. Additional image/collaborator credits remain an editorial follow-up; no further credit or rights claims are added.
+
+The other seven supplied images at `/work/unreleased-artwork` are explicitly unused client artwork, not alternative Vory covers or published releases. Both entries are linked from Art direction, preserving the existing slider and archive. Client names, dates and outcomes have not been invented. Corey requested no explanatory commentary about the designs; the pages show factual project information, role and artwork only. The original PNGs and private CV are not copied into public assets. Run `node scripts/prepare-album-artwork.mjs /path/to/source-directory` to generate uncropped WebP copies with target widths of 640, 1200 and 2000 pixels, without enlarging smaller originals. Responsive sources and display dimensions are defined in [src/caseStudyData.ts](../src/caseStudyData.ts). The canonical Notion project records production publication on 12 October 2026 and live checks of both artwork routes. That dated record supersedes the earlier pending-deployment wording. This documentation review does not rerun the live checks.
+
+Source: [Personal Portfolio project record](https://app.notion.com/p/3f67794de80e815e8dcaf3770d699e82).
