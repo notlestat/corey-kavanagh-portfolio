@@ -1,16 +1,14 @@
-# Corey Kavanagh portfolio
+# Portfolio
 
 An Astro portfolio for art direction, design, and creative technology, with React and TypeScript for interactive components. Home uses a looping film. Work groups projects by discipline and retains an image archive.
 
-The published address is [corey-kavanagh-portfolio.vercel.app](https://corey-kavanagh-portfolio.vercel.app/). The checked-in version is in [package.json](package.json).
+The checked-in version is in [package.json](package.json).
 
 ## Run locally
 
-Use a supported even-numbered Node.js release at version 22.12 or higher, with npm.
+Use a supported even-numbered Node.js release at version 22.12 or higher, with npm. Download or clone this repository using GitHub's **Code** menu, then run from the checkout:
 
 ```sh
-git clone https://github.com/notlestat/corey-kavanagh-portfolio.git
-cd corey-kavanagh-portfolio
 npm ci
 npm run dev
 ```
