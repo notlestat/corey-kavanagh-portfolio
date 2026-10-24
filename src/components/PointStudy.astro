@@ -1,0 +1,26 @@
+<section class="point-study" aria-label="Point study, moving image and code">
+  <div class="point-stage" data-point-study data-playing="false">
+    <video class="point-film" src="/work/point-study/point-study.mp4" poster="/work/point-study/poster.jpg" width="1920" height="1080" loop muted playsinline preload="none" aria-label="Point study: a fragmented three-dimensional form made from shifting points of light" aria-describedby="point-description" />
+    <div class="point-cross point-cross-top" aria-hidden="true">+</div>
+    <div class="point-cross point-cross-bottom" aria-hidden="true">+</div>
+    <div class="point-terminal" role="group" aria-label="Live coding terminal">
+      <div class="point-terminal-heading"><span>point-study.js</span><span class="point-state">still</span></div>
+      <pre class="point-code" aria-label="Code and command history"><span data-point-code>// image → points → image</span><span class="point-cursor" aria-hidden="true">_</span></pre>
+      <div class="point-telemetry" aria-hidden="true"><span>t <b data-point-time>00:00.00</b></span><span>frame <b data-point-frame>0000</b></span><span data-point-rate>1.00×</span></div>
+      <form class="point-command" hidden>
+        <span aria-hidden="true">&gt;</span><input type="text" name="command" aria-label="Video terminal command" placeholder="Type help" autocomplete="off" spellcheck="false" maxlength="80" /><button type="submit" aria-label="Run terminal command">↵</button>
+      </form>
+      <p class="sr-only point-command-response" role="status"></p>
+    </div>
+    <button class="point-toggle" type="button" aria-label="Play point study" aria-pressed="false" hidden><span class="point-toggle-label">Play motion</span><span aria-hidden="true">↗</span></button>
+    <p class="point-error" role="status" hidden>The film could not load. <a href="/work/point-study/point-study.mp4">Open the video</a></p>
+  </div>
+  <div class="point-caption"><span>Point study</span><span>Moving image / 00:05</span></div>
+  <p class="sr-only" id="point-description">A five-second looping film with an interactive coding terminal. Type help for playback commands, or use the play and pause button.</p>
+  <noscript><p class="point-fallback"><a href="/work/point-study/point-study.mp4">Play point study</a></p></noscript>
+</section>
+
+<script>
+  import { initPointStudies } from "../lib/point-study";
+  initPointStudies();
+</script>

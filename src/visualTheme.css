@@ -1,6 +1,7 @@
 /* A quieter Swiss typographic layer over the existing layouts and interactions. */
 :root {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --sans-font: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: var(--sans-font);
   --label-font: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
   --paper: #eeefeb;
   --ink: #2b302b;

@@ -4,8 +4,10 @@ import Header from "../../components/Header.astro";
 import CaseStudies from "../../components/CaseStudies.astro";
 import WorkGallery from "../../WorkGallery";
 import { artDirectionGalleryItems } from "../../portfolioData";
+import Contact from "../../components/Contact.astro";
 import { workDisciplines } from "../../workDisciplines";
 import "../../work.css";
+import "../../experimental-work.css";
 ---
 <BaseLayout title="Art direction | Corey Kavanagh" page="work">
   <a class="work-skip" href="#case-studies">Skip to case studies</a>
@@ -14,9 +16,9 @@ import "../../work.css";
     <div class="work-container"><a class="case-back" href="/work">All work</a><h1 class="discipline-gallery-heading">Art direction.</h1><p class="discipline-description">{workDisciplines[0].note}</p></div>
     <WorkGallery items={artDirectionGalleryItems} title="Art direction / Graphic design / Personal work / Film" id="art-gallery" autoPlay indexHref="#case-studies" client:load />
     <div class="work-container discipline-studies">
-      <header class="case-page-heading"><p class="work-label">Art direction / Case studies</p><h2>Behind the images.</h2><p>A closer look at my role, the context and the work.</p></header>
+      <header class="case-page-heading"><h2>Selected projects.</h2></header>
       <CaseStudies />
     </div>
   </main>
-  <footer class="work-footer work-container"><span>Corey Kavanagh</span><a href="/work">Back to Work</a></footer>
+  <footer class="work-footer work-container"><Contact /><a href="/work">Back to Work</a></footer>
 </BaseLayout>

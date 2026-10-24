@@ -2,9 +2,12 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Header from "./Header.astro";
 import DigitalWork from "./DigitalWork.astro";
+import PointStudy from "./PointStudy.astro";
+import Contact from "./Contact.astro";
 import { GithubIcon } from "../Navigation";
 import { workDisciplines } from "../workDisciplines";
 import "../work.css";
+import "../experimental-work.css";
 ---
 <BaseLayout title="Creative technology | Corey Kavanagh" page="work">
   <a class="work-skip" href="#technology-content">Skip to creative technology</a>
@@ -13,8 +16,9 @@ import "../work.css";
     <div class="work-container">
       <a class="case-back" href="/work">All work</a>
       <header class="case-page-heading engineering-heading"><p class="work-label">Design / Code / Creative technology</p><div><h1>Creative technology.</h1><a class="engineering-github" href="https://github.com/notlestat" target="_blank" rel="noopener noreferrer" aria-label="Corey Kavanagh on GitHub, opens in a new tab"><GithubIcon /></a></div><p>{workDisciplines[2].note}</p></header>
+      <PointStudy />
       <DigitalWork category="creative-technology" />
     </div>
   </main>
-  <footer class="work-footer work-container"><span>Corey Kavanagh</span><a href="/work">Back to Work</a></footer>
+  <footer class="work-footer work-container"><Contact /><a href="/work">Back to Work</a></footer>
 </BaseLayout>

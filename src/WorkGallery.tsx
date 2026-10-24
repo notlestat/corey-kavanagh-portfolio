@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { collections, galleryItems, type GalleryItem } from "./portfolioData";
+import DisplayCards from "./components/ui/display-cards";
 
 export type SelectedWork = { category: number; position: number };
 
@@ -357,7 +358,6 @@ export function ArchiveViewer({
     };
   }, []);
   const collection = collections[selected.category];
-  const item = collection.items[selected.position];
   const step = (amount: number) =>
     onChoose(
       selected.category,
@@ -395,26 +395,8 @@ export function ArchiveViewer({
             Close
           </button>
         </div>
-        <div
-          className="archive-viewer-media"
-          key={`${selected.category}-${selected.position}`}
-        >
-          {item.video ? (
-            <video
-              src={item.video}
-              poster={item.image}
-              controls
-              preload="metadata"
-              aria-label={`${collection.name} film ${selected.position + 1}`}
-            />
-          ) : (
-            <img
-              src={item.image}
-              alt={`${collection.name}, archive image ${selected.position + 1}`}
-              width={item.width}
-              height={item.height}
-            />
-          )}
+        <div className="archive-viewer-media">
+          <DisplayCards cards={collection.items} title={collection.name} selectedIndex={selected.position} onSelect={(position) => onChoose(selected.category, position)} />
         </div>
         <div className="archive-viewer-bottom">
           <span aria-live="polite" aria-atomic="true">

@@ -1,125 +1,54 @@
-# Corey Kavanagh portfolio
+# Portfolio
 
-An Astro portfolio with React and TypeScript for art direction, design and creative technology. Home is a quiet, film-led introduction with a bio and clothing-button page navigation. Work is a single centred folder with discipline navigation; see [Folder and sound](#folder-and-sound) for its pages and interaction details. The existing image-only scrolling archive and text-only collection index are retained at `/work/archive`. Gallery images have no visible captions and use the page background without tinted mounts; dark mode uses black with neutral grey controls and text.
+An image-led portfolio built with Astro, React, TypeScript, and Tailwind CSS. Home uses a looping film. Work opens a folder with three disciplines and retains the complete image archive.
 
-The current version is recorded in [package.json](package.json). See [Album artwork](#album-artwork-approved-for-publication-on-12-october-2026) for the 0.3.4 update. Version 0.3.3 uses live homepage previews for website and app projects, with Art direction-style title links in each discipline. Version 0.3.2 adds SourceLink under Interaction design and displays STUDY 01 as a text-only project link. See [Website and app projects](#website-and-app-projects) for the project added in 0.3.1. Version 0.3.0 includes the Work interactions described below, removes Home's conversation and adds fitted favicon exports. Version 0.2.2 grouped the two Adobe product tiles into one monochrome Adobe icon with the label "Adobe". Version 0.2.1 refreshed Work with discipline pages, a caption-free archive and a text-only index, following the Astro migration in 0.2.0. See [Rendering and deployment](#rendering-and-deployment) for how pages and React islands are served. The source is published on GitHub and the existing Vercel project hosts the site at [corey-kavanagh-portfolio.vercel.app](https://corey-kavanagh-portfolio.vercel.app/).
+Art direction combines the original image slider with visual project links. The media viewer includes stacked images, thumbnails, keyboard navigation, and video controls. Creative technology includes a point-study film with a terminal that controls playback. Contact links dial the published phone number.
+
+The release uses the system Helvetica stack. The checked-in version is recorded in [package.json](package.json).
 
 ## Run locally
 
-Use a supported even-numbered Node.js release at version 22.12 or higher, with npm.
+Use a supported even-numbered Node.js release at version 22.12 or higher, with npm. Download or clone the repository, then run:
 
 ```sh
-git clone https://github.com/notlestat/corey-kavanagh-portfolio.git
-cd corey-kavanagh-portfolio
 npm ci
 npm run dev
 ```
 
-Open the local address printed by Astro, usually `http://localhost:4321`. If the learning project is already running there, Astro will use the next available port, or run `npm run dev -- --port 4322` explicitly.
+Open the address printed by Astro, usually `http://localhost:4321`. To choose another port, run `npm run dev -- --port 4322`.
 
-| Command | Purpose |
-|---|---|
-| `npm run dev` | Start the Astro development server |
-| `npm run check` | Check Astro and TypeScript files |
-| `npm run build` | Check types and create `dist/` |
-| `npm run preview` | Serve the existing production build locally |
+## Check a change
 
-Run `npm run build` before `npm run preview`. There is no automated unit-test script in this repository.
+Build the static site and serve the result:
 
-## Project files
+```sh
+npm run build
+npm run preview
+```
 
-| Location | Purpose |
-|---|---|
-| [src/pages/index.astro](src/pages/index.astro) | Home page structure and introduction |
-| [src/pages/work.astro](src/pages/work.astro) | Minimal Work folder, discipline navigation and archive link |
-| [src/pages/work/[slug].astro](src/pages/work/[slug].astro) | Static case-study routes |
-| [src/components/CaseStudies.astro](src/components/CaseStudies.astro) | Text-only case-study index on the Art direction page |
-| [src/WorkFolder.tsx](src/WorkFolder.tsx) | Minimal folder disclosure using the shared discipline links |
-| [src/workDisciplines.ts](src/workDisciplines.ts) | Authoritative discipline names, routes and descriptions |
-| [src/lib/folder-events.ts](src/lib/folder-events.ts) | Single-use trusted folder transition provenance for scoped audio |
-| [src/folder.css](src/folder.css) | Folder material, fragmented type, responsive layout and restrained opening motion |
-| [src/pages/work/archive.astro](src/pages/work/archive.astro) | Preserved image scroll and full collection list |
-| [src/components/sound.tsx](src/components/sound.tsx) | Supplied Web Kits cue library, delegated listener and exported sound controls |
-| [src/components/WorkSound.tsx](src/components/WorkSound.tsx) | One sound wrapper/listener and mute control per Work document |
-| [src/components/UpcomingStudies.astro](src/components/UpcomingStudies.astro) | Retained upcoming-study layout, no longer rendered by a route |
-| [src/caseStudyData.ts](src/caseStudyData.ts) | Existing draft cases and visual-first authored projects with optional live/source links |
-| [src/work.css](src/work.css) | Work-only layout, case-study pages and archive viewer |
-| [src/layouts/BaseLayout.astro](src/layouts/BaseLayout.astro) | Shared HTML, metadata, global styles and early theme restoration |
-| [scripts/generate-favicons.mjs](scripts/generate-favicons.mjs) | Square web-icon exports from the retained CK artwork |
-| [scripts/prepare-study-media.mjs](scripts/prepare-study-media.mjs) | WebP crops from real STUDY 01 browser captures |
-| [src/HomeFilm.tsx](src/HomeFilm.tsx) | Looping film, sound switch and Home theme control |
-| [src/WorkExplorer.tsx](src/WorkExplorer.tsx) | Scrolling archive and modal media viewer with shared React state |
-| [src/WorkGallery.tsx](src/WorkGallery.tsx) | Shared discipline slider, automatic loop and retained image/video viewer |
-| [src/Navigation.tsx](src/Navigation.tsx) | Clothing-button page links, shared theme control and GitHub icon |
-| [src/components/Header.astro](src/components/Header.astro) | Logo-free Work header with page links, sound, theme and GitHub controls |
-| [src/components/DigitalWork.astro](src/components/DigitalWork.astro) | Static digital-project section with interactive system rows |
-| [src/SystemRow.tsx](src/SystemRow.tsx) | Expandable system details |
-| [src/systemData.ts](src/systemData.ts) | Existing digital-system descriptions |
-| [src/Conversation.tsx](src/Conversation.tsx) | Retained conversation component, no longer rendered on Home |
-| [src/ToolRail.tsx](src/ToolRail.tsx) | Retained tools and skills component, no longer rendered on Home |
-| [src/portfolioData.ts](src/portfolioData.ts) | Collection names, years, image/video paths and gallery ordering |
-| [src/styles.css](src/styles.css) | Typography, layout, motion and responsive rules |
-| [src/visualTheme.css](src/visualTheme.css) | Helvetica-based type, muted surfaces and component styling for both themes |
-| [src/home.css](src/home.css) | Home spacing, film controls and tactile navigation |
-| `public/work/gallery/` | Local gallery images and video previews |
-| [astro.config.mjs](astro.config.mjs) | Static output, React integration and Tailwind Vite plugin |
-| [vercel.json](vercel.json) | Astro preset, build command and output directory for Vercel |
+The build includes Astro and TypeScript checks. `npm run check` runs those checks separately. There is no unit-test script.
 
-Update collection metadata and item counts in `src/portfolioData.ts` when adding or removing media. Gallery paths are root-relative; a deployment under a URL subdirectory needs a path review.
+Use the preview to check changed routes, the Work folder, slider controls, media viewing, keyboard focus, narrow layouts, both themes, and reduced motion. A passing local build does not establish a production deployment.
 
-Favicons use the intact CK mark on the site's light neutral background, with tight browser padding and additional Apple home-screen padding. [scripts/generate-favicons.mjs](scripts/generate-favicons.mjs) owns the PNG, ICO and Apple touch-icon export sizes; the shared layout owns their declarations on every route. The exports follow [Google's square favicon recommendation](https://developers.google.com/search/docs/appearance/favicon-in-search) and [Safari's touch-icon declaration](https://developer.apple.com/library/archive/documentation/AppleApplications/Reference/SafariWebContent/ConfiguringWebApplications/ConfiguringWebApplications.html). Regenerate with `node scripts/generate-favicons.mjs` or pass a higher-resolution CK PNG as its first argument. This uses the sharp image tooling installed by Astro. Only the exported icons belong in public assets, not private source paths. Favicons may remain cached after publication, and Google decides whether and when to show them in search.
+## Find the source
 
-## Rendering and deployment
+| Task | File |
+| --- | --- |
+| Edit Home | [src/pages/index.astro](src/pages/index.astro) |
+| Edit discipline links | [src/workDisciplines.ts](src/workDisciplines.ts) |
+| Edit case studies | [src/caseStudyData.ts](src/caseStudyData.ts) |
+| Edit gallery membership | [src/portfolioData.ts](src/portfolioData.ts) |
+| Edit the media display | [src/components/ui/display-cards.tsx](src/components/ui/display-cards.tsx) |
+| Edit terminal commands | [src/lib/point-study.ts](src/lib/point-study.ts) |
+| Edit contact details | [src/components/Contact.astro](src/components/Contact.astro) |
+| Edit shared typography | [src/visualTheme.css](src/visualTheme.css) |
+| Review hosting settings | [vercel.json](vercel.json) |
 
-The Home introduction, navigation, page metadata, Work header, case-study text and footers are generated by Astro. `client:load` attaches React to film controls, the Work folder, sound controls, discipline galleries, archive/list viewer and workflow disclosures on Creative technology. The workflow section is not rendered on the main Work page. Initial React markup is deterministic during server rendering; browser preferences are read after hydration. The saved theme is applied by a head script before the page paints.
+Reusable UI components live in `src/components/ui`. The `@/` import alias points to `src/`; [components.json](components.json) records the shadcn-compatible paths. Tailwind scans these components through the explicit sources in [src/styles.css](src/styles.css).
 
-The build generates static HTML for Home, Work, the archive, the discipline pages and individual case studies, alongside the existing assets. `/work` is a real static page and no longer rewrites to the Home HTML. Legacy discipline redirects are configured in [astro.config.mjs](astro.config.mjs). Vercel uses the repository's Astro framework preset, `npm run build` and `dist` output directory. No server-rendering adapter is needed for this static site. Pushes to the connected production branch trigger a production deployment; verify the routes and their interactions after publishing.
+## Read the project records
 
-## Current content
+- [Implementation reference](docs/implementation.md) describes the routes, gallery, image viewer, terminal, and static deployment.
+- [Editorial record](docs/editorial-record.md) retains the artwork evidence, draft labels, attribution, and publication decisions.
 
-- Collection membership and image/video counts come from [src/portfolioData.ts](src/portfolioData.ts); the archive derives its displayed counts from those arrays.
-- Individual source file names are not shown in the interface.
-- The draft BSTROY, Jimi Vain and Stem Player case-study routes remain `/work/bstroy`, `/work/jimi-vain` and `/work/stem-player`.
-- See [Album artwork](#album-artwork-approved-for-publication-on-12-october-2026) for the new Art direction entries.
-- Navigation links to [the GitHub profile](https://github.com/notlestat).
-- No verified public contact route has been added yet.
-
-Home reuses `public/work/gallery/video/moving-09.mp4`, which matches the supplied source film. It loops inline without native playback controls. Playback attempts audio first and falls back to muted autoplay when the browser requires a user gesture. The sound switch enables or disables audio. With reduced motion enabled, the film remains still until the visitor enables sound.
-
-The tools and skills icon row has been removed from Home. Its component and styles remain in the source for reuse, but Home does not render or hydrate them. The film, name, disciplines, bio, navigation and footer are unchanged.
-
-## Editorial review
-
-The earlier Work refresh was approved for publication on 7 October 2026. The folder, discipline sliders, Home removals and image-click fix were approved for publication on 8 October 2026. The BSTROY, Jimi Vain and Stem Player case studies remain visibly labelled as drafts while detailed image selections and credits are reviewed. Responsibilities and periods come from the user-supplied `cv.pdf`; media comes from matching existing archive folders. Confirm exact project image selections, collaborator credits, publication permissions and any additional process evidence before removing the draft labels. No campaign titles, analytics or new production outcomes have been invented. The private CV itself is not copied into public assets. Existing `/work#work-index` links redirect to the preserved list at `/work/archive#work-index`. The workflow descriptions are retained with neutral project names, without Axis branding.
-
-## Album artwork, approved for publication on 12 October 2026
-
-Corey identified `IMG_0611.PNG` as the official Vory cover featuring Ye and confirmed a 2025 release during the 12 October 2026 review. `/work/vory-lord-lift-me-up` uses the title printed on the supplied artwork, "Lord Lift Me Up". Corey associated it with Donda 2; album attribution is left out of the public copy pending an exact release link. His private `cv.pdf`, page 2, supports the broader Vory role, not project-specific process, a brief, collaborators or campaign results. Corey explicitly requested GitHub and Vercel publication after reviewing the simplified pages. Additional image/collaborator credits remain an editorial follow-up; no further credit or rights claims are added.
-
-The other seven supplied images at `/work/unreleased-artwork` are explicitly unused client artwork, not alternative Vory covers or published releases. Both entries are linked from Art direction, preserving the existing slider and archive. Client names, dates and outcomes have not been invented. Corey requested no explanatory commentary about the designs; the pages show factual project information, role and artwork only. The original PNGs and private CV are not copied into public assets. Run `node scripts/prepare-album-artwork.mjs /path/to/source-directory` to generate uncropped WebP copies with target widths of 640, 1200 and 2000 pixels, without enlarging smaller originals. Responsive sources and display dimensions are defined in [src/caseStudyData.ts](src/caseStudyData.ts). Publication was approved on 12 October 2026; deployment completion still requires the release checks and a live smoke test.
-
-## Folder and sound
-
-Unmute feedback belongs to one trusted local `SoundToggle` press and is consumed once. The public `setSoundMuted` API is always silent, including when passed a saved native event; its optional event argument is retained only for compatibility. The shared setting notifier clears pending feedback for storage updates, volume changes and programmatic setting changes, so background updates cannot reuse a previous button press.
-
-The folder uses native button/navigation elements, `aria-expanded`, inert closed links, Escape dismissal and a no-JavaScript link fallback. Its 240ms opening transition explains where the three paper entries come from; keyboard activation and reduced-motion mode skip the transition. Grain and fragmented lettering interpret the supplied paper reference and [Raygun archive](https://designreviewed.com/series/raygun/) without using its cover artwork.
-
-The attached `sound.tsx` reference was used directly rather than running the shadcn registry generator. Its cue definitions, exported API, `data-slot`/`data-sound` wiring, SVG and exact SoundToggle utility string are retained. Differences: relative imports match this repository; Tailwind v4 runs through Astro's Vite integration with only theme/utilities and explicit sound-file sources, no Preflight reset; the supplied CSS dark tokens also recognise the site's existing `data-theme="dark"` selector; extra foreground/ring tokens map to the existing ink. The mute control overrides its outer hit area to 44px with `cn`, leaving the 17px glyph intact. If reading or writing a sound setting fails, that setting uses memory for the rest of the document's lifetime, even if later reads would succeed. Volume is clamped to 0–1, including zero.
-
-There is one `SoundEffects` wrapper in each Work document's header, with `scope="folder"`. Only opening or closing the folder and using the sound switch can play interface cues; navigation, gallery controls, viewers, workflow disclosures, theme changes and context menus are silent. The header's sound button mutes or unmutes interface sounds, and muted folder actions are silent. Folder feedback follows actual `aria-expanded` changes caused by trusted native button activation, Escape or outside-click dismissal. [src/lib/folder-events.ts](src/lib/folder-events.ts) issues provenance for the synchronous transition dispatch and consumes it once; scripted folder events, attribute mutations and saved-event replays cannot produce a folder cue. The wrapper leaves the library's default `scope="all"` available to other callers. Home has no interface-sound listener. No cue plays on load or hover. The mute preference and volume are saved locally when storage is available; Web Kits also suppresses cues for reduced-motion users. This interface mute is separate from Home's film soundtrack.
-
-The folder's entries come from [src/workDisciplines.ts](src/workDisciplines.ts). Art direction at `/work/art-direction` combines the original art-direction, Graphic Design, personal-work and video collections in its image-only looping gallery above the artwork entries and three draft case studies. Interaction design at `/work/interaction-design` contains a SourceLink case-study link and the portfolio link. Creative technology at `/work/creative-technology` contains one clickable STUDY 01 title row above the retained workflow list, with no discipline-page slider. Collection and image-position IDs are preserved so the archive viewer opens the correct original image or playable video.
-
-The Art direction slider drifts at a linear 24px/s on desktop and wraps seamlessly. It pauses on hover, keyboard focus, an open viewer, a hidden tab or when offscreen; a persistent Pause/Resume control lets visitors stop it themselves. The full archive uses the same gallery without automatic drift. Wheel input moves an endless strip while the pointer is over it; Prev/Next also work. Keyboard stepping is instant. Phones and reduced-motion mode retain native swipe/scroll without an automatic loop. The shared gallery repeats short collections enough times to cover a desktop viewport at the loop boundary. Duplicate copies are hidden from assistive technology and keyboard navigation.
-
-Click-to-open viewing is retained. Bringing a card into view is restricted to Tab navigation with visible keyboard focus, not pointer focus or programmatic focus restoration. This prevents a clicked image moving out from under the pointer before the click completes, and keeps the strip in place when the viewer closes.
-
-Confirm project credits and usage rights, add case-study detail where useful, and provide a verified contact route. Review video and image quality at full size. A Graphic Design source image was previously held out pending a publication decision; adding new media still requires editorial review.
-
-## Website and app projects
-
-STUDY 01 at `/work/study-01` and SourceLink at `/work/sourcelink` use the shared `SitePreview.astro` component. A live homepage preview links to the external project, followed by the project name and a short description. The preview has a small hover lift, a visible external-link cue, keyboard focus and reduced-motion support. Desktop homepages render in a fixed 1440 × 900 iframe and scale to the available width. No screenshot galleries appear on these project pages or in the image archive.
-
-Use `presentation: "website"`, a verified `liveUrl`, a brief `summary` and `media: []` for future website/app projects. Set `previewScripts: true` only when the app needs JavaScript to render. Previews do not accept input, submit forms or navigate the embedded page. The enclosing link opens the actual site in a new tab. Check the destination's frame restrictions before adding it. SourceLink renders its server-generated homepage without scripts, avoiding its newsletter popup; STUDY 01 requires scripts for its application.
-
-Interaction design and Creative technology reuse Art direction's case-study row markup and hover underline. Website projects remain linked to their local project pages from these discipline lists. The existing Art direction case studies retain their image layouts and draft content.
+Review media selections, collaborator credits, and usage permissions before changing public claims. Private source documents and personal-use font downloads are excluded from the release.

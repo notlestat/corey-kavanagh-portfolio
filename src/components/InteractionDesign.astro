@@ -2,8 +2,10 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Header from "./Header.astro";
 import DigitalWork from "./DigitalWork.astro";
+import Contact from "./Contact.astro";
 import { workDisciplines } from "../workDisciplines";
 import "../work.css";
+import "../experimental-work.css";
 ---
 <BaseLayout title="Interaction design | Corey Kavanagh" page="work">
   <a class="work-skip" href="#interaction-content">Skip to interaction design</a>
@@ -13,5 +15,5 @@ import "../work.css";
     <header class="case-page-heading engineering-heading"><p class="work-label">Websites / Interfaces / Digital experiences</p><h1>Interaction design.</h1><p>{workDisciplines[1].note}</p></header>
     <DigitalWork category="interaction-design" />
   </main>
-  <footer class="work-footer work-container"><span>Corey Kavanagh</span><a href="/work">Back to Work</a></footer>
+  <footer class="work-footer work-container"><Contact /><a href="/work">Back to Work</a></footer>
 </BaseLayout>

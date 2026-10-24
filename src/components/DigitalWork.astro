@@ -10,11 +10,16 @@ const projects = caseStudies.filter(study => study.category === category);
 <section class="engineering-systems" id="digital-work" aria-labelledby="systems-title">
   <h2 class="work-label" id="systems-title">Selected case studies</h2>
   <div class="systems-list">
-    <ol class="art-case-list">
-      {projects.map((project, index) => <li><a href={`/work/${project.slug}`}><span class="work-label">{String(index + 1).padStart(2, "0")}</span><div><h3>{project.name}</h3><p>{project.role}</p></div><span class="work-label">{project.period}</span></a></li>)}
-      {!creative && <li><a href="/" aria-label="Explore the Corey Kavanagh portfolio website"><span class="work-label">{String(projects.length + 1).padStart(2, "0")}</span><div><h3>This portfolio</h3><p>Website design</p></div><span class="work-label">Ongoing</span></a></li>}
-    </ol>
-    {creative && systems.map((item, index) => <SystemRow item={item} index={index + projects.length} client:load />)}
-    <p class="digital-next">{creative ? "More creative tools and project studies will appear here as they develop." : "More interfaces and project studies will appear here as they develop."}</p>
+    <div class:list={["digital-compositions", { "digital-compositions-creative": creative }]}>
+      {projects.map((project) => <article class="digital-composition">
+        <a class="digital-composition-main" href={`/work/${project.slug}`}>
+          <figure><img src={creative ? "/work/study-01/interface.webp" : "/work/sourcelink/home-desktop.webp"} width={creative ? 2000 : 1440} height={creative ? 1389 : 1000} alt={creative ? "STUDY 01, a browser-based composition instrument for image and typography" : "SourceLink, website design for clothing supplier intelligence"} loading="lazy" /><figcaption><h3>{project.name}</h3><span>{project.role}</span><span aria-hidden="true">↗</span></figcaption></figure>
+        </a>
+        {!creative && <a class="digital-composition-detail" href={`/work/${project.slug}`} aria-label="SourceLink, mobile website design"><img src="/work/sourcelink/home-mobile.webp" width="390" height="844" alt="SourceLink website on a narrow mobile screen" loading="lazy" /></a>}
+        {creative && <a class="digital-composition-detail" href={`/work/${project.slug}`} aria-label="STUDY 01, typographic composition"><img src="/work/study-01/tension.webp" width="840" height="1120" alt="TENSION, a typographic composition from STUDY 01" loading="lazy" /></a>}
+        <p class="digital-composition-note">{project.summary}</p>
+      </article>)}
+    </div>
+    {creative && <div class="creative-workflows"><h3>In the studio</h3>{systems.map((item, index) => <SystemRow item={item} index={index + projects.length} client:load />)}</div>}
   </div>
 </section>

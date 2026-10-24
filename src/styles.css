@@ -3,6 +3,7 @@
 @import "tailwindcss/utilities.css" layer(utilities) source(none);
 @source "./components/sound.tsx";
 @source "./components/WorkSound.tsx";
+@source "./components/ui";
 
 /* No Preflight: preserve the portfolio's existing Home and native controls. */
 :root {

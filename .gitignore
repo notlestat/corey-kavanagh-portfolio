@@ -9,6 +9,9 @@ dist/
 .env.*
 !.env.example
 
+# Supplied personal-use font files are for private local review only.
+/public/fonts/pp-neue-montreal/
+
 # Earlier preview assets are unused by the current gallery.
 public/hero-atmosphere.png
 public/work/*.jpg
