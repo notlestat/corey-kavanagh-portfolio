@@ -25,3 +25,9 @@ On 24 October 2026, the owner reviewed the local layout and requested GitHub pub
 The owner supplied the phone contact and chose phone-only contact for this release. The owner also chose the previous Helvetica font for public deployment. PP Neue Montreal was used only in local review; its personal-use files are excluded from this release.
 
 These are supplied decisions and local implementation evidence. They do not add clients, expertise, collaborator credits, usage rights, or production results. Deployment completion must be recorded from the actual hosting result.
+
+## Release scope confirmed on 25 October 2026
+
+The owner requested GitHub and Vercel publication of the reviewed portfolio updates while holding the orb experiment. The release excludes the entrance animation and its dependency. The orb work remains in the separate local checkout for later review. This instruction supersedes the earlier push hold for the portfolio updates.
+
+Source: the owner's explicit publication request in the portfolio conversation. Hosting completion remains a separate verified result.
