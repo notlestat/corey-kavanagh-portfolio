@@ -2,7 +2,9 @@
 
 An image-led portfolio built with Astro, React, TypeScript, and Tailwind CSS. Home uses a looping film. Work opens a folder with three disciplines and retains the complete image archive.
 
-Art direction combines the original image slider with visual project links. The media viewer includes stacked images, thumbnails, keyboard navigation, and video controls. Creative technology includes a point-study film with a terminal that controls playback. Contact links dial the published phone number.
+Design combines the original image slider with visual project links. The media viewer includes stacked images, thumbnails, keyboard navigation, and video controls. Creative technology includes a point-study film with a terminal that controls playback. Contact links dial the published phone number.
+
+Image Press is available as an interactive Creative technology project. Its app runs inside the portfolio, with a separate-tab link and browser-only image processing. See the [integration reference](docs/image-press-integration.md) for its source snapshot and credits.
 
 The release uses the system Helvetica stack. The checked-in version is recorded in [package.json](package.json).
 

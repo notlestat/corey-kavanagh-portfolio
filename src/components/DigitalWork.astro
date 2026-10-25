@@ -11,12 +11,11 @@ const projects = caseStudies.filter(study => study.category === category);
   <h2 class="work-label" id="systems-title">Selected case studies</h2>
   <div class="systems-list">
     <div class:list={["digital-compositions", { "digital-compositions-creative": creative }]}>
-      {projects.map((project) => <article class="digital-composition">
+      {projects.map((project) => project.listingMedia && <article class:list={["digital-composition", { "digital-composition-solo": !project.listingDetail }]}>
         <a class="digital-composition-main" href={`/work/${project.slug}`}>
-          <figure><img src={creative ? "/work/study-01/interface.webp" : "/work/sourcelink/home-desktop.webp"} width={creative ? 2000 : 1440} height={creative ? 1389 : 1000} alt={creative ? "STUDY 01, a browser-based composition instrument for image and typography" : "SourceLink, website design for clothing supplier intelligence"} loading="lazy" /><figcaption><h3>{project.name}</h3><span>{project.role}</span><span aria-hidden="true">↗</span></figcaption></figure>
+          <figure><img src={project.listingMedia.src} width={project.listingMedia.width} height={project.listingMedia.height} alt={project.listingMedia.alt} loading="lazy" /><figcaption><h3>{project.name}</h3><span>{project.role}</span><span aria-hidden="true">↗</span></figcaption></figure>
         </a>
-        {!creative && <a class="digital-composition-detail" href={`/work/${project.slug}`} aria-label="SourceLink, mobile website design"><img src="/work/sourcelink/home-mobile.webp" width="390" height="844" alt="SourceLink website on a narrow mobile screen" loading="lazy" /></a>}
-        {creative && <a class="digital-composition-detail" href={`/work/${project.slug}`} aria-label="STUDY 01, typographic composition"><img src="/work/study-01/tension.webp" width="840" height="1120" alt="TENSION, a typographic composition from STUDY 01" loading="lazy" /></a>}
+        {project.listingDetail && <a class="digital-composition-detail" href={`/work/${project.slug}`} aria-label={`${project.name}, project detail`}><img src={project.listingDetail.src} width={project.listingDetail.width} height={project.listingDetail.height} alt={project.listingDetail.alt} loading="lazy" /></a>}
         <p class="digital-composition-note">{project.summary}</p>
       </article>)}
     </div>

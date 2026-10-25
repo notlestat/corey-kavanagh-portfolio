@@ -1,0 +1,42 @@
+---
+interface Props { name: string; url: string; sourceUrl?: string; }
+const { name, url, sourceUrl } = Astro.props;
+---
+<section class="interactive-project" aria-label={`${name}, interactive project`}>
+  <nav class="interactive-project-links" aria-label={`${name} links`}>
+    <a href={url} target="_blank" rel="noopener noreferrer">Open {name} in a new tab <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 19 19 5M5 5h14v14" /></svg></a>
+    {sourceUrl && <a href={sourceUrl} target="_blank" rel="noopener noreferrer">Source on GitHub <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 19 19 5M5 5h14v14" /></svg></a>}
+  </nav>
+  <iframe data-interactive-project src={url} title={`${name}, interactive photo press`} width="1440" height="1100" loading="eager" referrerpolicy="no-referrer"></iframe>
+  <p class="interactive-project-error" data-project-error hidden>The embedded press could not load. <a href={url} target="_blank" rel="noopener noreferrer">Open {name} in a new tab</a>.</p>
+</section>
+<script>
+  document.querySelectorAll<HTMLIFrameElement>("[data-interactive-project]").forEach(frame => {
+    let observer: ResizeObserver | undefined;
+    const connect = () => {
+      observer?.disconnect();
+      const workshop = frame.contentDocument?.querySelector<HTMLElement>(".workshop");
+      const error = frame.parentElement?.querySelector<HTMLElement>("[data-project-error]");
+      if (!workshop) { if (error) error.hidden = false; return; }
+      if (error) error.hidden = true;
+      const fit = () => { frame.style.height = `${Math.ceil(workshop.getBoundingClientRect().height)}px`; };
+      fit();
+      observer = new ResizeObserver(fit);
+      observer.observe(workshop);
+    };
+    frame.addEventListener("load", connect);
+    if (frame.contentDocument?.querySelector(".workshop")) connect();
+    window.addEventListener("pagehide", () => observer?.disconnect(), { once: true });
+  });
+</script>
+<style>
+  .interactive-project { margin-top: 38px; }
+  .interactive-project-links { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px 24px; margin-bottom: 16px; font: 11px/1.6 var(--label-font); }
+  .interactive-project-links a { display: inline-flex; align-items: center; gap: 16px; min-height: 44px; text-underline-offset: 4px; }
+  .interactive-project iframe { display: block; width: 100%; height: 1100px; border: 0; background: var(--paper); }
+  .interactive-project-error { font-size: 14px; line-height: 1.5; }
+  @media (max-width: 700px) { .interactive-project iframe { height: 1800px; } }
+</style>
+<style is:global>
+  .site-project-description .interactive-project-credit { font: 11px/1.6 var(--label-font); color: var(--muted); }
+</style>

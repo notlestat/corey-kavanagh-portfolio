@@ -1,5 +1,7 @@
 import type { WorkDiscipline } from "./workDisciplines";
 
+export type ProjectImage = { src: string; alt: string; width: number; height: number };
+
 export type CaseStudy = {
   slug: string;
   name: string;
@@ -11,7 +13,9 @@ export type CaseStudy = {
   contribution?: string[];
   approach?: string;
   category?: WorkDiscipline;
-  presentation?: "visual" | "website" | "artwork";
+  presentation?: "visual" | "website" | "artwork" | "interactive";
+  listingMedia?: ProjectImage;
+  listingDetail?: ProjectImage;
   editorialNote?: string;
   previewScripts?: boolean;
   disciplines?: string[];
@@ -73,6 +77,8 @@ export const caseStudies: CaseStudy[] = [
   },
   {
     slug: "sourcelink",
+    listingMedia: { src: "/work/sourcelink/home-desktop.webp", alt: "SourceLink, website design for clothing supplier intelligence", width: 1440, height: 1000 },
+    listingDetail: { src: "/work/sourcelink/home-mobile.webp", alt: "SourceLink website on a narrow mobile screen", width: 390, height: 844 },
     name: "SourceLink",
     period: "Live website",
     role: "Website design",
@@ -143,7 +149,23 @@ export const caseStudies: CaseStudy[] = [
     ],
   },
   {
+    slug: "image-press",
+    name: "Image Press",
+    period: "2026",
+    role: "Creative coding / Interface design",
+    category: "creative-technology",
+    presentation: "interactive",
+    summary: "An interactive two-ink photo press. Feed a photograph, adjust the halftone, contrast and registration, then pull and save an impression.",
+    liveUrl: "/tools/image-press",
+    sourceUrl: "https://github.com/notlestat/image-press",
+    credit: "Built with SVG, Canvas and the Anatomy drawing kit.",
+    listingMedia: { src: "/work/image-press/interface.webp", alt: "Image Press: an isometric printing machine, three ink controls and a carbon-and-vermilion photographic proof", width: 1448, height: 1217 },
+    media: [],
+  },
+  {
     slug: "study-01",
+    listingMedia: { src: "/work/study-01/interface.webp", alt: "STUDY 01, a browser-based composition instrument for image and typography", width: 2000, height: 1389 },
+    listingDetail: { src: "/work/study-01/tension.webp", alt: "TENSION, a typographic composition from STUDY 01", width: 840, height: 1120 },
     name: "STUDY 01",
     period: "2026",
     role: "Design / Development / Creative technology",

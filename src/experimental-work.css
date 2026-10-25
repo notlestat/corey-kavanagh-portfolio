@@ -27,7 +27,7 @@
 .point-fallback { font-size: 12px; margin-top: 45px; }
 @keyframes terminal-cursor { 50% { opacity: 0; } }
 
-.digital-compositions { margin: 55px 0 100px; }
+.digital-compositions { display: grid; gap: 80px; margin: 55px 0 100px; }
 .engineering-systems > .systems-list { border-top: 0; }
 .digital-composition { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 28px; align-items: start; }
 .digital-composition a { display: block; color: var(--ink); text-decoration: none; min-width: 0; }
@@ -96,3 +96,6 @@
 @media (prefers-reduced-motion: reduce) {
   .point-stage[data-playing="true"] .point-cursor { animation: none; }
 }
+
+.digital-composition-solo .digital-composition-main { grid-column: 1 / -1; }
+.digital-composition-solo .digital-composition-note { grid-column: 1 / -1; }

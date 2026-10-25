@@ -8,11 +8,14 @@ This reference describes the source in this checkout. See the [repository overvi
 | --- | --- |
 | `/` | Film-led introduction and phone contact |
 | `/work` | Original folder with three discipline links |
-| `/work/art-direction` | Full image slider and visual case-study cards |
+| `/work/art-direction` | Design: full image slider and visual case-study cards |
 | `/work/interaction-design` | SourceLink project imagery and description |
-| `/work/creative-technology` | Point-study film, playback terminal, STUDY 01, and workflow disclosures |
+| `/work/creative-technology` | Point-study film, playback terminal, Image Press, STUDY 01, and workflow disclosures |
 | `/work/archive` | Full image strip and collection index |
+| `/tools/image-press` | Bundled interactive two-ink photo press |
 | `/work/[slug]` | Static case-study pages from the project data |
+
+The first work discipline is labelled Design to cover branding, visual identity and the wider image-led work. Its existing `/work/art-direction` path is retained so published links keep working.
 
 Legacy discipline redirects are defined in [astro.config.mjs](../astro.config.mjs). `/work#work-index` redirects to `/work/archive#work-index`.
 
@@ -23,18 +26,19 @@ Legacy discipline redirects are defined in [astro.config.mjs](../astro.config.mj
 | [WorkFolder.tsx](../src/WorkFolder.tsx) | Original folder disclosure |
 | [WorkGallery.tsx](../src/WorkGallery.tsx) | Slider, selection state, and native dialog |
 | [display-cards.tsx](../src/components/ui/display-cards.tsx) | Stacked media display and thumbnail strip |
-| [CaseStudies.astro](../src/components/CaseStudies.astro) | Visual links to Art direction projects |
+| [CaseStudies.astro](../src/components/CaseStudies.astro) | Visual links to Design projects |
 | [DigitalWork.astro](../src/components/DigitalWork.astro) | Aligned website and application project images |
 | [PointStudy.astro](../src/components/PointStudy.astro) | Point-study film and terminal markup |
 | [point-study.ts](../src/lib/point-study.ts) | Playback commands and live media state |
 | [Contact.astro](../src/components/Contact.astro) | Shared telephone link |
+| [InteractiveProject.astro](../src/components/InteractiveProject.astro) | Interactive project frame with responsive height |
 | [SitePreview.astro](../src/components/SitePreview.astro) | Scaled live homepage previews on website case-study pages |
 
 Collection names, item counts, paths, and slider ordering come from [portfolioData.ts](../src/portfolioData.ts). Case-study content and presentation settings come from [caseStudyData.ts](../src/caseStudyData.ts).
 
 ## Gallery and media viewer
 
-The Art direction slider uses the original gallery items. Desktop automatic motion pauses on hover, keyboard focus, an open viewer, a hidden document, or an offscreen gallery. Pause and Resume controls persist for the page visit. Phones and reduced-motion preferences use native scrolling without automatic drift. The archive uses the gallery without automatic drift.
+The Design slider uses the original gallery items. Desktop automatic motion pauses on hover, keyboard focus, an open viewer, a hidden document, or an offscreen gallery. Pause and Resume controls persist for the page visit. Phones and reduced-motion preferences use native scrolling without automatic drift. The archive uses the gallery without automatic drift.
 
 The viewer opens the selected image in its original collection. It includes previous and next controls, thumbnails, arrow-key navigation, Escape dismissal, and focus restoration. Videos use native playback controls. Thumbnails keep the selected item visible without scrolling the document. The stacked display uses translations without skew or rotation. Image mounts and thumbnails use the page background.
 
@@ -76,3 +80,7 @@ Astro generates static HTML and assets in `dist/`. React islands hydrate the fil
 ## Media preparation
 
 The scripts in `scripts/` prepare favicon exports, STUDY 01 images, and album artwork. Album artwork is uncropped and has responsive WebP sizes. Private CVs, original source attachments, and personal-use font downloads are excluded from public assets. Credits and publication evidence are tracked in the [editorial record](editorial-record.md).
+
+## Image Press
+
+The Creative technology project list includes Image Press and STUDY 01. Listing images and optional detail images are defined on each case study rather than selected by category. Image Press uses the interactive presentation; its embedded app retains its own CSS and font licences. See the [Image Press integration reference](image-press-integration.md) for the pinned source, update command and credits.

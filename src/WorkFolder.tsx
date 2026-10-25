@@ -83,7 +83,7 @@ export default function WorkFolder() {
               <i>.</i>
             </span>
             <span className="folder-stamp">
-              Art direction
+              Design
               <br />
               Interaction / Technology
             </span>
