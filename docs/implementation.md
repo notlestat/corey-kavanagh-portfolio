@@ -10,7 +10,7 @@ This reference describes the source in this checkout. See the [repository overvi
 | `/work` | Original folder with three discipline links |
 | `/work/art-direction` | Design: full image slider and visual case-study cards |
 | `/work/interaction-design` | SourceLink project imagery and description |
-| `/work/creative-technology` | Point-study film, playback terminal, Image Press, STUDY 01, and workflow disclosures |
+| `/work/creative-technology` | Point-study film, playback terminal, Image Press, and workflow disclosures |
 | `/work/archive` | Full image strip and collection index |
 | `/tools/image-press` | Bundled interactive two-ink photo press |
 | `/work/[slug]` | Static case-study pages from the project data |
@@ -83,4 +83,4 @@ The scripts in `scripts/` prepare favicon exports, STUDY 01 images, and album ar
 
 ## Image Press
 
-The Creative technology project list includes Image Press and STUDY 01. Listing images and optional detail images are defined on each case study rather than selected by category. Image Press uses the interactive presentation; its embedded app retains its own CSS and font licences. See the [Image Press integration reference](image-press-integration.md) for the pinned source, update command and credits.
+The Creative technology project list includes Image Press. Listing images and optional detail images are defined on each case study rather than selected by category. Image Press uses the interactive presentation; its embedded app retains its own CSS and font licences. STUDY 01 has been removed from the project data, so it has no listing, project page or next-project link. Its existing media and preparation script remain in the repository. See the [Image Press integration reference](image-press-integration.md) for the pinned source, update command and credits.
