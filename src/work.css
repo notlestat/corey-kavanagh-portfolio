@@ -1,10 +1,10 @@
 /* Work refresh: image archive retained, with a quieter editorial case-study layer. */
 .page-work .site-header { justify-content: flex-end; }
 @media (max-width: 600px) {
-  /* Keep the additional sound control away from the centre navigation. */
-  .page-work .site-header { height: 138px; align-items: flex-start; padding-top: 20px; }
-  .page-work .site-header > .garment-navigation { top: 93px; }
-  .page-work .header-actions { align-items: center; }
+  /* Navigation first, at Home's position; sound, theme and GitHub sit in a row beneath it. */
+  .page-work .site-header { height: auto; flex-direction: column; align-items: stretch; gap: 2px; padding: 24px 20px 6px; }
+  .page-work .site-header > .garment-navigation { position: static; transform: none; align-self: center; }
+  .page-work .header-actions { align-self: flex-end; align-items: center; }
 }
 .work-container { width: min(1200px, calc(100% - 96px)); margin-inline: auto; }
 .work-refresh { padding-top: 1px; }
@@ -46,12 +46,22 @@
 .discipline-studies .case-page-heading h2 { font: 400 clamp(32px, 4vw, 54px)/1.05 var(--sans-font); letter-spacing: -.045em; margin: 20px 0 25px; }
 .discipline-studies .art-case-index { margin-top: 0; }
 .discipline-gallery .gallery-pause:disabled { display: none; }
+/* Project filter: same label type as the gallery heading; the selected project is underlined like the current page button. */
+.gallery-filters { display: flex; flex-wrap: wrap; gap: 4px 20px; padding: 0 3.175% 20px; }
+.gallery-filters button { min-height: 32px; padding: 0; border: 0; border-bottom: 1px solid transparent; background: none; color: color-mix(in srgb, var(--ink) 72%, var(--paper)); font: 400 10px/1.6 var(--label-font); letter-spacing: .035em; cursor: pointer; }
+.gallery-filters button span { margin-left: 4px; font-variant-numeric: tabular-nums; }
+.gallery-filters button[aria-pressed="true"] { color: var(--ink); border-bottom-color: currentColor; }
+.gallery-filters button:focus-visible { outline: 1px solid var(--ink); outline-offset: 3px; }
+@media (hover: hover) and (pointer: fine) { .gallery-filters button:hover { color: var(--ink); } }
 .gallery-track { position: relative; }
 @media (max-width: 700px) {
   .discipline-gallery-heading { margin: 20px 0 30px; font-size: 34px; }
   .discipline-with-gallery .discipline-studies { padding-top: 35px; }
   .work-refresh .discipline-gallery .gallery-footer { height: auto; min-height: 68px; gap: 12px; flex-wrap: wrap; padding-block: 10px; }
   .discipline-gallery .gallery-pause { display: none; }
+  /* One swipeable line on phones instead of four wrapped rows. */
+  .gallery-filters { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; padding-inline: 20px; }
+  .gallery-filters button { flex: none; min-height: 44px; }
 }
 @media (prefers-reduced-motion: reduce) { .discipline-gallery .gallery-pause { display: none; } }
 .art-case-index > h2 { margin-bottom: 24px; }

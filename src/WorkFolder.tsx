@@ -89,6 +89,13 @@ export default function WorkFolder() {
             </span>
           </span>
         </button>
+        {/* One print per discipline, tucked into the folder so work shows before it opens.
+            Decorative: the trigger's enlarged hit area takes the click. */}
+        <div className="folder-prints" aria-hidden="true">
+          <img className="folder-print folder-print-design" src="/work/folder/design.webp" alt="" width="200" height="300" />
+          <img className="folder-print folder-print-interaction" src="/work/folder/interaction.webp" alt="" width="280" height="194" />
+          <img className="folder-print folder-print-technology" src="/work/folder/technology.webp" alt="" width="180" height="243" />
+        </div>
         <nav
           id="folder-categories"
           className="folder-files"

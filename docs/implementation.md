@@ -7,16 +7,17 @@ This reference describes the source in this checkout. See the [repository overvi
 | Route | Content |
 | --- | --- |
 | `/` | Film-led introduction and phone contact |
-| `/work` | Original folder with three discipline links |
-| `/work/art-direction` | Design: original full slider and five project cards |
+| `/work` | Original folder with three discipline links; one print per discipline shows above the closed folder |
+| `/work/design` | Design: original full slider with a project filter, and five project cards |
 | `/work/interaction-design` | Beveled website previews |
 | `/work/creative-technology` | Original point-study film and terminal |
+| `/work/art-direction` | Redirect to Design; the original Design path |
 | `/work/archive` | Redirect to Design; separate archive removed |
 | `/work/[slug]` | Static case-study pages from the project data |
 
-The first work discipline is labelled Design to cover branding, visual identity and the wider image-led work. Its existing `/work/art-direction` path is retained so published links keep working.
+The first work discipline is labelled Design to cover branding, visual identity and the wider image-led work. It moved from `/work/art-direction` to `/work/design` to match its label; the old path redirects so published links keep working. Data still uses the internal category key `art-direction`.
 
-Legacy discipline redirects are defined in [astro.config.mjs](../astro.config.mjs). `/work#work-index` redirects to `/work/art-direction#case-studies`; the former `/work/archive` route redirects to Design.
+Legacy discipline redirects are defined in [astro.config.mjs](../astro.config.mjs). `/work#work-index` redirects to `/work/design#case-studies`; the former `/work/archive` route redirects to Design.
 
 ## Shared components
 
@@ -35,6 +36,16 @@ Legacy discipline redirects are defined in [astro.config.mjs](../astro.config.mj
 | [WebsiteBundle.astro](../src/components/WebsiteBundle.astro) | Up to three overlapping website views and live-site link |
 
 Collection names, item counts, paths, and slider ordering come from [portfolioData.ts](../src/portfolioData.ts). Case-study content and presentation settings come from [caseStudyData.ts](../src/caseStudyData.ts).
+
+## Interface review · 27 October 2026
+
+Changes from a design and accessibility audit of the published site:
+
+- **Toggles.** The theme, Home sound, Work mute and gallery pause controls each use one signal. Theme and Home sound are switches with fixed names ("Dark mode", "Sound") whose checked state follows the setting. The Work mute button keeps a fixed name with `aria-pressed`. The gallery pause and point-study buttons change their visible text and carry no pressed state. The point-study name is its visible text plus "(point study)", so voice control can use the words on screen. The sound cue library treats `role="switch"` as a toggle.
+- **One layout system.** Home's button navigation sits in the same 94px band as the Work header. Interaction design and Creative technology use Design's intro spacing and heading scale. Below 600px the Work header puts navigation first, at Home's position, with the controls in a row beneath it.
+- **Folder prints.** `public/work/folder/` holds three small WebP prints (17 KB total), derived from `gallery/bstroy-01.jpg`, `sourcelink/views/home.webp` and `point-study/poster.jpg`. They are decorative; the folder trigger's enlarged hit area receives clicks on them. The folder is scaled to 1.2 above 900px.
+- **Gallery.** The slider uses a roving tabindex: one card is in the tab order, and arrow keys, Home and End move between cards. `WorkGallery` takes a `filterable` prop that adds project filter buttons (`aria-pressed`, fixed names); changing the filter remounts the slider.
+- **Video.** Home plays `gallery/video/moving-09-home.mp4` (834 × 540, H.264 CRF 30, 2.1 MB; was 4.5 MB). Creative technology plays `point-study/point-study-web.mp4` (1440 × 810, CRF 25, 3.4 MB; was 8.5 MB). The original encodes remain for the gallery viewer and as sources.
 
 ## Gallery and media viewer
 

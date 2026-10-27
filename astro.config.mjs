@@ -8,8 +8,10 @@ export default defineConfig({
   output: "static",
   trailingSlash: "never",
   redirects: {
-    "/work/archive": "/work/art-direction",
-    "/work/graphic-design": "/work/art-direction",
+    // Design was published at /work/art-direction before the discipline was renamed.
+    "/work/art-direction": "/work/design",
+    "/work/archive": "/work/design",
+    "/work/graphic-design": "/work/design",
     "/work/design-engineering": "/work/creative-technology",
     "/work/digital-work": "/work/creative-technology",
   },

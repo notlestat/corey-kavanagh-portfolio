@@ -1,13 +1,13 @@
 /* Compact headings for the digital work disciplines. */
-.edited-discipline { padding-block: 24px 40px; }
-.minimal-work-page { width: min(820px, calc(100% - 96px)); }
-.edited-heading { margin: 18px 0 28px; }
-.edited-heading h1 { margin: 0; font: 400 24px/1.2 var(--sans-font); letter-spacing: -.025em; text-wrap: balance; }
+.work-refresh.edited-discipline { padding-block: 52px 100px; }
+.minimal-work-page { width: min(1200px, calc(100% - 96px)); }
+/* Matches .discipline-gallery-heading on Design, so all three discipline pages open the same way. */
+.edited-heading { margin: 32px 0 48px; }
+.edited-heading h1 { margin: 0; font: 400 clamp(36px, 4.5vw, 64px)/1.05 var(--sans-font); letter-spacing: -.04em; text-wrap: balance; }
 .edited-heading p { margin: 0; max-width: 48ch; color: var(--muted); font-size: 16px; line-height: 1.6; text-wrap: pretty; }
 @media (max-width: 700px) {
-  .edited-discipline { padding-block: 20px 32px; }
+  .work-refresh.edited-discipline { padding-block: 30px 75px; }
   .minimal-work-page { width: calc(100% - 40px); }
-  .edited-heading { margin: 14px 0 24px; }
-  .edited-heading h1 { font-size: 22px; }
+  .edited-heading { margin: 20px 0 30px; }
   .edited-heading p { font-size: 14px; }
 }

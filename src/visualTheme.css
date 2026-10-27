@@ -149,6 +149,10 @@
 .page-switch-link.is-active { background: var(--surface-strong); box-shadow: none; }
 .page-switch-tip { border-radius: 2px; }
 .theme-toggle-label { font-family: var(--label-font); font-size: 10px; }
+/* Light ◯ Dark: the inactive word is dimmed (still 4.5:1), the active word uses full ink. */
+.theme-toggle-label-light, .theme-toggle-label-dark { color: color-mix(in srgb, var(--ink) 72%, var(--paper)); transition: color 180ms ease; }
+.theme-toggle-label-light { min-width: 0; text-align: right; }
+:root:not([data-theme="dark"]) .theme-toggle-label-light, :root[data-theme="dark"] .theme-toggle-label-dark { color: var(--ink); }
 .theme-toggle-track { background: transparent; }
 .conversation-content { font-size: 15px; line-height: 1.45; color: var(--chat-question-ink); }
 .conversation-composer { background: transparent; }

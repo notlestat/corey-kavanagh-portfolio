@@ -3,7 +3,7 @@ export const workDisciplines = [
     id: "art-direction",
     number: "01",
     name: "Design",
-    href: "/work/art-direction",
+    href: "/work/design",
     note: "Branding, visual identity, graphic design, photography and moving image.",
   },
   {

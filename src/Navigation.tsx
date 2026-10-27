@@ -46,9 +46,12 @@ export function ThemeToggle() {
       );
     }).catch(() => { /* An interrupted transition leaves the selected theme in place. */ });
   };
-  return <button ref={buttonRef} className="theme-toggle" type="button" onClick={toggleTheme} aria-pressed={theme === "dark"} aria-label={`Switch to ${theme === "light" ? "dark" : "light"} mode`}>
+  // One fixed name and one state: "Dark mode", on or off. Visually, the thumb moves
+  // toward the active word, and CSS brightens that word from the root theme attribute.
+  return <button ref={buttonRef} className="theme-toggle" type="button" role="switch" onClick={toggleTheme} aria-checked={theme === "dark"} aria-label="Dark mode">
+    <span className="theme-toggle-label theme-toggle-label-light" aria-hidden="true">Light</span>
     <span className="theme-toggle-track" aria-hidden="true"><span className="theme-toggle-thumb" /></span>
-    <span className="theme-toggle-label" aria-hidden="true">{theme === "light" ? "Dark" : "Light"}</span>
+    <span className="theme-toggle-label theme-toggle-label-dark" aria-hidden="true">Dark</span>
   </button>;
 }
 

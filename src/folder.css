@@ -73,8 +73,22 @@
 .folder-file-number { flex: none; font: 400 8px/1.5 var(--label-font); color: var(--muted); }
 .folder-file-title { min-width: 0; font-size: 14px; letter-spacing: -.025em; line-height: 1.25; font-weight: 400; }
 .folder-file-title small { display: block; font: 400 8px/1.5 var(--label-font); color: var(--muted); margin-top: 4px; letter-spacing: .01em; }
-.folder-caption { position: absolute; bottom: 0; left: 0; width: 100%; margin: 0; text-align: center; font: 400 9px/1.6 var(--label-font); color: var(--muted); }
+.folder-caption { position: absolute; bottom: -16px; left: 0; width: 100%; margin: 0; text-align: center; font: 400 9px/1.6 var(--label-font); color: var(--muted); }
 .folder-stage[data-open="true"] .folder-front { transform: translateY(24px) rotateX(-28deg); box-shadow: inset 0 1px rgb(255 255 255 / .35), 0 16px 24px -14px rgb(0 0 0 / .28); }
+/* Prints sit between the back and front panels; only their tops show above the folder. */
+.folder-prints { position: absolute; z-index: 2; inset: 0; pointer-events: none; }
+.folder-print {
+  position: absolute; display: block; height: auto; border: 3px solid #ece9e1; border-radius: 1px;
+  box-shadow: 0 2px 6px rgb(0 0 0 / .2);
+  transition: transform 240ms var(--ease-out), opacity 160ms ease;
+}
+.folder-print-design { width: 74px; top: 98px; left: 74px; transform: rotate(-7deg); }
+.folder-print-interaction { width: 104px; top: 114px; left: 126px; transform: rotate(3deg); }
+.folder-print-technology { width: 70px; top: 104px; left: 214px; transform: rotate(8deg); }
+/* The visible print tops open the folder too. */
+.folder-trigger::before { content: ""; position: absolute; left: 0; right: 0; bottom: 100%; height: 72px; }
+.folder-stage[data-open="true"] .folder-trigger::before { display: none; }
+.folder-stage[data-open="true"] .folder-print { opacity: 0; transform: translateY(56px); }
 .folder-stage[data-open="true"] .folder-files { transform: translate(-50%, 0); opacity: 1; visibility: visible; transition-delay: 0ms; }
 .folder-trigger:active .folder-front { scale: .98; }
 .folder-trigger:focus-visible { outline: 1px solid var(--ink); outline-offset: 10px; }
@@ -88,7 +102,10 @@
 @media (hover: hover) and (pointer: fine) {
   .folder-stage[data-open="false"] .folder-trigger:hover .folder-front { transform: translateY(-3px) rotateX(-8deg); }
   .folder-file:hover { transform: translateX(5px) rotate(0deg); }
+  .folder-stage[data-open="false"] .folder-trigger:hover ~ .folder-prints .folder-print { translate: 0 -6px; }
 }
+/* A larger object on wide screens, so the folder holds the page instead of floating in it. */
+@media (min-width: 900px) { .folder-stage { scale: 1.2; } }
 @media (max-width: 700px) {
   .page-work:has(.folder-page) .site-header { padding-inline: 20px; }
   .page-work:has(.folder-page) .header-actions { gap: 6px; }
@@ -99,12 +116,9 @@
   .folder-footer { padding-inline: 20px; font-size: 8px; }
 }
 @media (max-width: 420px) {
-  .page-work:has(.folder-page) .site-header { height: 138px; align-items: flex-start; padding-top: 20px; }
-  .page-work:has(.folder-page) .garment-navigation { top: 93px; gap: 20px; }
-  .page-work:has(.folder-page) .header-actions { align-items: center; }
   .folder-page { min-height: 400px; }
   .folder-footer { flex-wrap: wrap; column-gap: 10px; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .folder-front, .folder-files, .folder-file { transition: none; }
+  .folder-front, .folder-files, .folder-file, .folder-print { transition: none; }
 }

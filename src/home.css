@@ -32,7 +32,8 @@
 
 .home-skip { position: absolute; top: 10px; left: 20px; z-index: 30; padding: 10px; background: var(--paper); font-size: 12px; transform: translateY(-200%); }
 .home-skip:focus { transform: none; }
-.home-navigation { padding: 49px 20px 0; margin-bottom: 62px; }
+/* Same 94px band as .site-header so the buttons do not jump between Home and Work. */
+.home-navigation { display: grid; place-items: center; height: 94px; padding: 0 20px; margin-bottom: 86px; }
 .minimal-home { width: min(560px, calc(100% - 48px)); margin: 0 auto; }
 .home-film-wrap { position: relative; }
 .home-film { position: relative; margin: 0; width: 100%; aspect-ratio: 1112 / 720; }
@@ -46,6 +47,11 @@
 .home-film-controls .sound-toggle[aria-checked="true"] .theme-toggle-thumb { transform: translateX(13px); }
 :root[data-theme="dark"] .home-film-controls .sound-toggle[aria-checked="false"] .theme-toggle-thumb { transform: translateX(0); }
 .home-film-controls .sound-toggle:disabled { opacity: .5; cursor: default; }
+/* In the stacked desktop column, "Light" hangs left so both switch tracks line up. */
+@media (min-width: 851px) {
+  .home-film-controls .theme-toggle:not(.sound-toggle) { position: relative; }
+  .home-film-controls .theme-toggle-label-light { position: absolute; right: calc(100% + 9px); min-width: 0; }
+}
 .film-error { position: absolute; inset: auto 12px 12px; padding: 12px; background: var(--paper); font-size: 12px; line-height: 1.5; }
 .film-audio-error { position: absolute; top: 100%; margin: 8px 0 0; width: 110px; font-size: 11px; line-height: 1.4; color: var(--muted); }
 .home-introduction { position: relative; width: min(400px, 100%); margin: 67px auto 0; scroll-margin-top: 35px; }
@@ -87,7 +93,7 @@
   .garment-holes { grid-template-columns: repeat(2, 4px); gap: 4px; }
   .garment-holes i { width: 4px; height: 4px; }
   .garment-label { font-size: 9px; }
-  .home-navigation { padding-top: 34px; margin-bottom: 42px; }
+  .home-navigation { display: block; height: auto; padding-top: 24px; margin-bottom: 42px; }
   .home-introduction { width: min(400px, calc(100% - 12px)); margin-top: 38px; }
   .home-introduction h1 { font-size: 22px; }
   .home-disciplines { font-size: 9px; max-width: 32ch; letter-spacing: 0; }

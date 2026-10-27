@@ -45,9 +45,8 @@ export function initPointStudies() {
       const playing = !video.paused;
       stage.dataset.playing = String(playing);
       state.textContent = playing ? "playing" : "still";
+      // The visible words are the accessible name, so voice control can say exactly what it reads.
       label.textContent = playing ? "Pause motion" : "Play motion";
-      button.setAttribute("aria-label", playing ? "Pause point study" : "Play point study");
-      button.setAttribute("aria-pressed", String(playing));
       clearInterval(timer);
       if (playing) timer = setInterval(paint, 120);
       paint();

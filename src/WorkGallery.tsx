@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { collections, galleryItems, type GalleryItem } from "./portfolioData";
 import DisplayCards from "./components/ui/display-cards";
 
@@ -12,6 +12,7 @@ type GalleryProps = {
   autoPlay?: boolean;
   indexHref?: string;
   suspended?: boolean;
+  filters?: ReactNode;
 };
 
 export function Gallery({
@@ -22,6 +23,7 @@ export function Gallery({
   autoPlay = false,
   indexHref = "#work-index",
   suspended = false,
+  filters,
 }: GalleryProps) {
   const viewportRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
@@ -33,6 +35,8 @@ export function Gallery({
   const [paused, setPaused] = useState(false);
   const [canLoop, setCanLoop] = useState(false);
   const [repeatCount, setRepeatCount] = useState(2);
+  // Roving tabindex: one card is in the tab order; arrow keys move between cards.
+  const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {
     suspendedRef.current = suspended;
@@ -125,7 +129,7 @@ export function Gallery({
       wake();
     };
     const onDocumentKeyDown = (event: KeyboardEvent) => {
-      keyboardNavigation = event.key === "Tab";
+      keyboardNavigation = ["Tab", "ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key);
     };
     const onDocumentPointerDown = () => {
       keyboardNavigation = false;
@@ -217,7 +221,8 @@ export function Gallery({
           type="button"
           className={`gallery-card shape-${index % 4}`}
           key={`${item.category}-${item.position}-${duplicate}`}
-          tabIndex={duplicate ? -1 : undefined}
+          tabIndex={duplicate || index !== activeIndex ? -1 : 0}
+          onFocus={duplicate ? undefined : () => setActiveIndex(index)}
           onClick={() => onChoose(item.category, item.position)}
           aria-label={
             duplicate
@@ -252,17 +257,25 @@ export function Gallery({
         <h2 id={`${id}-title`}>{title}</h2>
         <span className="gallery-count">{items.length} images &amp; films</span>
       </div>
+      {filters}
       <div
         className="gallery-viewport"
         ref={viewportRef}
-        tabIndex={0}
         role="region"
         aria-label={`${title}. Scroll or swipe to explore, or use the left and right arrow keys.`}
         onKeyDown={(event) => {
-          if (event.key === "ArrowRight" || event.key === "ArrowLeft") {
-            event.preventDefault();
-            moveRef.current(event.key === "ArrowRight" ? 360 : -360, true);
-          }
+          const keys = ["ArrowRight", "ArrowLeft", "Home", "End"];
+          const cards = cycleRef.current?.children;
+          if (!keys.includes(event.key) || !cards?.length) return;
+          event.preventDefault();
+          const last = cards.length - 1;
+          const next =
+            event.key === "Home" ? 0
+            : event.key === "End" ? last
+            : event.key === "ArrowRight" ? Math.min(activeIndex + 1, last)
+            : Math.max(activeIndex - 1, 0);
+          setActiveIndex(next);
+          (cards[next] as HTMLElement).focus();
         }}
       >
         <div className="gallery-track" ref={trackRef}>
@@ -279,7 +292,6 @@ export function Gallery({
               className="gallery-pause"
               type="button"
               disabled={!canLoop}
-              aria-pressed={paused}
               aria-label={paused ? "Resume image loop" : "Pause image loop"}
               onClick={() => {
                 pausedRef.current = !pausedRef.current;
@@ -311,10 +323,35 @@ export function Gallery({
   );
 }
 
-export default function WorkGallery(
-  props: Omit<GalleryProps, "onChoose" | "suspended">,
-) {
+export default function WorkGallery({
+  filterable = false,
+  ...props
+}: Omit<GalleryProps, "onChoose" | "suspended" | "filters"> & { filterable?: boolean }) {
   const [selected, setSelected] = useState<SelectedWork | null>(null);
+  const allItems = props.items ?? galleryItems;
+  const [filter, setFilter] = useState<number | null>(null);
+  // Projects in collection order, with how many pieces each has in this gallery.
+  const projects = useMemo(() => {
+    const counts = new Map<number, number>();
+    allItems.forEach((item) => counts.set(item.category, (counts.get(item.category) ?? 0) + 1));
+    return [...counts].sort(([a], [b]) => a - b);
+  }, [allItems]);
+  const items = useMemo(
+    () => (filter === null ? allItems : allItems.filter((item) => item.category === filter)),
+    [allItems, filter],
+  );
+  const filters = filterable && (
+    <div className="gallery-filters" role="group" aria-label="Filter by project">
+      <button type="button" aria-pressed={filter === null} onClick={() => setFilter(null)}>
+        All <span>{allItems.length}</span>
+      </button>
+      {projects.map(([category, count]) => (
+        <button key={category} type="button" aria-pressed={filter === category} onClick={() => setFilter(category)}>
+          {collections[category].name} <span>{count}</span>
+        </button>
+      ))}
+    </div>
+  );
   const triggerRef = useRef<HTMLElement | null>(null);
   const choose = (category: number, position: number) => {
     if (!selected && document.activeElement instanceof HTMLElement)
@@ -329,7 +366,8 @@ export default function WorkGallery(
   };
   return (
     <>
-      <Gallery {...props} onChoose={choose} suspended={!!selected} />
+      {/* A new key remounts the slider so its loop and keyboard position restart with the filter. */}
+      <Gallery {...props} key={filter ?? "all"} items={items} filters={filters || undefined} onChoose={choose} suspended={!!selected} />
       {selected && (
         <ArchiveViewer selected={selected} onChoose={choose} onClose={close} />
       )}
