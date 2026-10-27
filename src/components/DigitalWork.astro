@@ -1,24 +1,17 @@
 ---
-import { systems } from "../systemData";
-import SystemRow from "../SystemRow";
 import { caseStudies } from "../caseStudyData";
+import { ImagesScrollingAnimation } from "./ui/images-scrolling-animation";
 interface Props { category: "interaction-design" | "creative-technology"; }
 const { category } = Astro.props;
-const creative = category === "creative-technology";
-const projects = caseStudies.filter(study => study.category === category);
+const projects = caseStudies.filter(project => project.featured && project.category === category).map(project => {
+  const image = project.listingMedia ?? project.displayMedia?.[0] ?? project.media[0];
+  return {
+    title: project.name, href: `/work/${project.slug}`, role: project.role,
+    src: image.src, alt: image.alt, width: image.width, height: image.height,
+  };
+});
 ---
-<section class="engineering-systems" id="digital-work" aria-labelledby="systems-title">
-  <h2 class="work-label" id="systems-title">Selected case studies</h2>
-  <div class="systems-list">
-    <div class:list={["digital-compositions", { "digital-compositions-creative": creative }]}>
-      {projects.map((project) => project.listingMedia && <article class:list={["digital-composition", { "digital-composition-solo": !project.listingDetail }]}>
-        <a class="digital-composition-main" href={`/work/${project.slug}`}>
-          <figure><img src={project.listingMedia.src} width={project.listingMedia.width} height={project.listingMedia.height} alt={project.listingMedia.alt} loading="lazy" /><figcaption><h3>{project.name}</h3><span>{project.role}</span><span aria-hidden="true">↗</span></figcaption></figure>
-        </a>
-        {project.listingDetail && <a class="digital-composition-detail" href={`/work/${project.slug}`} aria-label={`${project.name}, project detail`}><img src={project.listingDetail.src} width={project.listingDetail.width} height={project.listingDetail.height} alt={project.listingDetail.alt} loading="lazy" /></a>}
-        <p class="digital-composition-note">{project.summary}</p>
-      </article>)}
-    </div>
-    {creative && <div class="creative-workflows"><h3>In the studio</h3>{systems.map((item, index) => <SystemRow item={item} index={index + projects.length} client:load />)}</div>}
-  </div>
-</section>
+{projects.length > 0 && <div class="digital-projects" id="digital-work"><ImagesScrollingAnimation projects={projects} client:load /></div>}
+<style>
+  .digital-projects { width: min(100%, 1040px); margin-inline: auto; }
+</style>

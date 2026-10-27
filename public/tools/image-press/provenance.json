@@ -1,5 +1,0 @@
-{
-  "source": "https://github.com/notlestat/image-press",
-  "revision": "442ea9bff65f1bf714306bce668c16d7d0b85a0c",
-  "changes": "Root asset paths and the home link are scoped to /tools/image-press/. Runtime behavior is retained."
-}

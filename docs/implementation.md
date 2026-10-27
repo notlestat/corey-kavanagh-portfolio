@@ -8,16 +8,15 @@ This reference describes the source in this checkout. See the [repository overvi
 | --- | --- |
 | `/` | Film-led introduction and phone contact |
 | `/work` | Original folder with three discipline links |
-| `/work/art-direction` | Design: full image slider and visual case-study cards |
-| `/work/interaction-design` | SourceLink project imagery and description |
-| `/work/creative-technology` | Point-study film, playback terminal, Image Press, and workflow disclosures |
-| `/work/archive` | Full image strip and collection index |
-| `/tools/image-press` | Bundled interactive two-ink photo press |
+| `/work/art-direction` | Design: original full slider and five project cards |
+| `/work/interaction-design` | Beveled website previews |
+| `/work/creative-technology` | Original point-study film and terminal |
+| `/work/archive` | Redirect to Design; separate archive removed |
 | `/work/[slug]` | Static case-study pages from the project data |
 
 The first work discipline is labelled Design to cover branding, visual identity and the wider image-led work. Its existing `/work/art-direction` path is retained so published links keep working.
 
-Legacy discipline redirects are defined in [astro.config.mjs](../astro.config.mjs). `/work#work-index` redirects to `/work/archive#work-index`.
+Legacy discipline redirects are defined in [astro.config.mjs](../astro.config.mjs). `/work#work-index` redirects to `/work/art-direction#case-studies`; the former `/work/archive` route redirects to Design.
 
 ## Shared components
 
@@ -27,20 +26,31 @@ Legacy discipline redirects are defined in [astro.config.mjs](../astro.config.mj
 | [WorkGallery.tsx](../src/WorkGallery.tsx) | Slider, selection state, and native dialog |
 | [display-cards.tsx](../src/components/ui/display-cards.tsx) | Stacked media display and thumbnail strip |
 | [CaseStudies.astro](../src/components/CaseStudies.astro) | Visual links to Design projects |
-| [DigitalWork.astro](../src/components/DigitalWork.astro) | Aligned website and application project images |
+| [DigitalWork.astro](../src/components/DigitalWork.astro) | Website preview index driven by project data |
+| [images-scrolling-animation.tsx](../src/components/ui/images-scrolling-animation.tsx) | Native horizontal website rail and navigation controls |
 | [PointStudy.astro](../src/components/PointStudy.astro) | Point-study film and terminal markup |
 | [point-study.ts](../src/lib/point-study.ts) | Playback commands and live media state |
 | [Contact.astro](../src/components/Contact.astro) | Shared telephone link |
 | [InteractiveProject.astro](../src/components/InteractiveProject.astro) | Interactive project frame with responsive height |
-| [SitePreview.astro](../src/components/SitePreview.astro) | Scaled live homepage previews on website case-study pages |
+| [WebsiteBundle.astro](../src/components/WebsiteBundle.astro) | Up to three overlapping website views and live-site link |
 
 Collection names, item counts, paths, and slider ordering come from [portfolioData.ts](../src/portfolioData.ts). Case-study content and presentation settings come from [caseStudyData.ts](../src/caseStudyData.ts).
 
 ## Gallery and media viewer
 
-The Design slider uses the original gallery items. Desktop automatic motion pauses on hover, keyboard focus, an open viewer, a hidden document, or an offscreen gallery. Pause and Resume controls persist for the page visit. Phones and reduced-motion preferences use native scrolling without automatic drift. The archive uses the gallery without automatic drift.
+Design retains the complete 141-item slider, original viewer and all five project cards. It uses native scrolling without automatic drift. The separate Image archive page and links have been removed; its former URL redirects to Design.
 
 The viewer opens the selected image in its original collection. It includes previous and next controls, thumbnails, arrow-key navigation, Escape dismissal, and focus restoration. Videos use native playback controls. Thumbnails keep the selected item visible without scrolling the document. The stacked display uses translations without skew or rotation. Image mounts and thumbnails use the page background.
+
+## Current work displays
+
+Corey's latest 27 October correction restores Design's original full slider and five project cards. Its source matches published commit `bc44be6`. Project-detail navigation again includes every project in the same discipline.
+
+`DigitalWork.astro` maps website project data to a React preview rail. Each item is a beveled rectangular image of the site, with its name and role. Native horizontal scrolling and snap alignment arrange future projects alongside SourceLink. Navigation controls appear only with multiple entries after hydration; scroll and resize listeners maintain boundary states. Keyboard activation and reduced motion scroll immediately. Server HTML and browsers without JavaScript retain native links and horizontal scrolling. Framer Motion and Lenis were removed because the latest horizontal presentation does not use them.
+
+Opening a preview leads to `WebsiteBundle.astro`, which enforces a maximum of three images with `.slice(0, 3)`. SourceLink uses three 1440 × 1000 landscape page views, with aligned overlap, natural proportions and no visible screenshot labels. Accessible descriptions, image links and a separate live-site link remain. `listingMedia` supplies the preview; `displayMedia` supplies the page views. Source/time/viewport-extraction provenance accompanies each WebP. Future websites reuse these fields.
+
+No Creative technology app projects remain after Image Press's removal. The point-cloud film and terminal stay directly visible, preserving their original components and playback behavior. The main folder and homepage remain. The In the studio disclosure and separate Image archive have been removed for this release. Corey authorised pushing branch `codex/edited-work-sequence` and publishing the approved revision on Vercel on 27 October 2026. See [work-display.md](work-display.md) for scope and checks.
 
 ## Point-study terminal
 
@@ -69,7 +79,7 @@ The Web Kits sound component uses a header wrapper scoped to the folder. Folder 
 
 [visualTheme.css](../src/visualTheme.css) defines the Helvetica system stack, page colours, and monospace labels. The terminal uses monospace text. The release has no bundled PP Neue Montreal files or font requests.
 
-[experimental-work.css](../src/experimental-work.css) defines the current project grids and film presentation. The folder keeps [folder.css](../src/folder.css). [styles.css](../src/styles.css) imports Tailwind theme and utilities with explicit component sources and no Preflight reset. [components.json](../components.json) and [tsconfig.json](../tsconfig.json) define the UI component paths and `@/` alias.
+[edited-work.css](../src/edited-work.css) defines the compact digital discipline headings. Website preview/rail styles live in `images-scrolling-animation.css`; the screenshot bundle styles live in `WebsiteBundle.astro`. Design keeps its original styles. [experimental-work.css](../src/experimental-work.css) retains the film presentation and earlier layout rules. The folder keeps [folder.css](../src/folder.css). [styles.css](../src/styles.css) imports Tailwind theme and utilities with explicit component sources and no Preflight reset. [components.json](../components.json) and [tsconfig.json](../tsconfig.json) define the UI component paths and `@/` alias.
 
 ## Static rendering and hosting
 
@@ -81,6 +91,8 @@ Astro generates static HTML and assets in `dist/`. React islands hydrate the fil
 
 The scripts in `scripts/` prepare favicon exports, STUDY 01 images, and album artwork. Album artwork is uncropped and has responsive WebP sizes. Private CVs, original source attachments, and personal-use font downloads are excluded from public assets. Credits and publication evidence are tracked in the [editorial record](editorial-record.md).
 
-## Image Press
+## Removed projects
 
-The Creative technology project list includes Image Press. Listing images and optional detail images are defined on each case study rather than selected by category. Image Press uses the interactive presentation; its embedded app retains its own CSS and font licences. STUDY 01 has been removed from the project data, so it has no listing, project page or next-project link. Its existing media and preparation script remain in the repository. See the [Image Press integration reference](image-press-integration.md) for the pinned source, update command and credits.
+Image Press is removed from the project data, generated project pages, public tool snapshot and preview assets. `/work/image-press` and `/tools/image-press` return 404 in this local build. The standalone source repository is unchanged. The [historical integration reference](image-press-integration.md) records its original snapshot and attribution.
+
+STUDY 01 remains absent from the project data, listing and routes. Its unused preparation script and media remain in the repository.

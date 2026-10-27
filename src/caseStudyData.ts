@@ -13,9 +13,11 @@ export type CaseStudy = {
   contribution?: string[];
   approach?: string;
   category?: WorkDiscipline;
+  featured?: boolean;
   presentation?: "visual" | "website" | "artwork" | "interactive";
   listingMedia?: ProjectImage;
   listingDetail?: ProjectImage;
+  displayMedia?: (ProjectImage & { label: string })[];
   editorialNote?: string;
   previewScripts?: boolean;
   disciplines?: string[];
@@ -39,10 +41,11 @@ function albumArtwork(name: string, alt: string, caption: string, height = 2000)
 }
 
 // BSTROY, Jimi Vain and Stem Player remain CV-grounded drafts using the archive.
-// Website and app projects use live homepage previews with a short description.
+// Website projects use beveled previews and three-screen bundles.
 export const caseStudies: CaseStudy[] = [
   {
     slug: "vory-lord-lift-me-up",
+    featured: true,
     name: "Vory / Lord Lift Me Up",
     period: "2025",
     periodLabel: "Release",
@@ -77,8 +80,14 @@ export const caseStudies: CaseStudy[] = [
   },
   {
     slug: "sourcelink",
-    listingMedia: { src: "/work/sourcelink/home-desktop.webp", alt: "SourceLink, website design for clothing supplier intelligence", width: 1440, height: 1000 },
+    featured: true,
+    listingMedia: { src: "/work/sourcelink/views/home.webp", alt: "SourceLink, website design for clothing supplier intelligence", width: 1440, height: 1000 },
     listingDetail: { src: "/work/sourcelink/home-mobile.webp", alt: "SourceLink website on a narrow mobile screen", width: 390, height: 844 },
+    displayMedia: [
+      { src: "/work/sourcelink/views/home.webp", alt: "SourceLink landing page, desktop view", width: 1440, height: 1000, label: "Landing page" },
+      { src: "/work/sourcelink/views/reports.webp", alt: "SourceLink reports page, desktop view", width: 1440, height: 1000, label: "Reports" },
+      { src: "/work/sourcelink/views/savings.webp", alt: "SourceLink savings calculator, desktop view", width: 1440, height: 1000, label: "Savings calculator" },
+    ],
     name: "SourceLink",
     period: "Live website",
     role: "Website design",
@@ -92,6 +101,7 @@ export const caseStudies: CaseStudy[] = [
   },
   {
     slug: "bstroy",
+    featured: true,
     name: "BSTROY",
     period: "2022–2024",
     role: "Art direction / Photography",
@@ -112,6 +122,7 @@ export const caseStudies: CaseStudy[] = [
   },
   {
     slug: "jimi-vain",
+    featured: true,
     name: "Jimi Vain",
     period: "2022–2023",
     role: "Art direction / Media design",
@@ -147,19 +158,5 @@ export const caseStudies: CaseStudy[] = [
       { src: "/work/gallery/stem-02.jpg", alt: "Stem Player selected archive image 2" },
       { src: "/work/gallery/stem-03.jpg", alt: "Stem Player selected archive image 3" },
     ],
-  },
-  {
-    slug: "image-press",
-    name: "Image Press",
-    period: "2026",
-    role: "Creative coding / Interface design",
-    category: "creative-technology",
-    presentation: "interactive",
-    summary: "An interactive two-ink photo press. Feed a photograph, adjust the halftone, contrast and registration, then pull and save an impression.",
-    liveUrl: "/tools/image-press",
-    sourceUrl: "https://github.com/notlestat/image-press",
-    credit: "Built with SVG, Canvas and the Anatomy drawing kit.",
-    listingMedia: { src: "/work/image-press/interface.webp", alt: "Image Press: an isometric printing machine, three ink controls and a carbon-and-vermilion photographic proof", width: 1448, height: 1217 },
-    media: [],
   },
 ];

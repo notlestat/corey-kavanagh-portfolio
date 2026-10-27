@@ -2,23 +2,21 @@
 version: 1
 slug: "src-components-digitalwork-astro"
 primary_target: "src/components/DigitalWork.astro"
-related_targets: ["src/pages/work/[slug].astro"]
+related_targets: ["src/components/ui/images-scrolling-animation.tsx", "src/components/WebsiteBundle.astro", "src/pages/work/[slug].astro"]
 ---
 
-# Image Press portfolio extension
+# Beveled website previews and three-screen compositions
 
-Mode: Experience. Extend the existing Creative technology index and project template. The user confirmed an interactive press inside the portfolio.
+Mode: Experience. Corey's latest 27 October correction rejects the small website folders. Preserve the original main Work folder and original Design slider/cards.
 
-## Direction contract
+THESIS: A beveled rectangular preview of the site opens a compact composition of up to three page views.
 
-THESIS: Let visitors use the real press rather than watch a simulated product demo.
+OWN-WORLD: Existing Helvetica, paper/graphite, quiet navigation and aligned images. The site image itself has a subtle edge and soft directional shadow. No folder tabs, front pocket or folder lettering. References inform depth, horizontal browsing and screenshot overlap; do not copy their identity, handwriting, binder clip or artwork.
 
-OWN-WORLD: Retain the portfolio's Helvetica, page background, aligned project imagery and quiet navigation. Keep Image Press's own Swiss print workspace intact inside the tool.
+STORY: Small discipline heading, real website preview and project name. Opening it reveals three landscape page views maximum, overlapping without visible labels. Keep a live-site link. Accessible image descriptions remain. The renderer enforces the limit, independently of the data length.
 
-STORY: A real interface preview introduces the project. Its page opens the working press, with an independent full-window link and source link.
+MOTION: Native horizontal scrolling and snap alignment arrange future projects alongside one another. Controls appear only for multiple projects after hydration, with correct boundary states. Pointer activation can scroll smoothly; keyboard and reduced-motion activation are immediate. A small pointer hover lift indicates the preview is clickable. No vertical sticky stack, global scroll interception or automatic movement.
 
-FIRST VIEWPORT: The embedded press leads the project page. Its minimal toolbar sits above it; a short description follows. The listing uses the source repository's actual interface screenshot.
+PRESERVE: Main Work folder, home, original Design display, Helvetica, contact, factual credits, point-cloud film and terminal. Future Creative technology project entries share this index. Image Press remains removed; do not invent replacement projects. Corey authorised GitHub push and Vercel publication on 27 October 2026. Remove In the studio and separate Image archive links/page for that release. Keep the orb held; do not merge main without explicit approval.
 
-FORM: Extend the incumbent image-led project pattern; no new visual system. seed: none (unavailable).
-
-FINISH: Complete the finish review and verdict, check the integration records against the source, and retain provenance for every shipping raster. This ordinary extension preserves the incumbent system; do not create global DESIGN.md, PRODUCT.md or design sidecar files to fill preexisting gaps.
+VERIFY: Desktop/mobile bevel, three compact screenshots, real overlap, no visible screenshot labels, focus/link, both themes, reduced motion, no-JavaScript navigation and multi-project horizontal behavior with a nonshipping fixture. Record screenshot source and viewport extraction in provenance sidecars. This scoped revision does not create global product/design records.

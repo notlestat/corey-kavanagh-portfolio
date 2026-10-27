@@ -6,13 +6,14 @@ import Contact from "./Contact.astro";
 import { workDisciplines } from "../workDisciplines";
 import "../work.css";
 import "../experimental-work.css";
+import "../edited-work.css";
 ---
 <BaseLayout title="Interaction design | Corey Kavanagh" page="work">
   <a class="work-skip" href="#interaction-content">Skip to interaction design</a>
   <Header page="work" />
-  <main class="work-refresh discipline-page work-container" id="interaction-content">
+  <main class="work-refresh edited-discipline minimal-work-page work-container" id="interaction-content">
     <a class="case-back" href="/work">All work</a>
-    <header class="case-page-heading engineering-heading"><p class="work-label">Websites / Interfaces / Digital experiences</p><h1>Interaction design.</h1><p>{workDisciplines[1].note}</p></header>
+    <header class="edited-heading"><h1>Interaction design.</h1><p class="sr-only">{workDisciplines[1].note}</p></header>
     <DigitalWork category="interaction-design" />
   </main>
   <footer class="work-footer work-container"><Contact /><a href="/work">Back to Work</a></footer>

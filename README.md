@@ -1,10 +1,10 @@
 # Portfolio
 
-An image-led portfolio built with Astro, React, TypeScript, and Tailwind CSS. Home uses a looping film. Work opens a folder with three disciplines and retains the complete image archive.
+An image-led portfolio built with Astro, React, TypeScript, and Tailwind CSS. Home uses a looping film. Work opens a folder containing Design, Interaction design and Creative technology.
 
-Design combines the original image slider with visual project links. The media viewer includes stacked images, thumbnails, keyboard navigation, and video controls. Creative technology includes a point-study film with a terminal that controls playback. Contact links dial the published phone number.
+Design retains its original full slider and five project cards. Website projects use beveled site previews in a horizontal row, opening into up to three overlapping page views. Creative technology retains the point-cloud film and functioning terminal. The Design slider contains the complete image and film selection.
 
-Image Press is available as an interactive Creative technology project. Its app runs inside the portfolio, with a separate-tab link and browser-only image processing. See the [integration reference](docs/image-press-integration.md) for its source snapshot and credits.
+The scroll component is in `src/components/ui`, using the existing shadcn aliases, TypeScript and Tailwind setup. It uses native horizontal scrolling and real portfolio data. See the [work display reference](docs/work-display.md) for the data flow, motion choices and local-review scope.
 
 The release uses the system Helvetica stack. The checked-in version is recorded in [package.json](package.json).
 

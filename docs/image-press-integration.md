@@ -1,6 +1,6 @@
-# Image Press integration
+# Image Press integration history
 
-Image Press appears under Creative technology and has a working project page at `/work/image-press`. The press can also run in its own tab at `/tools/image-press`.
+Removed from this local portfolio build at Corey’s request on 27 October 2026. Its listing, project page, public runtime snapshot and preview image are no longer shipped. The original app repository is unchanged. The sections below describe the earlier integration; paths and update instructions are historical.
 
 ## Source snapshot
 

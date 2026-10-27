@@ -12,9 +12,9 @@ import "../folder.css";
   <main class="work-refresh folder-page" id="work-content">
     <WorkFolder client:load />
   </main>
-  <footer class="folder-footer"><Contact /><a href="/work/archive" data-slot="archive-link">Image archive</a></footer>
+  <footer class="folder-footer"><Contact /></footer>
   <script is:inline>
-    // Keep previously shared work-index links pointed at the preserved list.
-    if (location.hash === "#work-index") location.replace("/work/archive#work-index");
+    // Keep previously shared index links pointed at Design projects.
+    if (location.hash === "#work-index") location.replace("/work/art-direction#case-studies");
   </script>
 </BaseLayout>
