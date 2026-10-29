@@ -48,7 +48,10 @@
 :root[data-theme="dark"] .home-film-controls .sound-toggle[aria-checked="false"] .theme-toggle-thumb { transform: translateX(0); }
 .home-film-controls .sound-toggle:disabled { opacity: .5; cursor: default; }
 /* In the stacked desktop column, "Light" hangs left so both switch tracks line up. */
-@media (min-width: 851px) {
+@media (min-width: 900px) {
+  /* Start the column past the hanging "Light" (5ch at 10px, about 30px) and its 9px gap,
+     so the label keeps the same 28px clearance from the film as the tracks. */
+  .home-film-controls { left: calc(100% + 67px); }
   .home-film-controls .theme-toggle:not(.sound-toggle) { position: relative; }
   .home-film-controls .theme-toggle-label-light { position: absolute; right: calc(100% + 9px); min-width: 0; }
 }
@@ -79,7 +82,7 @@
   .home-footer a:hover { color: var(--ink); }
   .home-tool-mark:hover { color: var(--ink); }
 }
-@media (max-width: 850px) {
+@media (max-width: 899px) {
   .home-film-controls { position: relative; top: auto; left: auto; transform: none; flex-direction: row; flex-wrap: wrap; justify-content: center; gap: 0 32px; margin-top: 9px; }
   .home-film-controls .theme-toggle-label { min-width: 0; }
   .film-audio-error { position: static; width: auto; margin: 0; align-self: center; }
