@@ -26,29 +26,6 @@
   --pin-shadow: 0 16px 34px rgb(33 40 31 / .14);
 }
 
-:root[data-theme="dark"] {
-  --paper: #000000;
-  --ink: #eeeeee;
-  --muted: #a6a6a6;
-  --line: #303030;
-  --accent: #cccccc;
-  --blue: var(--accent);
-  --surface: #141414;
-  --surface-strong: #252525;
-  --control: #000000;
-  --caption: rgb(0 0 0 / .94);
-  --footer-bg: #000000;
-  --footer-ink: #eeeeee;
-  --footer-muted: #a6a6a6;
-  --footer-subtle: #a6a6a6;
-  --footer-line: #303030;
-  --chat-question: #303033;
-  --chat-question-ink: #fff;
-  --chat-answer: #0072e8;
-  --chat-answer-ink: #fff;
-  --pin-shadow: 0 16px 34px rgb(0 0 0 / .24);
-}
-
 ::selection { background: var(--ink); color: var(--paper); }
 .accent-dot, .conversation-heading h2 span { color: inherit; }
 
@@ -149,10 +126,6 @@
 .page-switch-link.is-active { background: var(--surface-strong); box-shadow: none; }
 .page-switch-tip { border-radius: 2px; }
 .theme-toggle-label { font-family: var(--label-font); font-size: 10px; }
-/* Light ◯ Dark: the inactive word is dimmed (still 4.5:1), the active word uses full ink. */
-.theme-toggle-label-light, .theme-toggle-label-dark { color: color-mix(in srgb, var(--ink) 72%, var(--paper)); transition: color 180ms ease; }
-.theme-toggle-label-light { min-width: 0; text-align: right; }
-:root:not([data-theme="dark"]) .theme-toggle-label-light, :root[data-theme="dark"] .theme-toggle-label-dark { color: var(--ink); }
 .theme-toggle-track { background: transparent; }
 .conversation-content { font-size: 15px; line-height: 1.45; color: var(--chat-question-ink); }
 .conversation-composer { background: transparent; }

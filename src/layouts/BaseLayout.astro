@@ -39,20 +39,6 @@ const shareImage = new URL("/og/default.jpg", Astro.site);
     <meta property="og:image:alt" content="A still from Corey Kavanagh's moving-image work" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="theme-color" content="#eeefeb" />
-    <script is:inline>
-      (() => {
-        try {
-          const savedTheme = localStorage.getItem("corey-theme");
-          const theme = savedTheme === "light" || savedTheme === "dark"
-            ? savedTheme
-            : matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-          document.documentElement.dataset.theme = theme;
-          document.querySelector('meta[name="theme-color"]').setAttribute("content", theme === "dark" ? "#000000" : "#eeefeb");
-        } catch {
-          document.documentElement.dataset.theme = "light";
-        }
-      })();
-    </script>
     <title>{title}</title>
   </head>
   <body>
