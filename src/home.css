@@ -80,7 +80,7 @@
   .home-tool-mark:hover { color: var(--ink); }
 }
 @media (max-width: 850px) {
-  .home-film-controls { position: relative; top: auto; left: auto; transform: none; flex-direction: row; justify-content: flex-end; gap: 22px; margin-top: 9px; }
+  .home-film-controls { position: relative; top: auto; left: auto; transform: none; flex-direction: row; flex-wrap: wrap; justify-content: flex-end; gap: 0 22px; margin-top: 9px; }
   .film-audio-error { position: static; width: auto; margin: 0; align-self: center; }
   .home-introduction { margin-top: 47px; }
   .home-tool-marks { gap: 4px; }

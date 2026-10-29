@@ -4,6 +4,7 @@ import { ThemeToggle } from "./Navigation";
 export default function HomeFilm() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [soundOn, setSoundOn] = useState(true);
+  const [playing, setPlaying] = useState(true);
   const [error, setError] = useState(false);
   const [audioError, setAudioError] = useState(false);
 
@@ -17,6 +18,7 @@ export default function HomeFilm() {
         video.pause();
         video.muted = true;
         setSoundOn(false);
+        setPlaying(false);
         return;
       }
       try {
@@ -28,6 +30,7 @@ export default function HomeFilm() {
         setSoundOn(false);
         try { await video.play(); } catch { /* Sound's user gesture can retry playback. */ }
       }
+      if (active) setPlaying(!video.paused);
     };
     const changeMotion = () => { void start(); };
     void start();
@@ -43,11 +46,23 @@ export default function HomeFilm() {
     setAudioError(false);
     setSoundOn(nextSound);
     if (nextSound) {
-      try { await video.play(); } catch {
+      try { await video.play(); setPlaying(true); } catch {
         video.muted = true;
         setSoundOn(false);
         setAudioError(true);
       }
+    }
+  };
+
+  // WCAG 2.2.2: a looping film needs a pause control, not only the reduced-motion preference.
+  const togglePlayback = async () => {
+    const video = videoRef.current;
+    if (!video) return;
+    if (video.paused) {
+      try { await video.play(); setPlaying(true); } catch { setPlaying(false); }
+    } else {
+      video.pause();
+      setPlaying(false);
     }
   };
 
@@ -57,6 +72,10 @@ export default function HomeFilm() {
       {error && <figcaption className="film-error">The film could not load. <a href="/work">View the work</a></figcaption>}
     </figure>
     <div className="home-film-controls" aria-label="Film and appearance">
+      <button className="sound-toggle theme-toggle" type="button" role="switch" aria-checked={playing} aria-label="Play film" disabled={error} onClick={() => { void togglePlayback(); }}>
+        <span className="theme-toggle-track" aria-hidden="true"><span className="theme-toggle-thumb" /></span>
+        <span className="theme-toggle-label" aria-hidden="true">Film</span>
+      </button>
       <button className="sound-toggle theme-toggle" type="button" role="switch" aria-checked={soundOn} aria-label="Sound" disabled={error} onClick={() => { void toggleSound(); }}>
         <span className="theme-toggle-track" aria-hidden="true"><span className="theme-toggle-thumb" /></span>
         <span className="theme-toggle-label" aria-hidden="true">Sound</span>
