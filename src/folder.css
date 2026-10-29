@@ -108,7 +108,7 @@
 @media (min-width: 900px) { .folder-stage { scale: 1.2; } }
 @media (max-width: 700px) {
   .page-work:has(.folder-page) .site-header { padding-inline: 20px; }
-  .page-work:has(.folder-page) .header-actions { gap: 6px; }
+  .page-work:has(.folder-page) .header-actions { gap: 20px; }
   .page-work:has(.folder-page) .wordmark { width: 44px; }
   .page-work:has(.folder-page) .wordmark img { width: 44px; }
   .folder-room { padding-block: 85px 40px; }
