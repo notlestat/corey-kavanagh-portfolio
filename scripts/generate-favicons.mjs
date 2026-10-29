@@ -7,7 +7,9 @@ import { fileURLToPath } from "node:url";
 
 const source = process.argv[2] ?? fileURLToPath(new URL("./ck-signature.png", import.meta.url));
 const publicDir = new URL("../public/", import.meta.url);
-const background = "#eeefeb";
+// Browser tabs show the mark on its own; iOS needs a solid tile.
+const transparent = { r: 0, g: 0, b: 0, alpha: 0 };
+const tile = "#eeefeb";
 const { data, info } = await sharp(source).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
 // A signature exported on an opaque background has no transparent pixels.
 // Use darkness as coverage instead, so the paper drops out and edges stay soft.
@@ -37,7 +39,7 @@ const artwork = await sharp(data, { raw: info }).extract({ left, top, width: rig
 // resizing so small icons read; 96px and up keep the drawn line weight.
 const strokeBoost = (size) => (size <= 16 ? 3.6 : size <= 32 ? 2.4 : size <= 48 ? 1.7 : 1);
 
-async function render(size, paddingFraction = .04) {
+async function render(size, paddingFraction = .04, background = transparent) {
   const padding = Math.max(1, Math.round(size * paddingFraction));
   const boost = strokeBoost(size);
   const { data: mark, info: markInfo } = await sharp(await sharp(artwork)
@@ -57,8 +59,8 @@ for (const size of browserSizes) {
   images.set(size, png);
   await writeFile(new URL(`favicon-${size}.png`, publicDir), png);
 }
-// iOS supplies the corner mask. Keep the export opaque and square.
-await writeFile(new URL("apple-touch-icon.png", publicDir), await render(180, .1));
+// iOS supplies the corner mask and fills transparency with black. Keep the export opaque and square.
+await writeFile(new URL("apple-touch-icon.png", publicDir), await render(180, .1, tile));
 
 // ICO uses conventional uncompressed BGRA bitmaps, including an AND mask.
 // This supports browser fallback without relying on PNG-in-ICO decoding.
@@ -97,4 +99,4 @@ for (const [index, size] of icoSizes.entries()) {
   offset += bitmap.length;
 }
 await writeFile(new URL("favicon.ico", publicDir), Buffer.concat([directory, ...bitmaps]));
-console.log("Generated square 16/32/48/96px favicons, multi-size ICO and 180px Apple touch icon.");
+console.log("Generated transparent 16/32/48/96px favicons, multi-size ICO and 180px Apple touch icon.");
