@@ -1,12 +1,19 @@
 # Portfolio
 
-An image-led portfolio built with Astro, React, TypeScript, and Tailwind CSS. Home uses a looping film. Work opens a folder containing Design, Interaction design and Creative technology.
+An image-led portfolio built with Astro, React, TypeScript, and Tailwind CSS. Home plays a looping film. Work opens a folder with one page per discipline.
 
-Design retains its original full slider and five project cards. Website projects use beveled site previews in a horizontal row, opening into up to three overlapping page views. Creative technology retains the point-cloud film and functioning terminal. The Design slider contains the complete image and film selection.
+| Route | Contents |
+| --- | --- |
+| `/work/design` | A filterable slider with the full image and film selection, then five project cards |
+| `/work/interaction-design` | A horizontal row of website projects |
+| `/work/creative-technology` | A point-cloud film with a working terminal. Featured projects with this category appear below it |
+| `/work/<slug>` | One case-study page per entry in `src/caseStudyData.ts` |
 
-The scroll component is in `src/components/ui`, using the existing shadcn aliases, TypeScript and Tailwind setup. It uses native horizontal scrolling and real portfolio data. See the [work display reference](docs/work-display.md) for the data flow, motion choices and local-review scope.
+`/work/art-direction` redirects to `/work/design`. Website projects open into up to three overlapping page views. Type `help` in the Creative technology terminal to list its playback commands.
 
-The release uses the system Helvetica stack. The checked-in version is recorded in [package.json](package.json).
+`src/components/ui/images-scrolling-animation.tsx` renders the website row with native horizontal scrolling. It uses the shadcn aliases in [components.json](components.json). See the [work display reference](docs/work-display.md) for the data flow, motion choices, and local-review scope.
+
+The site uses the system Helvetica stack. The checked-in version is in [package.json](package.json).
 
 ## Run locally
 
@@ -40,13 +47,15 @@ Use the preview to check changed routes, the Work folder, slider controls, media
 | Edit discipline links | [src/workDisciplines.ts](src/workDisciplines.ts) |
 | Edit case studies | [src/caseStudyData.ts](src/caseStudyData.ts) |
 | Edit gallery membership | [src/portfolioData.ts](src/portfolioData.ts) |
+| Edit the Design slider and filter | [src/WorkGallery.tsx](src/WorkGallery.tsx) |
 | Edit the media display | [src/components/ui/display-cards.tsx](src/components/ui/display-cards.tsx) |
+| Edit the website row | [src/components/ui/images-scrolling-animation.tsx](src/components/ui/images-scrolling-animation.tsx) |
 | Edit terminal commands | [src/lib/point-study.ts](src/lib/point-study.ts) |
 | Edit contact details | [src/components/Contact.astro](src/components/Contact.astro) |
 | Edit shared typography | [src/visualTheme.css](src/visualTheme.css) |
 | Review hosting settings | [vercel.json](vercel.json) |
 
-Reusable UI components live in `src/components/ui`. The `@/` import alias points to `src/`; [components.json](components.json) records the shadcn-compatible paths. Tailwind scans these components through the explicit sources in [src/styles.css](src/styles.css).
+Reusable UI components live in `src/components/ui`. The `@/` import alias points to `src/`. [components.json](components.json) records the shadcn-compatible paths. Tailwind scans these components through the explicit sources in [src/styles.css](src/styles.css).
 
 ## Read the project records
 
