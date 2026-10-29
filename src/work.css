@@ -4,7 +4,11 @@
   /* Navigation first, at Home's position; sound, theme and GitHub sit in a row beneath it. */
   .page-work .site-header { height: auto; flex-direction: column; align-items: stretch; gap: 2px; padding: 24px 20px 6px; }
   .page-work .site-header > .garment-navigation { position: static; transform: none; align-self: center; }
-  .page-work .header-actions { align-self: flex-end; align-items: center; }
+  /* Centred under the navigation. GitHub matches the sound button's 44px tap width, so the
+     equal gaps also look equal around the theme switch, which keeps its own 6px inside. */
+  .page-work .header-actions { align-self: center; align-items: center; gap: 20px; }
+  .page-work .header-actions .theme-toggle-label { min-width: 0; }
+  .page-work .header-actions .github-link { width: 44px; height: 44px; }
 }
 .work-container { width: min(1200px, calc(100% - 96px)); margin-inline: auto; }
 .work-refresh { padding-top: 1px; }
