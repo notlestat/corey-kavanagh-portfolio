@@ -41,7 +41,7 @@ Collection names, item counts, paths, and slider ordering come from [portfolioDa
 
 Changes from a design and accessibility audit of the published site:
 
-- **Toggles.** The theme, Home sound, Work mute and gallery pause controls each use one signal. Theme and Home sound are switches with fixed names ("Dark mode", "Sound") whose checked state follows the setting. The Work mute button keeps a fixed name with `aria-pressed`. The gallery pause and point-study buttons change their visible text and carry no pressed state. The point-study name is its visible text plus "(point study)", so voice control can use the words on screen. The sound cue library treats `role="switch"` as a toggle.
+- **Toggles.** The Home film, Home sound, Work mute and gallery pause controls each use one signal. Home film and Home sound are switches with fixed names ("Play film", "Sound") whose checked state follows the setting. The Work mute button keeps a fixed name with `aria-pressed`. The gallery pause and point-study buttons change their visible text and carry no pressed state. The point-study name is its visible text plus "(point study)", so voice control can use the words on screen. The sound cue library treats `role="switch"` as a toggle.
 - **One layout system.** Home's button navigation sits in the same 94px band as the Work header. Interaction design and Creative technology use Design's intro spacing and heading scale. Below 600px the Work header puts navigation first, at Home's position, with the controls in a row beneath it.
 - **Folder prints.** `public/work/folder/` holds three small WebP prints (17 KB total), derived from `gallery/bstroy-01.jpg`, `sourcelink/views/home.webp` and `point-study/poster.jpg`. They are decorative; the folder trigger's enlarged hit area receives clicks on them. The folder is scaled to 1.2 above 900px.
 - **Gallery.** The slider uses a roving tabindex: one card is in the tab order, and arrow keys, Home and End move between cards. `WorkGallery` takes a `filterable` prop that adds project filter buttons (`aria-pressed`, fixed names); changing the filter remounts the slider.
@@ -84,7 +84,7 @@ The original folder component and its CSS are retained. It uses a native button 
 
 The folder's grain and fragmented lettering interpret the supplied paper reference and the [Raygun archive](https://designreviewed.com/series/raygun/), without copying its cover artwork. The media display adapts the user-supplied React DisplayCards reference to real image and video collections.
 
-The Web Kits sound component uses a header wrapper scoped to the folder. Folder transitions and the mute control can play cues; gallery controls, viewers, navigation, workflow disclosures, and theme changes remain silent. The setting is separate from Home's film soundtrack. Trusted transition provenance is handled in [folder-events.ts](../src/lib/folder-events.ts).
+The Web Kits sound component uses a header wrapper scoped to the folder. Folder transitions and the mute control can play cues; gallery controls, viewers, navigation, and workflow disclosures remain silent. The setting is separate from Home's film soundtrack. Trusted transition provenance is handled in [folder-events.ts](../src/lib/folder-events.ts).
 
 ## Typography and styling
 
@@ -94,7 +94,7 @@ The Web Kits sound component uses a header wrapper scoped to the folder. Folder 
 
 ## Static rendering and hosting
 
-Astro generates static HTML and assets in `dist/`. React islands hydrate the film controls, folder, sound controls, galleries, media viewer, and workflow disclosures. The terminal uses a client-side script. Theme restoration runs before paint.
+Astro generates static HTML and assets in `dist/`. React islands hydrate the film controls, folder, sound controls, galleries, media viewer, and workflow disclosures. The terminal uses a client-side script. The site has one light colour scheme and no theme switch.
 
 [vercel.json](../vercel.json) specifies the Astro framework, `npm run build`, and `dist/`. The repository does not need a server-rendering adapter. A successful local build is separate from a Vercel deployment; production status requires deployment metadata and live route checks.
 

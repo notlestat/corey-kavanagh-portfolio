@@ -30,7 +30,6 @@ export function checkMobileHeader() {
     ".garment-link-home",
     ".garment-link-work",
     "button[data-sound]",
-    "button.theme-toggle",
     ".github-link",
   ];
   const controls = selectors.map((selector) => {

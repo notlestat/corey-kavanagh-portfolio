@@ -27,8 +27,6 @@
 .garment-link:focus-visible { border-radius: 3px; outline-width: 1px; outline-offset: 8px; }
 .garment-link:focus-visible .garment-button { transition: none; }
 .site-header > .garment-navigation { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); }
-:root[data-theme="dark"] .garment-button { box-shadow: inset 0 1px 1px rgb(255 255 255 / .7), inset 0 -2px 3px rgb(76 64 30 / .12), -2px 4px 6px rgb(0 0 0 / .3); }
-:root[data-theme="dark"] .garment-link-work .garment-button { border-color: #68715b; box-shadow: inset 0 1px 1px rgb(255 255 255 / .18), inset 0 -2px 3px rgb(0 0 0 / .25), -2px 4px 6px rgb(0 0 0 / .4); }
 
 .home-skip { position: absolute; top: 10px; left: 20px; z-index: 30; padding: 10px; background: var(--paper); font-size: 12px; transform: translateY(-200%); }
 .home-skip:focus { transform: none; }
@@ -43,18 +41,8 @@
 .home-film-controls .theme-toggle-label { display: inline; min-width: 32px; font-size: 10px; }
 .home-film-controls .theme-toggle-track { width: 29px; height: 16px; padding: 2px; border-color: var(--muted); }
 .home-film-controls .theme-toggle-thumb { width: 10px; height: 10px; }
-:root[data-theme="dark"] .home-film-controls .theme-toggle:not(.sound-toggle) .theme-toggle-thumb,
 .home-film-controls .sound-toggle[aria-checked="true"] .theme-toggle-thumb { transform: translateX(13px); }
-:root[data-theme="dark"] .home-film-controls .sound-toggle[aria-checked="false"] .theme-toggle-thumb { transform: translateX(0); }
 .home-film-controls .sound-toggle:disabled { opacity: .5; cursor: default; }
-/* In the stacked desktop column, "Light" hangs left so both switch tracks line up. */
-@media (min-width: 900px) {
-  /* Start the column past the hanging "Light" (5ch at 10px, about 30px) and its 9px gap,
-     so the label keeps the same 28px clearance from the film as the tracks. */
-  .home-film-controls { left: calc(100% + 67px); }
-  .home-film-controls .theme-toggle:not(.sound-toggle) { position: relative; }
-  .home-film-controls .theme-toggle-label-light { position: absolute; right: calc(100% + 9px); min-width: 0; }
-}
 .film-error { position: absolute; inset: auto 12px 12px; padding: 12px; background: var(--paper); font-size: 12px; line-height: 1.5; }
 .film-audio-error { position: absolute; top: 100%; margin: 8px 0 0; width: 110px; font-size: 11px; line-height: 1.4; color: var(--muted); }
 .home-introduction { position: relative; width: min(400px, 100%); margin: 67px auto 0; scroll-margin-top: 35px; }

@@ -37,7 +37,7 @@ npm run preview
 
 The build includes Astro and TypeScript checks. `npm run check` runs those checks separately. There is no unit-test script.
 
-Use the preview to check changed routes, the Work folder, slider controls, media viewing, keyboard focus, narrow layouts, both themes, and reduced motion. A passing local build does not establish a production deployment.
+Use the preview to check changed routes, the Work folder, slider controls, media viewing, keyboard focus, narrow layouts, and reduced motion. A passing local build does not establish a production deployment.
 
 ## Find the source
 
