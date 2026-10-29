@@ -80,7 +80,8 @@
   .home-tool-mark:hover { color: var(--ink); }
 }
 @media (max-width: 850px) {
-  .home-film-controls { position: relative; top: auto; left: auto; transform: none; flex-direction: row; justify-content: flex-end; gap: 22px; margin-top: 9px; }
+  .home-film-controls { position: relative; top: auto; left: auto; transform: none; flex-direction: row; flex-wrap: wrap; justify-content: center; gap: 0 32px; margin-top: 9px; }
+  .home-film-controls .theme-toggle-label { min-width: 0; }
   .film-audio-error { position: static; width: auto; margin: 0; align-self: center; }
   .home-introduction { margin-top: 47px; }
   .home-tool-marks { gap: 4px; }

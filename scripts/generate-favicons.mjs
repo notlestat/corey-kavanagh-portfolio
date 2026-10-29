@@ -1,14 +1,26 @@
-// Export web icons without changing the original CK artwork or header logo.
+// Export web icons without changing the original artwork or header logo.
 // sharp is provided by Astro's image tooling. Pass higher-resolution artwork
-// as the first argument, or regenerate from the checked-in header mark.
+// as the first argument, or regenerate from the checked-in signature mark.
 import sharp from "sharp";
 import { writeFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 
-const source = process.argv[2] ?? fileURLToPath(new URL("../public/ck-logo.png", import.meta.url));
+const source = process.argv[2] ?? fileURLToPath(new URL("./ck-signature.png", import.meta.url));
 const publicDir = new URL("../public/", import.meta.url);
 const background = "#eeefeb";
 const { data, info } = await sharp(source).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
+// A signature exported on an opaque background has no transparent pixels.
+// Use darkness as coverage instead, so the paper drops out and edges stay soft.
+let opaque = true;
+for (let i = 3; i < data.length; i += 4) if (data[i] < 255) { opaque = false; break; }
+if (opaque) {
+  const paper = (data[0] + data[1] + data[2]) / 3;
+  for (let i = 0; i < data.length; i += 4) {
+    const coverage = (paper - (data[i] + data[i + 1] + data[i + 2]) / 3) / paper;
+    data[i] = data[i + 1] = data[i + 2] = 17;
+    data[i + 3] = Math.round(Math.min(1, Math.max(0, coverage * 1.15)) * 255);
+  }
+}
 let left = info.width, top = info.height, right = -1, bottom = -1;
 for (let y = 0; y < info.height; y++) {
   for (let x = 0; x < info.width; x++) {
@@ -19,12 +31,19 @@ for (let y = 0; y < info.height; y++) {
   }
 }
 if (right < left || bottom < top) throw new Error("CK artwork contains no visible pixels.");
-const artwork = await sharp(source).extract({ left, top, width: right - left + 1, height: bottom - top + 1 }).png().toBuffer();
+const artwork = await sharp(data, { raw: info }).extract({ left, top, width: right - left + 1, height: bottom - top + 1 }).png().toBuffer();
+
+// Hairline strokes fade to nothing at tab sizes. Boost coverage after
+// resizing so small icons read; 96px and up keep the drawn line weight.
+const strokeBoost = (size) => (size <= 16 ? 3.6 : size <= 32 ? 2.4 : size <= 48 ? 1.7 : 1);
 
 async function render(size, paddingFraction = .04) {
   const padding = Math.max(1, Math.round(size * paddingFraction));
-  const { data: mark, info: markInfo } = await sharp(artwork)
+  const boost = strokeBoost(size);
+  const { data: mark, info: markInfo } = await sharp(await sharp(artwork)
     .resize(size - padding * 2, size - padding * 2, { fit: "inside", kernel: "lanczos3" })
+    .png().toBuffer())
+    .linear([1, 1, 1, boost], [0, 0, 0, 0])
     .png().toBuffer({ resolveWithObject: true });
   return sharp({ create: { width: size, height: size, channels: 4, background } })
     .composite([{ input: mark, left: Math.round((size - markInfo.width) / 2), top: Math.round((size - markInfo.height) / 2) }])

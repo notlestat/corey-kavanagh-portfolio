@@ -3,6 +3,8 @@ import react from "@astrojs/react";
 import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
+  // Canonical and share-card URLs are built from this origin. Update it when a custom domain goes live.
+  site: "https://corey-kavanagh-portfolio.vercel.app",
   integrations: [react()],
   vite: { plugins: [tailwindcss()] },
   output: "static",
