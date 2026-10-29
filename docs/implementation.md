@@ -1,91 +1,109 @@
 # Portfolio implementation reference
 
-This reference describes the checked-in Astro site. See [the repository overview](../README.md) for setup and navigation.
+This reference describes the source in this checkout. See the [repository overview](../README.md) for setup.
 
-## Project files
+## Routes
 
-| Location | Purpose |
-|---|---|
-| [src/pages/index.astro](../src/pages/index.astro) | Home page structure and introduction |
-| [src/pages/work.astro](../src/pages/work.astro) | Minimal Work folder, discipline navigation and archive link |
-| [src/pages/work/[slug].astro](../src/pages/work/[slug].astro) | Static case-study routes |
-| [src/components/CaseStudies.astro](../src/components/CaseStudies.astro) | Text-only case-study index on the Art direction page |
-| [src/WorkFolder.tsx](../src/WorkFolder.tsx) | Minimal folder disclosure using the shared discipline links |
-| [src/workDisciplines.ts](../src/workDisciplines.ts) | Authoritative discipline names, routes and descriptions |
-| [src/lib/folder-events.ts](../src/lib/folder-events.ts) | Single-use trusted folder transition provenance for scoped audio |
-| [src/folder.css](../src/folder.css) | Folder material, fragmented type, responsive layout and restrained opening motion |
-| [src/pages/work/archive.astro](../src/pages/work/archive.astro) | Preserved image scroll and full collection list |
-| [src/components/sound.tsx](../src/components/sound.tsx) | Supplied Web Kits cue library, delegated listener and exported sound controls |
-| [src/components/WorkSound.tsx](../src/components/WorkSound.tsx) | One sound wrapper/listener and mute control per Work document |
-| [src/components/UpcomingStudies.astro](../src/components/UpcomingStudies.astro) | Retained upcoming-study layout, no longer rendered by a route |
-| [src/caseStudyData.ts](../src/caseStudyData.ts) | Existing draft cases and visual-first authored projects with optional live/source links |
-| [src/work.css](../src/work.css) | Work-only layout, case-study pages and archive viewer |
-| [src/layouts/BaseLayout.astro](../src/layouts/BaseLayout.astro) | Shared HTML, metadata, global styles and early theme restoration |
-| [scripts/generate-favicons.mjs](../scripts/generate-favicons.mjs) | Square web-icon exports from the retained CK artwork |
-| [scripts/prepare-study-media.mjs](../scripts/prepare-study-media.mjs) | WebP crops from real STUDY 01 browser captures |
-| [src/HomeFilm.tsx](../src/HomeFilm.tsx) | Looping film, sound switch and Home theme control |
-| [src/WorkExplorer.tsx](../src/WorkExplorer.tsx) | Scrolling archive and modal media viewer with shared React state |
-| [src/WorkGallery.tsx](../src/WorkGallery.tsx) | Shared discipline slider, automatic loop and retained image/video viewer |
-| [src/Navigation.tsx](../src/Navigation.tsx) | Clothing-button page links, shared theme control and GitHub icon |
-| [src/components/Header.astro](../src/components/Header.astro) | Logo-free Work header with page links, sound, theme and GitHub controls |
-| [src/components/DigitalWork.astro](../src/components/DigitalWork.astro) | Static digital-project section with interactive system rows |
-| [src/SystemRow.tsx](../src/SystemRow.tsx) | Expandable system details |
-| [src/systemData.ts](../src/systemData.ts) | Existing digital-system descriptions |
-| [src/Conversation.tsx](../src/Conversation.tsx) | Retained conversation component, no longer rendered on Home |
-| [src/ToolRail.tsx](../src/ToolRail.tsx) | Retained tools and skills component, no longer rendered on Home |
-| [src/portfolioData.ts](../src/portfolioData.ts) | Collection names, years, image/video paths and gallery ordering |
-| [src/styles.css](../src/styles.css) | Typography, layout, motion and responsive rules |
-| [src/visualTheme.css](../src/visualTheme.css) | Helvetica-based type, muted surfaces and component styling for both themes |
-| [src/home.css](../src/home.css) | Home spacing, film controls and tactile navigation |
-| `public/work/gallery/` | Local gallery images and video previews |
-| [astro.config.mjs](../astro.config.mjs) | Static output, React integration and Tailwind Vite plugin |
-| [vercel.json](../vercel.json) | Astro preset, build command and output directory for Vercel |
+| Route | Content |
+| --- | --- |
+| `/` | Film-led introduction and phone contact |
+| `/work` | Original folder with three discipline links; one print per discipline shows above the closed folder |
+| `/work/design` | Design: original full slider with a project filter, and five project cards |
+| `/work/interaction-design` | Beveled website previews |
+| `/work/creative-technology` | Original point-study film and terminal |
+| `/work/art-direction` | Redirect to Design; the original Design path |
+| `/work/archive` | Redirect to Design; separate archive removed |
+| `/work/[slug]` | Static case-study pages from the project data |
 
-Update collection metadata and item counts in `src/portfolioData.ts` when adding or removing media. Gallery paths are root-relative; a deployment under a URL subdirectory needs a path review.
+The first work discipline is labelled Design to cover branding, visual identity and the wider image-led work. It moved from `/work/art-direction` to `/work/design` to match its label; the old path redirects so published links keep working. Data still uses the internal category key `art-direction`.
 
-Favicons use the intact CK mark on the site's light neutral background, with tight browser padding and additional Apple home-screen padding. [scripts/generate-favicons.mjs](../scripts/generate-favicons.mjs) owns the PNG, ICO and Apple touch-icon export sizes; the shared layout owns their declarations on every route. The exports follow [Google's square favicon recommendation](https://developers.google.com/search/docs/appearance/favicon-in-search) and [Safari's touch-icon declaration](https://developer.apple.com/library/archive/documentation/AppleApplications/Reference/SafariWebContent/ConfiguringWebApplications/ConfiguringWebApplications.html). Regenerate with `node scripts/generate-favicons.mjs` or pass a higher-resolution CK PNG as its first argument. This uses the sharp image tooling installed by Astro. Only the exported icons belong in public assets, not private source paths. Favicons may remain cached after publication, and Google decides whether and when to show them in search.
+Legacy discipline redirects are defined in [astro.config.mjs](../astro.config.mjs). `/work#work-index` redirects to `/work/design#case-studies`; the former `/work/archive` route redirects to Design.
 
-## Rendering and deployment
+## Shared components
 
-The Home introduction, navigation, page metadata, Work header, case-study text and footers are generated by Astro. `client:load` attaches React to film controls, the Work folder, sound controls, discipline galleries, archive/list viewer and workflow disclosures on Creative technology. The workflow section is not rendered on the main Work page. Initial React markup is deterministic during server rendering; browser preferences are read after hydration. The saved theme is applied by a head script before the page paints.
+| Source | Purpose |
+| --- | --- |
+| [WorkFolder.tsx](../src/WorkFolder.tsx) | Original folder disclosure |
+| [WorkGallery.tsx](../src/WorkGallery.tsx) | Slider, selection state, and native dialog |
+| [display-cards.tsx](../src/components/ui/display-cards.tsx) | Stacked media display and thumbnail strip |
+| [CaseStudies.astro](../src/components/CaseStudies.astro) | Visual links to Design projects |
+| [DigitalWork.astro](../src/components/DigitalWork.astro) | Website preview index driven by project data |
+| [images-scrolling-animation.tsx](../src/components/ui/images-scrolling-animation.tsx) | Native horizontal website rail and navigation controls |
+| [PointStudy.astro](../src/components/PointStudy.astro) | Point-study film and terminal markup |
+| [point-study.ts](../src/lib/point-study.ts) | Playback commands and live media state |
+| [Contact.astro](../src/components/Contact.astro) | Shared telephone link |
+| [InteractiveProject.astro](../src/components/InteractiveProject.astro) | Interactive project frame with responsive height |
+| [WebsiteBundle.astro](../src/components/WebsiteBundle.astro) | Up to three overlapping website views and live-site link |
 
-The build generates static HTML for Home, Work, the archive, the discipline pages and individual case studies, alongside the existing assets. `/work` is a real static page and no longer rewrites to the Home HTML. Legacy discipline redirects are configured in [astro.config.mjs](../astro.config.mjs). Vercel uses the repository's Astro framework preset, `npm run build` and `dist` output directory. No server-rendering adapter is needed for this static site. Pushes to the connected production branch trigger a production deployment; verify the routes and their interactions after publishing.
+Collection names, item counts, paths, and slider ordering come from [portfolioData.ts](../src/portfolioData.ts). Case-study content and presentation settings come from [caseStudyData.ts](../src/caseStudyData.ts).
 
-## Current content
+## Interface review · 27 October 2026
 
-- Collection membership and image/video counts come from [src/portfolioData.ts](../src/portfolioData.ts); the archive derives its displayed counts from those arrays.
-- Individual source file names are not shown in the interface.
-- The draft BSTROY, Jimi Vain and Stem Player case-study routes remain `/work/bstroy`, `/work/jimi-vain` and `/work/stem-player`.
-- See [Album artwork](editorial-record.md#album-artwork-approved-for-publication-on-12-october-2026) for the new Art direction entries.
-- Navigation links to [the GitHub profile](https://github.com/notlestat).
-- No verified public contact route has been added yet.
+Changes from a design and accessibility audit of the published site:
 
-Home reuses `public/work/gallery/video/moving-09.mp4`, which matches the supplied source film. It loops inline without native playback controls. Playback attempts audio first and falls back to muted autoplay when the browser requires a user gesture. The sound switch enables or disables audio. With reduced motion enabled, the film remains still until the visitor enables sound.
+- **Toggles.** The theme, Home sound, Work mute and gallery pause controls each use one signal. Theme and Home sound are switches with fixed names ("Dark mode", "Sound") whose checked state follows the setting. The Work mute button keeps a fixed name with `aria-pressed`. The gallery pause and point-study buttons change their visible text and carry no pressed state. The point-study name is its visible text plus "(point study)", so voice control can use the words on screen. The sound cue library treats `role="switch"` as a toggle.
+- **One layout system.** Home's button navigation sits in the same 94px band as the Work header. Interaction design and Creative technology use Design's intro spacing and heading scale. Below 600px the Work header puts navigation first, at Home's position, with the controls in a row beneath it.
+- **Folder prints.** `public/work/folder/` holds three small WebP prints (17 KB total), derived from `gallery/bstroy-01.jpg`, `sourcelink/views/home.webp` and `point-study/poster.jpg`. They are decorative; the folder trigger's enlarged hit area receives clicks on them. The folder is scaled to 1.2 above 900px.
+- **Gallery.** The slider uses a roving tabindex: one card is in the tab order, and arrow keys, Home and End move between cards. `WorkGallery` takes a `filterable` prop that adds project filter buttons (`aria-pressed`, fixed names); changing the filter remounts the slider.
+- **Video.** Home plays `gallery/video/moving-09-home.mp4` (834 × 540, H.264 CRF 30, 2.1 MB; was 4.5 MB). Creative technology plays `point-study/point-study-web.mp4` (1440 × 810, CRF 25, 3.4 MB; was 8.5 MB). The original encodes remain for the gallery viewer and as sources.
 
-The tools and skills icon row has been removed from Home. Its component and styles remain in the source for reuse, but Home does not render or hydrate them. The film, name, disciplines, bio, navigation and footer are unchanged.
+## Gallery and media viewer
+
+Design retains the complete 141-item slider, original viewer and all five project cards. It uses native scrolling without automatic drift. The separate Image archive page and links have been removed; its former URL redirects to Design.
+
+The viewer opens the selected image in its original collection. It includes previous and next controls, thumbnails, arrow-key navigation, Escape dismissal, and focus restoration. Videos use native playback controls. Thumbnails keep the selected item visible without scrolling the document. The stacked display uses translations without skew or rotation. Image mounts and thumbnails use the page background.
+
+## Current work displays
+
+Corey's latest 27 October correction restores Design's original full slider and five project cards. Its source matches published commit `bc44be6`. Project-detail navigation again includes every project in the same discipline.
+
+`DigitalWork.astro` maps website project data to a React preview rail. Each item is a beveled rectangular image of the site, with its name and role. Native horizontal scrolling and snap alignment arrange future projects alongside SourceLink. Navigation controls appear only with multiple entries after hydration; scroll and resize listeners maintain boundary states. Keyboard activation and reduced motion scroll immediately. Server HTML and browsers without JavaScript retain native links and horizontal scrolling. Framer Motion and Lenis were removed because the latest horizontal presentation does not use them.
+
+Opening a preview leads to `WebsiteBundle.astro`, which enforces a maximum of three images with `.slice(0, 3)`. SourceLink uses three 1440 × 1000 landscape page views, with aligned overlap, natural proportions and no visible screenshot labels. Accessible descriptions, image links and a separate live-site link remain. `listingMedia` supplies the preview; `displayMedia` supplies the page views. Source/time/viewport-extraction provenance accompanies each WebP. Future websites reuse these fields.
+
+No Creative technology app projects remain after Image Press's removal. The point-cloud film and terminal stay directly visible, preserving their original components and playback behavior. The main folder and homepage remain. The In the studio disclosure and separate Image archive have been removed for this release. Corey authorised pushing branch `codex/edited-work-sequence` and publishing the approved revision on Vercel on 27 October 2026. See [work-display.md](work-display.md) for scope and checks.
+
+## Point-study terminal
+
+The supplied five-second film is served from `public/work/point-study/`, with a 1080p web encode and a still poster. The terminal displays a short playback script, then accepts these commands:
+
+| Command | Effect |
+| --- | --- |
+| `help` | List supported commands |
+| `play` | Play the visible film |
+| `pause` | Pause the film |
+| `speed 0.5` | Set playback speed between 0.25 and 2 |
+| `seek 2` | Seek to a time from 0 to 5.33 seconds after the film has loaded |
+| `clear` | Clear the command display |
+
+Time, frame, and speed output comes from the video element. The command interpreter does not evaluate user-supplied JavaScript or run a shell. Up and down arrows recall command history. Reduced motion and data-saving preferences start with the poster and a manual play control. Offscreen and hidden playback pauses.
 
 ## Folder and sound
 
-Unmute feedback belongs to one trusted local `SoundToggle` press and is consumed once. The public `setSoundMuted` API is always silent, including when passed a saved native event; its optional event argument is retained only for compatibility. The shared setting notifier clears pending feedback for storage updates, volume changes and programmatic setting changes, so background updates cannot reuse a previous button press.
+The original folder component and its CSS are retained. It uses a native button and navigation, `aria-expanded`, inert closed links, Escape dismissal, and a no-JavaScript fallback. Keyboard activation and reduced motion skip its opening transition.
 
-The folder uses native button/navigation elements, `aria-expanded`, inert closed links, Escape dismissal and a no-JavaScript link fallback. Its 240ms opening transition explains where the three paper entries come from; keyboard activation and reduced-motion mode skip the transition. Grain and fragmented lettering interpret the supplied paper reference and [Raygun archive](https://designreviewed.com/series/raygun/) without using its cover artwork.
+The folder's grain and fragmented lettering interpret the supplied paper reference and the [Raygun archive](https://designreviewed.com/series/raygun/), without copying its cover artwork. The media display adapts the user-supplied React DisplayCards reference to real image and video collections.
 
-The attached `sound.tsx` reference was used directly rather than running the shadcn registry generator. Its cue definitions, exported API, `data-slot`/`data-sound` wiring, SVG and exact SoundToggle utility string are retained. Differences: relative imports match this repository; Tailwind v4 runs through Astro's Vite integration with only theme/utilities and explicit sound-file sources, no Preflight reset; the supplied CSS dark tokens also recognise the site's existing `data-theme="dark"` selector; extra foreground/ring tokens map to the existing ink. The mute control overrides its outer hit area to 44px with `cn`, leaving the 17px glyph intact. If reading or writing a sound setting fails, that setting uses memory for the rest of the document's lifetime, even if later reads would succeed. Volume is clamped to 0–1, including zero.
+The Web Kits sound component uses a header wrapper scoped to the folder. Folder transitions and the mute control can play cues; gallery controls, viewers, navigation, workflow disclosures, and theme changes remain silent. The setting is separate from Home's film soundtrack. Trusted transition provenance is handled in [folder-events.ts](../src/lib/folder-events.ts).
 
-There is one `SoundEffects` wrapper in each Work document's header, with `scope="folder"`. Only opening or closing the folder and using the sound switch can play interface cues; navigation, gallery controls, viewers, workflow disclosures, theme changes and context menus are silent. The header's sound button mutes or unmutes interface sounds, and muted folder actions are silent. Folder feedback follows actual `aria-expanded` changes caused by trusted native button activation, Escape or outside-click dismissal. [src/lib/folder-events.ts](../src/lib/folder-events.ts) issues provenance for the synchronous transition dispatch and consumes it once; scripted folder events, attribute mutations and saved-event replays cannot produce a folder cue. The wrapper leaves the library's default `scope="all"` available to other callers. Home has no interface-sound listener. No cue plays on load or hover. The mute preference and volume are saved locally when storage is available; Web Kits also suppresses cues for reduced-motion users. This interface mute is separate from Home's film soundtrack.
+## Typography and styling
 
-The folder's entries come from [src/workDisciplines.ts](../src/workDisciplines.ts). Art direction at `/work/art-direction` combines the original art-direction, Graphic Design, personal-work and video collections in its image-only looping gallery above the artwork entries and three draft case studies. Interaction design at `/work/interaction-design` contains a SourceLink case-study link and the portfolio link. Creative technology at `/work/creative-technology` contains one clickable STUDY 01 title row above the retained workflow list, with no discipline-page slider. Collection and image-position IDs are preserved so the archive viewer opens the correct original image or playable video.
+[visualTheme.css](../src/visualTheme.css) defines the Helvetica system stack, page colours, and monospace labels. The terminal uses monospace text. The release has no bundled PP Neue Montreal files or font requests.
 
-The Art direction slider drifts at a linear 24px/s on desktop and wraps seamlessly. It pauses on hover, keyboard focus, an open viewer, a hidden tab or when offscreen; a persistent Pause/Resume control lets visitors stop it themselves. The full archive uses the same gallery without automatic drift. Wheel input moves an endless strip while the pointer is over it; Prev/Next also work. Keyboard stepping is instant. Phones and reduced-motion mode retain native swipe/scroll without an automatic loop. The shared gallery repeats short collections enough times to cover a desktop viewport at the loop boundary. Duplicate copies are hidden from assistive technology and keyboard navigation.
+[edited-work.css](../src/edited-work.css) defines the compact digital discipline headings. Website preview/rail styles live in `images-scrolling-animation.css`; the screenshot bundle styles live in `WebsiteBundle.astro`. Design keeps its original styles. [experimental-work.css](../src/experimental-work.css) retains the film presentation and earlier layout rules. The folder keeps [folder.css](../src/folder.css). [styles.css](../src/styles.css) imports Tailwind theme and utilities with explicit component sources and no Preflight reset. [components.json](../components.json) and [tsconfig.json](../tsconfig.json) define the UI component paths and `@/` alias.
 
-Click-to-open viewing is retained. Bringing a card into view is restricted to Tab navigation with visible keyboard focus, not pointer focus or programmatic focus restoration. This prevents a clicked image moving out from under the pointer before the click completes, and keeps the strip in place when the viewer closes.
+## Static rendering and hosting
 
-Confirm project credits and usage rights, add case-study detail where useful, and provide a verified contact route. Review video and image quality at full size. A Graphic Design source image was previously held out pending a publication decision; adding new media still requires editorial review.
+Astro generates static HTML and assets in `dist/`. React islands hydrate the film controls, folder, sound controls, galleries, media viewer, and workflow disclosures. The terminal uses a client-side script. Theme restoration runs before paint.
 
-## Website and app projects
+[vercel.json](../vercel.json) specifies the Astro framework, `npm run build`, and `dist/`. The repository does not need a server-rendering adapter. A successful local build is separate from a Vercel deployment; production status requires deployment metadata and live route checks.
 
-STUDY 01 at `/work/study-01` and SourceLink at `/work/sourcelink` use the shared `SitePreview.astro` component. A live homepage preview links to the external project, followed by the project name and a short description. The preview has a small hover lift, a visible external-link cue, keyboard focus and reduced-motion support. Desktop homepages render in a fixed 1440 × 900 iframe and scale to the available width. No screenshot galleries appear on these project pages or in the image archive.
+## Media preparation
 
-Use `presentation: "website"`, a verified `liveUrl`, a brief `summary` and `media: []` for future website/app projects. Set `previewScripts: true` only when the app needs JavaScript to render. Previews do not accept input, submit forms or navigate the embedded page. The enclosing link opens the actual site in a new tab. Check the destination's frame restrictions before adding it. SourceLink renders its server-generated homepage without scripts, avoiding its newsletter popup; STUDY 01 requires scripts for its application.
+The scripts in `scripts/` prepare favicon exports, STUDY 01 images, and album artwork. Album artwork is uncropped and has responsive WebP sizes. Private CVs, original source attachments, and personal-use font downloads are excluded from public assets. Credits and publication evidence are tracked in the [editorial record](editorial-record.md).
 
-Interaction design and Creative technology reuse Art direction's case-study row markup and hover underline. Website projects remain linked to their local project pages from these discipline lists. The existing Art direction case studies retain their image layouts and draft content.
+## Removed projects
+
+Image Press is removed from the project data, generated project pages, public tool snapshot and preview assets. `/work/image-press` and `/tools/image-press` return 404 in this local build. The standalone source repository is unchanged. The [historical integration reference](image-press-integration.md) records its original snapshot and attribution.
+
+STUDY 01 remains absent from the project data, listing and routes. Its unused preparation script and media remain in the repository.

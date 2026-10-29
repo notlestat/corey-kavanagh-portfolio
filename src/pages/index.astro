@@ -1,17 +1,19 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import HomeFilm from "../HomeFilm";
+import Contact from "../components/Contact.astro";
 import { GithubIcon, PageNavigation } from "../Navigation";
 ---
-<BaseLayout title="COREY KAVANAGH | Art Direction / Design / Creative Technology" page="home">
+<BaseLayout title="COREY KAVANAGH | Design / Creative Technology" page="home">
   <a class="home-skip" href="#home-introduction">Skip to introduction</a>
   <div class="home-navigation"><PageNavigation page="home" /></div>
   <main class="minimal-home">
     <HomeFilm client:load />
     <section class="home-introduction" id="home-introduction" aria-labelledby="home-title">
       <h1 id="home-title">Corey Kavanagh</h1>
-      <p class="home-disciplines">Art Direction / Design / Creative Technology</p>
+      <p class="home-disciplines">Design / Creative Technology</p>
       <p class="home-description">An experimental designer working across images, identities and digital experiences. Drawn to fashion, industrial forms and the quieter side of design.</p>
+      <Contact />
     </section>
   </main>
   <footer class="home-footer"><span>London / New Zealand</span><a href="https://github.com/notlestat" target="_blank" rel="noopener noreferrer" aria-label="GitHub, opens in a new tab"><GithubIcon /></a><a href="#top">Back to top</a></footer>

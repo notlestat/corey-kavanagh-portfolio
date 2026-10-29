@@ -1,10 +1,10 @@
 /* Work refresh: image archive retained, with a quieter editorial case-study layer. */
 .page-work .site-header { justify-content: flex-end; }
 @media (max-width: 600px) {
-  /* Keep the additional sound control away from the centre navigation. */
-  .page-work .site-header { height: 138px; align-items: flex-start; padding-top: 20px; }
-  .page-work .site-header > .garment-navigation { top: 93px; }
-  .page-work .header-actions { align-items: center; }
+  /* Navigation first, at Home's position; sound, theme and GitHub sit in a row beneath it. */
+  .page-work .site-header { height: auto; flex-direction: column; align-items: stretch; gap: 2px; padding: 24px 20px 6px; }
+  .page-work .site-header > .garment-navigation { position: static; transform: none; align-self: center; }
+  .page-work .header-actions { align-self: flex-end; align-items: center; }
 }
 .work-container { width: min(1200px, calc(100% - 96px)); margin-inline: auto; }
 .work-refresh { padding-top: 1px; }
@@ -34,7 +34,7 @@
 .work-text-list, .art-case-list { list-style: none; padding: 0; margin: 0; border-top: 1px solid var(--line); }
 .work-text-list li, .art-case-list li { border-bottom: 1px solid var(--line); }
 .work-text-list li > a, .work-text-list li > button { display: grid; grid-template-columns: 44px minmax(0, 1fr) 85px; gap: 16px; align-items: center; width: 100%; min-height: 76px; padding: 20px 0; background: transparent; border: 0; color: var(--ink); text-decoration: none; text-align: left; cursor: pointer; transition: color 160ms ease; }
-.work-text-name { font: 400 clamp(23px, 2.5vw, 34px)/1.2 "Helvetica Neue", Helvetica, Arial, sans-serif; letter-spacing: -.03em; }
+.work-text-name { font: 400 clamp(23px, 2.5vw, 34px)/1.2 var(--sans-font); letter-spacing: -.03em; }
 .work-text-meta { font: 400 10px/1.5 var(--label-font); color: var(--muted); text-align: right; }
 .work-text-list li > a:hover .work-text-name, .work-text-list li > button:hover .work-text-name { text-decoration: underline; text-underline-offset: 6px; text-decoration-thickness: 1px; }
 .discipline-page { padding-block: 52px 100px; min-height: calc(100dvh - 210px); }
@@ -43,15 +43,25 @@
 .discipline-description { max-width: 48ch; margin: -24px 0 36px; color: var(--muted); font-size: 16px; line-height: 1.6; }
 .discipline-with-gallery .discipline-studies { padding-top: 55px; }
 .discipline-studies .case-page-heading { margin: 30px 0 50px; }
-.discipline-studies .case-page-heading h2 { font: 400 clamp(32px, 4vw, 54px)/1.05 "Helvetica Neue", Helvetica, Arial, sans-serif; letter-spacing: -.045em; margin: 20px 0 25px; }
+.discipline-studies .case-page-heading h2 { font: 400 clamp(32px, 4vw, 54px)/1.05 var(--sans-font); letter-spacing: -.045em; margin: 20px 0 25px; }
 .discipline-studies .art-case-index { margin-top: 0; }
 .discipline-gallery .gallery-pause:disabled { display: none; }
+/* Project filter: same label type as the gallery heading; the selected project is underlined like the current page button. */
+.gallery-filters { display: flex; flex-wrap: wrap; gap: 4px 20px; padding: 0 3.175% 20px; }
+.gallery-filters button { min-height: 32px; padding: 0; border: 0; border-bottom: 1px solid transparent; background: none; color: color-mix(in srgb, var(--ink) 72%, var(--paper)); font: 400 10px/1.6 var(--label-font); letter-spacing: .035em; cursor: pointer; }
+.gallery-filters button span { margin-left: 4px; font-variant-numeric: tabular-nums; }
+.gallery-filters button[aria-pressed="true"] { color: var(--ink); border-bottom-color: currentColor; }
+.gallery-filters button:focus-visible { outline: 1px solid var(--ink); outline-offset: 3px; }
+@media (hover: hover) and (pointer: fine) { .gallery-filters button:hover { color: var(--ink); } }
 .gallery-track { position: relative; }
 @media (max-width: 700px) {
   .discipline-gallery-heading { margin: 20px 0 30px; font-size: 34px; }
   .discipline-with-gallery .discipline-studies { padding-top: 35px; }
   .work-refresh .discipline-gallery .gallery-footer { height: auto; min-height: 68px; gap: 12px; flex-wrap: wrap; padding-block: 10px; }
   .discipline-gallery .gallery-pause { display: none; }
+  /* One swipeable line on phones instead of four wrapped rows. */
+  .gallery-filters { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; padding-inline: 20px; }
+  .gallery-filters button { flex: none; min-height: 44px; }
 }
 @media (prefers-reduced-motion: reduce) { .discipline-gallery .gallery-pause { display: none; } }
 .art-case-index > h2 { margin-bottom: 24px; }

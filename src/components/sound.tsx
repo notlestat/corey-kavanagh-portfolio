@@ -331,7 +331,7 @@ function classify(el: HTMLElement): Cue | null {
   if (
     TOGGLE_SLOTS.has(slot) ||
     el.matches(
-      'input[type="checkbox"], input[type="radio"], [aria-pressed], [role="menuitemcheckbox"], [role="menuitemradio"]',
+      'input[type="checkbox"], input[type="radio"], [aria-pressed], [role="switch"], [role="menuitemcheckbox"], [role="menuitemradio"]',
     )
   ) {
     return { sound: isOn(el) ? "toggleOff" : "toggleOn" };
@@ -745,7 +745,7 @@ export function SoundToggle({
   return (
     <button
       type="button"
-      aria-label={muted ? "Unmute interface sounds" : "Mute interface sounds"}
+      aria-label="Mute interface sounds"
       aria-pressed={muted}
       onClick={(event) => {
         onClick?.(event);

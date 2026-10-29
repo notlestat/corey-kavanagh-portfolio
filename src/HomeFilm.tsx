@@ -53,11 +53,11 @@ export default function HomeFilm() {
 
   return <div className="home-film-wrap">
     <figure className="home-film">
-      <video ref={videoRef} src="/work/gallery/video/moving-09.mp4" poster="/work/gallery/moving-09.jpg" width="1112" height="720" autoPlay loop playsInline muted={!soundOn} preload="auto" disablePictureInPicture disableRemotePlayback aria-label="Selected moving-image work by Corey Kavanagh" onError={() => setError(true)} />
+      <video ref={videoRef} src="/work/gallery/video/moving-09-home.mp4" poster="/work/gallery/moving-09.jpg" width="1112" height="720" autoPlay loop playsInline muted={!soundOn} preload="auto" disablePictureInPicture disableRemotePlayback aria-label="Selected moving-image work by Corey Kavanagh" onError={() => setError(true)} />
       {error && <figcaption className="film-error">The film could not load. <a href="/work">View the work</a></figcaption>}
     </figure>
     <div className="home-film-controls" aria-label="Film and appearance">
-      <button className="sound-toggle theme-toggle" type="button" role="switch" aria-checked={soundOn} aria-label={`Turn sound ${soundOn ? "off" : "on"}`} disabled={error} onClick={() => { void toggleSound(); }}>
+      <button className="sound-toggle theme-toggle" type="button" role="switch" aria-checked={soundOn} aria-label="Sound" disabled={error} onClick={() => { void toggleSound(); }}>
         <span className="theme-toggle-track" aria-hidden="true"><span className="theme-toggle-thumb" /></span>
         <span className="theme-toggle-label" aria-hidden="true">Sound</span>
       </button>

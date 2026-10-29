@@ -1,15 +1,33 @@
 # Portfolio editorial record
 
-These notes retain the project-specific evidence and publication decisions from the previous README. See [the repository overview](../README.md) for the current entry point.
+This record preserves the evidence and publication decisions from the earlier README. See the [repository overview](../README.md) for the current setup.
 
-## Editorial review
+## Existing artwork
 
-The earlier Work refresh was approved for publication on 7 October 2026. The folder, discipline sliders, Home removals and image-click fix were approved for publication on 8 October 2026. The BSTROY, Jimi Vain and Stem Player case studies remain visibly labelled as drafts while detailed image selections and credits are reviewed. Responsibilities and periods come from the user-supplied `cv.pdf`; media comes from matching existing archive folders. Confirm exact project image selections, collaborator credits, publication permissions and any additional process evidence before removing the draft labels. No campaign titles, analytics or new production outcomes have been invented. The private CV itself is not copied into public assets. Existing `/work#work-index` links redirect to the preserved list at `/work/archive#work-index`. The workflow descriptions use neutral project names.
+The Work refresh was approved for publication on 7 October 2026. The folder, discipline sliders, Home removals, and image-click fix were approved on 8 October 2026.
 
-## Album artwork, approved for publication on 12 October 2026
+BSTROY, Jimi Vain, and Stem Player case studies remain labelled as drafts while detailed image selections and credits are reviewed. Responsibilities and periods come from a user-supplied CV; imagery comes from the existing archive. The private CV is not included in public assets. Draft labels do not establish final collaborator credits or publication rights.
 
-The project owner identified `IMG_0611.PNG` as the official Vory cover featuring Ye and confirmed a 2025 release during the 12 October 2026 review. `/work/vory-lord-lift-me-up` uses the title printed on the supplied artwork, "Lord Lift Me Up". The owner associated it with Donda 2; album attribution is left out of the public copy pending an exact release link. The owner's private `cv.pdf`, page 2, supports the broader Vory role, not project-specific process, a brief, collaborators or campaign results. The owner explicitly requested GitHub and Vercel publication after reviewing the simplified pages. Additional image/collaborator credits remain an editorial follow-up; no further credit or rights claims are added.
+## Album artwork
 
-The other seven supplied images at `/work/unreleased-artwork` are explicitly unused client artwork, not alternative Vory covers or published releases. Both entries are linked from Art direction, preserving the existing slider and archive. Client names, dates and outcomes have not been invented. The owner requested no explanatory commentary about the designs; the pages show factual project information, role and artwork only. The original PNGs and private CV are not copied into public assets. Run `node scripts/prepare-album-artwork.mjs /path/to/source-directory` to generate uncropped WebP copies with target widths of 640, 1200 and 2000 pixels, without enlarging smaller originals. Responsive sources and display dimensions are defined in [src/caseStudyData.ts](../src/caseStudyData.ts). The canonical Notion project records production publication on 12 October 2026 and live checks of both artwork routes. That dated record supersedes the earlier pending-deployment wording. This documentation review does not rerun the live checks.
+On 12 October 2026, the project owner identified the supplied Lord Lift Me Up artwork as the official Vory cover featuring Ye and confirmed a 2025 release. The displayed title comes from the supplied artwork. Album attribution remains omitted pending an exact release source. The private CV supports the broader Vory role, not project-specific collaborators or outcomes.
 
-Source: [Personal Portfolio project record](https://app.notion.com/p/3f67794de80e815e8dcaf3770d699e82).
+The seven images under `/work/unreleased-artwork` are unused client concepts. They are separate from the official Vory cover. Client names, dates, and outcomes have not been inferred. Both entries retain factual project details, role, credit, and uncropped artwork.
+
+The canonical Notion project records production publication on 12 October 2026 and live checks of both artwork routes. That dated record supersedes the earlier pending-deployment wording. It does not establish the state of a later deployment.
+
+Source: [Portfolio project record](https://app.notion.com/p/3f67794de80e815e8dcaf3770d699e82).
+
+## Reviewed layout and contact update
+
+On 24 October 2026, the owner reviewed the local layout and requested GitHub publication, an updated README, and Vercel publication. The final selection retains the original Work folder and Art direction slider, keeps visual case-study cards, and adds the supplied point-study film with a functioning playback terminal. The temporary collection-cover grid was removed.
+
+The owner supplied the phone contact and chose phone-only contact for this release. The owner also chose the previous Helvetica font for public deployment. PP Neue Montreal was used only in local review; its personal-use files are excluded from this release.
+
+These are supplied decisions and local implementation evidence. They do not add clients, expertise, collaborator credits, usage rights, or production results. Deployment completion must be recorded from the actual hosting result.
+
+## Release scope confirmed on 25 October 2026
+
+The owner requested GitHub and Vercel publication of the reviewed portfolio updates while holding the orb experiment. The release excludes the entrance animation and its dependency. The orb work remains in the separate local checkout for later review. This instruction supersedes the earlier push hold for the portfolio updates.
+
+Source: the owner's explicit publication request in the portfolio conversation. Hosting completion remains a separate verified result.

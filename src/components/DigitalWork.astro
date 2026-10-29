@@ -1,20 +1,17 @@
 ---
-import { systems } from "../systemData";
-import SystemRow from "../SystemRow";
 import { caseStudies } from "../caseStudyData";
+import { ImagesScrollingAnimation } from "./ui/images-scrolling-animation";
 interface Props { category: "interaction-design" | "creative-technology"; }
 const { category } = Astro.props;
-const creative = category === "creative-technology";
-const projects = caseStudies.filter(study => study.category === category);
+const projects = caseStudies.filter(project => project.featured && project.category === category).map(project => {
+  const image = project.listingMedia ?? project.displayMedia?.[0] ?? project.media[0];
+  return {
+    title: project.name, href: `/work/${project.slug}`, role: project.role,
+    src: image.src, alt: image.alt, width: image.width, height: image.height,
+  };
+});
 ---
-<section class="engineering-systems" id="digital-work" aria-labelledby="systems-title">
-  <h2 class="work-label" id="systems-title">Selected case studies</h2>
-  <div class="systems-list">
-    <ol class="art-case-list">
-      {projects.map((project, index) => <li><a href={`/work/${project.slug}`}><span class="work-label">{String(index + 1).padStart(2, "0")}</span><div><h3>{project.name}</h3><p>{project.role}</p></div><span class="work-label">{project.period}</span></a></li>)}
-      {!creative && <li><a href="/" aria-label="Explore the Corey Kavanagh portfolio website"><span class="work-label">{String(projects.length + 1).padStart(2, "0")}</span><div><h3>This portfolio</h3><p>Website design</p></div><span class="work-label">Ongoing</span></a></li>}
-    </ol>
-    {creative && systems.map((item, index) => <SystemRow item={item} index={index + projects.length} client:load />)}
-    <p class="digital-next">{creative ? "More creative tools and project studies will appear here as they develop." : "More interfaces and project studies will appear here as they develop."}</p>
-  </div>
-</section>
+{projects.length > 0 && <div class="digital-projects" id="digital-work"><ImagesScrollingAnimation projects={projects} client:load /></div>}
+<style>
+  .digital-projects { width: min(100%, 1040px); margin-inline: auto; }
+</style>

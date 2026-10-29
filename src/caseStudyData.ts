@@ -1,5 +1,7 @@
 import type { WorkDiscipline } from "./workDisciplines";
 
+export type ProjectImage = { src: string; alt: string; width: number; height: number };
+
 export type CaseStudy = {
   slug: string;
   name: string;
@@ -11,7 +13,11 @@ export type CaseStudy = {
   contribution?: string[];
   approach?: string;
   category?: WorkDiscipline;
-  presentation?: "visual" | "website" | "artwork";
+  featured?: boolean;
+  presentation?: "visual" | "website" | "artwork" | "interactive";
+  listingMedia?: ProjectImage;
+  listingDetail?: ProjectImage;
+  displayMedia?: (ProjectImage & { label: string })[];
   editorialNote?: string;
   previewScripts?: boolean;
   disciplines?: string[];
@@ -35,10 +41,11 @@ function albumArtwork(name: string, alt: string, caption: string, height = 2000)
 }
 
 // BSTROY, Jimi Vain and Stem Player remain CV-grounded drafts using the archive.
-// Website and app projects use live homepage previews with a short description.
+// Website projects use beveled previews and three-screen bundles.
 export const caseStudies: CaseStudy[] = [
   {
     slug: "vory-lord-lift-me-up",
+    featured: true,
     name: "Vory / Lord Lift Me Up",
     period: "2025",
     periodLabel: "Release",
@@ -73,6 +80,14 @@ export const caseStudies: CaseStudy[] = [
   },
   {
     slug: "sourcelink",
+    featured: true,
+    listingMedia: { src: "/work/sourcelink/views/home.webp", alt: "SourceLink, website design for clothing supplier intelligence", width: 1440, height: 1000 },
+    listingDetail: { src: "/work/sourcelink/home-mobile.webp", alt: "SourceLink website on a narrow mobile screen", width: 390, height: 844 },
+    displayMedia: [
+      { src: "/work/sourcelink/views/home.webp", alt: "SourceLink landing page, desktop view", width: 1440, height: 1000, label: "Landing page" },
+      { src: "/work/sourcelink/views/reports.webp", alt: "SourceLink reports page, desktop view", width: 1440, height: 1000, label: "Reports" },
+      { src: "/work/sourcelink/views/savings.webp", alt: "SourceLink savings calculator, desktop view", width: 1440, height: 1000, label: "Savings calculator" },
+    ],
     name: "SourceLink",
     period: "Live website",
     role: "Website design",
@@ -86,6 +101,7 @@ export const caseStudies: CaseStudy[] = [
   },
   {
     slug: "bstroy",
+    featured: true,
     name: "BSTROY",
     period: "2022–2024",
     role: "Art direction / Photography",
@@ -106,6 +122,7 @@ export const caseStudies: CaseStudy[] = [
   },
   {
     slug: "jimi-vain",
+    featured: true,
     name: "Jimi Vain",
     period: "2022–2023",
     role: "Art direction / Media design",
@@ -141,20 +158,5 @@ export const caseStudies: CaseStudy[] = [
       { src: "/work/gallery/stem-02.jpg", alt: "Stem Player selected archive image 2" },
       { src: "/work/gallery/stem-03.jpg", alt: "Stem Player selected archive image 3" },
     ],
-  },
-  {
-    slug: "study-01",
-    name: "STUDY 01",
-    period: "2026",
-    role: "Design / Development / Creative technology",
-    category: "creative-technology",
-    presentation: "website",
-    previewScripts: true,
-    disciplines: ["Creative coding", "Design engineering", "Experimental typography"],
-    summary: "A browser-based composition instrument for image and type. ORDER, SILENCE and TENSION set the starting rules; seeds and selective locks develop variations.",
-    liveUrl: "https://study-01-nu.vercel.app/",
-    sourceUrl: "https://github.com/notlestat/study-01",
-    credit: "Art direction and design by Corey Kavanagh. Built with Codex.",
-    media: [],
   },
 ];

@@ -3,6 +3,7 @@
 @import "tailwindcss/utilities.css" layer(utilities) source(none);
 @source "./components/sound.tsx";
 @source "./components/WorkSound.tsx";
+@source "./components/ui";
 
 /* No Preflight: preserve the portfolio's existing Home and native controls. */
 :root {
@@ -391,7 +392,6 @@ img{display:block;width:100%;height:100%;object-fit:cover}
 @media(max-width:700px){
   .site-header{height:70px}
   .header-actions{gap:8px}
-  .theme-toggle-label{display:none}
   .page-switch{height:48px;padding:3px;gap:2px}
   .page-switch-link{width:34px;height:34px}
   .page-switch-link.is-active{width:42px;height:42px}
