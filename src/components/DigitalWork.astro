@@ -8,6 +8,7 @@ const projects = caseStudies.filter(project => project.featured && project.categ
   return {
     title: project.name, href: `/work/${project.slug}`, role: project.role,
     src: image.src, alt: image.alt, width: image.width, height: image.height,
+    transitionName: `work-${project.slug}`,
   };
 });
 ---

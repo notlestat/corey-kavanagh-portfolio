@@ -2,19 +2,38 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import HomeFilm from "../HomeFilm";
 import Contact from "../components/Contact.astro";
-import { GithubIcon, PageNavigation } from "../Navigation";
+import SiteFooter from "../components/SiteFooter.astro";
+import HoverPreviewList, { type PreviewProject } from "../components/ui/hover-preview-list";
+import { PageNavigation } from "../Navigation";
+import { caseStudies } from "../caseStudyData";
+
+// One row per case study, then the point study, which lives on its discipline page.
+const projects: PreviewProject[] = [
+  ...caseStudies.map(study => {
+    const listing = study.listingMedia ?? study.displayMedia?.[0];
+    const image = listing ?? study.media[0];
+    return {
+      title: study.name, href: `/work/${study.slug}`, role: study.role, period: study.period,
+      src: image.src, srcSet: listing ? undefined : study.media[0].srcSet, alt: image.alt, width: image.width, height: image.height,
+    };
+  }),
+  { title: "Point study", href: "/work/creative-technology", role: "Moving image / Code", period: "00:05", src: "/work/point-study/poster.jpg", alt: "", width: 1920, height: 1080 },
+];
 ---
 <BaseLayout title="Corey Kavanagh | Design / Creative Technology" page="home">
   <a class="home-skip" href="#home-introduction">Skip to introduction</a>
   <div class="home-navigation"><PageNavigation page="home" /></div>
-  <main class="minimal-home">
-    <HomeFilm client:load />
-    <section class="home-introduction" id="home-introduction" aria-labelledby="home-title">
-      <h1 id="home-title">Corey Kavanagh</h1>
-      <p class="home-disciplines">Design / Creative Technology</p>
-      <p class="home-description">An experimental designer working across images, identities and digital experiences. Drawn to fashion, industrial forms and the quieter side of design.</p>
-      <Contact />
-    </section>
+  <main class="home">
+    <div class="home-stage work-container">
+      <HomeFilm client:load />
+      <section class="home-introduction" id="home-introduction" aria-labelledby="home-title">
+        <h1 id="home-title"><span class="rise"><span>Corey</span></span> <span class="rise" style="--i:1"><span>Kavanagh</span></span></h1>
+        <p class="home-disciplines settle">Design / Creative Technology</p>
+        <p class="home-description settle" style="--i:1">An experimental designer working across images, identities and digital experiences. Drawn to fashion, industrial forms and the quieter side of design.</p>
+        <div class="settle" style="--i:2"><Contact /></div>
+      </section>
+    </div>
+    <HoverPreviewList projects={projects} label="Selected work" allHref="/work" client:visible />
   </main>
-  <footer class="home-footer"><span>London / New Zealand</span><a href="https://github.com/notlestat" target="_blank" rel="noopener noreferrer" aria-label="GitHub, opens in a new tab"><GithubIcon /></a><a href="#top">Back to top</a></footer>
+  <SiteFooter contact={false} github />
 </BaseLayout>

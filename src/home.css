@@ -11,7 +11,7 @@
   background: conic-gradient(from 30deg, #c5bea0, #e8e4d3, #d5d0b8, #f0eee3, #c5bea0);
   border: 1px solid #c9c2a7;
   box-shadow: inset 0 1px 1px rgb(255 255 255 / .7), inset 0 -2px 3px rgb(76 64 30 / .12), -2px 4px 5px rgb(34 32 21 / .13);
-  transition: transform 180ms var(--ease-out), box-shadow 180ms ease;
+  transition: transform 180ms var(--ease-out), translate 260ms var(--ease-out), box-shadow 180ms ease;
 }
 .garment-button::before { content: ""; position: absolute; inset: 6px; border-radius: 50%; border: 1px solid rgb(110 95 49 / .21); box-shadow: inset 0 1px 2px rgb(65 54 25 / .12), 0 1px 1px rgb(255 255 255 / .45); }
 .garment-holes { display: grid; grid-template-columns: repeat(2, 5px); gap: 5px; transform: rotate(-9deg); }
@@ -31,24 +31,37 @@
 .home-skip { position: absolute; top: 10px; left: 20px; z-index: 30; padding: 10px; background: var(--paper); font-size: 12px; transform: translateY(-200%); }
 .home-skip:focus { transform: none; }
 /* Same 94px band as .site-header so the buttons do not jump between Home and Work. */
-.home-navigation { display: grid; place-items: center; height: 94px; padding: 0 20px; margin-bottom: 86px; }
-.minimal-home { width: min(560px, calc(100% - 48px)); margin: 0 auto; }
-.home-film-wrap { position: relative; }
-.home-film { position: relative; margin: 0; width: 100%; aspect-ratio: 1112 / 720; }
-.home-film video { display: block; width: 100%; height: 100%; object-fit: contain; background: transparent; border-radius: 2px; }
-.home-film-controls { position: absolute; left: calc(100% + 28px); top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; align-items: start; gap: 5px; }
+.home-navigation { display: grid; place-items: center; height: 94px; padding: 0 20px; margin-bottom: 44px; }
+.home { padding-bottom: 72px; }
+
+/* Home shares the Work pages' column. On a twelve-column grid the film takes seven
+   and the introduction four, with one empty column between them. The name sits on the
+   film's top edge and the contact line on its bottom edge. */
+.home-stage { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 28px; }
+/* The wrapper adds no box, so the film and its caption are placed on the grid directly. */
+.home-film-wrap { display: contents; }
+.home-film { grid-column: 1 / 8; grid-row: 1; position: relative; margin: 0; aspect-ratio: 1112 / 720; }
+.home-film video { display: block; width: 100%; height: 100%; object-fit: contain; background: transparent; border-radius: 2px; animation: develop 1300ms var(--ease-out) backwards; }
+/* The film comes up like a print in a developing tray. */
+@keyframes develop { from { opacity: 0; filter: blur(18px) saturate(.2); transform: scale(1.02); } }
+.home-film-controls { grid-column: 1 / 8; grid-row: 2; display: flex; align-items: center; flex-wrap: wrap; gap: 0 26px; margin-top: 6px; color: var(--muted); font: 400 10px/1.5 var(--label-font); }
+.home-film-caption { display: flex; gap: 14px; margin: 0 auto 0 0; }
+.home-film-time { color: var(--ink); font-variant-numeric: tabular-nums; }
 .home-film-controls .theme-toggle { min-height: 44px; padding: 8px 0; gap: 9px; }
-.home-film-controls .theme-toggle-label { display: inline; min-width: 32px; font-size: 10px; }
+.home-film-controls .theme-toggle-label { display: inline; min-width: 0; font-size: 10px; }
 .home-film-controls .theme-toggle-track { width: 29px; height: 16px; padding: 2px; border-color: var(--muted); }
 .home-film-controls .theme-toggle-thumb { width: 10px; height: 10px; }
 .home-film-controls .sound-toggle[aria-checked="true"] .theme-toggle-thumb { transform: translateX(13px); }
 .home-film-controls .sound-toggle:disabled { opacity: .5; cursor: default; }
 .film-error { position: absolute; inset: auto 12px 12px; padding: 12px; background: var(--paper); font-size: 12px; line-height: 1.5; }
-.film-audio-error { position: absolute; top: 100%; margin: 8px 0 0; width: 110px; font-size: 11px; line-height: 1.4; color: var(--muted); }
-.home-introduction { position: relative; width: min(400px, 100%); margin: 67px auto 0; scroll-margin-top: 35px; }
-.home-introduction h1 { font-size: 23px; line-height: 1.2; font-weight: 400; letter-spacing: -.035em; margin: 0 0 12px; }
+.film-audio-error { flex-basis: 100%; margin: 0 0 8px; font-size: 11px; line-height: 1.4; }
+.home-introduction { grid-column: 9 / 13; grid-row: 1; display: flex; flex-direction: column; min-width: 0; scroll-margin-top: 35px; }
+/* The negative margin lifts the cap height onto the film's top edge. */
+.home-introduction h1 { margin: -.13em 0 16px; font-size: clamp(40px, 4.5vw, 64px); line-height: 1; font-weight: 400; letter-spacing: -.04em; }
 .home-disciplines { font-family: var(--label-font); font-size: 10px; line-height: 1.7; letter-spacing: -.025em; color: var(--muted); margin: 0; }
-.home-description { max-width: 39ch; font-size: 16px; font-weight: 400; line-height: 1.6; letter-spacing: -.01em; margin: 31px 0 25px; text-wrap: pretty; }
+.home-description { max-width: 36ch; margin: auto 0 14px; padding-top: 28px; font-size: 16px; font-weight: 400; line-height: 1.6; letter-spacing: -.01em; text-wrap: pretty; }
+/* The phone link is a 44px target; pull it down so its text rests on the film's bottom edge. */
+.home-introduction .portfolio-contact { margin-bottom: -18px; }
 .home-tools { margin-top: 36px; color: var(--muted); }
 .home-tools-heading { margin: 0 0 11px; font: 400 9px/1.5 var(--label-font); letter-spacing: .02em; }
 .home-tool-marks { display: grid; grid-template-columns: repeat(7, 44px); gap: 6px; width: max-content; max-width: 100%; margin-left: -9px; }
@@ -59,22 +72,20 @@
 .home-tool-mark[data-open="true"] .home-tool-name { opacity: 1; visibility: visible; }
 .home-tool-mark[data-instant="true"] .home-tool-name { transition: none; }
 .home-tool-mark:focus-visible { outline: 1px solid var(--ink); outline-offset: 3px; border-radius: 2px; }
-.home-footer { width: min(400px, calc(100% - 48px)); margin: 104px auto 0; padding: 0 0 55px; display: flex; align-items: center; gap: 23px; color: var(--muted); font-family: var(--label-font); font-size: 10px; line-height: 1.5; }
-.home-footer > span { margin-right: auto; }
-.home-footer a { display: inline-flex; align-items: center; min-height: 44px; text-decoration: none; }
-.home-footer svg { width: 15px; height: 15px; }
 
 @media (hover: hover) and (pointer: fine) {
   .garment-link:hover .garment-button { transform: translateY(-2px) rotate(-7deg); }
   .garment-link-work:hover .garment-button { transform: translateY(-2px) rotate(7deg); }
-  .home-footer a:hover { color: var(--ink); }
   .home-tool-mark:hover { color: var(--ink); }
 }
 @media (max-width: 899px) {
-  .home-film-controls { position: relative; top: auto; left: auto; transform: none; flex-direction: row; flex-wrap: wrap; justify-content: center; gap: 0 32px; margin-top: 9px; }
-  .home-film-controls .theme-toggle-label { min-width: 0; }
-  .film-audio-error { position: static; width: auto; margin: 0; align-self: center; }
-  .home-introduction { margin-top: 47px; }
+  /* One column: film, caption, then the introduction. */
+  .home-stage { display: block; }
+  .home-film-wrap { display: block; max-width: 640px; }
+  .home-introduction { margin-top: 44px; }
+  .home-introduction h1 { margin-top: 0; }
+  .home-description { margin-top: 0; }
+  .home-introduction .portfolio-contact { margin-bottom: 0; }
   .home-tool-marks { gap: 4px; }
 }
 @media (max-width: 700px) {
@@ -85,18 +96,19 @@
   .garment-holes { grid-template-columns: repeat(2, 4px); gap: 4px; }
   .garment-holes i { width: 4px; height: 4px; }
   .garment-label { font-size: 9px; }
-  .home-navigation { display: block; height: auto; padding-top: 24px; margin-bottom: 42px; }
-  .home-introduction { width: min(400px, calc(100% - 12px)); margin-top: 38px; }
-  .home-introduction h1 { font-size: 22px; }
-  .home-disciplines { font-size: 9px; max-width: 32ch; letter-spacing: 0; }
-  .home-description { font-size: 15px; margin-top: 26px; }
-  .home-footer { margin-top: 80px; padding-bottom: 32px; gap: 20px; }
+  .home-navigation { display: block; height: auto; padding-top: 24px; margin-bottom: 34px; }
+  .home { padding-bottom: 40px; }
+  .home-film-controls { gap: 0 20px; }
+  .home-introduction { margin-top: 34px; }
+  .home-disciplines { font-size: 9px; letter-spacing: 0; }
+  .home-description { font-size: 15px; padding-top: 24px; }
 }
 @media (max-width: 480px) {
   .home-tool-marks { grid-template-columns: repeat(4, 44px); gap: 8px 13px; }
   .home-tool-mark:nth-child(4n + 1) .home-tool-name { left: 0; transform: none; }
 }
 @media (prefers-reduced-motion: reduce) {
+  .home-film video { animation: none; }
   .home-tool-name { transition: none; }
   .garment-button { transition: none; }
   .garment-link:hover .garment-button, .garment-link:active .garment-button { transform: none; }
