@@ -11,8 +11,8 @@ html { scrollbar-color: var(--surface-strong) var(--paper); }
 ::view-transition-old(root) { animation: page-out 140ms var(--ease-out) both; }
 ::view-transition-new(root) { animation: page-in 380ms var(--ease-out) both; }
 ::view-transition-group(*) { animation-duration: 440ms; animation-timing-function: var(--ease-in-out); }
-/* The navigation buttons sit in the same place on every page, so they hold still. */
-.garment-navigation { view-transition-name: site-nav; }
+/* The navigation tags hang in the same place on every page, so they hold still. */
+.tag-navigation { view-transition-name: site-nav; }
 ::view-transition-old(site-nav), ::view-transition-new(site-nav) { animation-duration: 120ms; }
 @keyframes page-out { to { opacity: 0; } }
 @keyframes page-in { from { opacity: 0; transform: translateY(10px); } }

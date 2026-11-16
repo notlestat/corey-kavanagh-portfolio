@@ -42,7 +42,7 @@ Collection names, item counts, paths, and slider ordering come from [portfolioDa
 Changes from a design and accessibility audit of the published site:
 
 - **Toggles.** The Home film, Home sound, Work mute and gallery pause controls each use one signal. Home film and Home sound are switches with fixed names ("Play film", "Sound") whose checked state follows the setting. The Work mute button keeps a fixed name with `aria-pressed`. The gallery pause and point-study buttons change their visible text and carry no pressed state. The point-study name is its visible text plus "(point study)", so voice control can use the words on screen. The sound cue library treats `role="switch"` as a toggle.
-- **One layout system.** Home's button navigation sits in the same 94px band as the Work header. Interaction design and Creative technology use Design's intro spacing and heading scale. Below 600px the Work header puts navigation first, at Home's position, with the controls in a row beneath it.
+- **One layout system.** Home's navigation hangs from the top edge of the same 94px band as the Work header. Interaction design and Creative technology use Design's intro spacing and heading scale. Below 600px the Work header puts navigation first, at Home's position, with the controls in a row beneath it.
 - **Folder prints.** `public/work/folder/` holds three small WebP prints (17 KB total), derived from `gallery/bstroy-01.jpg`, `sourcelink/views/home.webp` and `point-study/poster.jpg`. They are decorative; the folder trigger's enlarged hit area receives clicks on them. The folder is scaled to 1.2 above 900px.
 - **Gallery.** The slider uses a roving tabindex: one card is in the tab order, and arrow keys, Home and End move between cards. `WorkGallery` takes a `filterable` prop that adds project filter buttons (`aria-pressed`, fixed names); changing the filter remounts the slider.
 - **Video.** Home plays `gallery/video/moving-09-home.mp4` (834 × 540, H.264 CRF 30, 2.1 MB; was 4.5 MB). Creative technology plays `point-study/point-study-web.mp4` (1440 × 810, CRF 25, 3.4 MB; was 8.5 MB). The original encodes remain for the gallery viewer and as sources.
@@ -118,7 +118,7 @@ Under the film, [hover-preview-list.tsx](../src/components/ui/hover-preview-list
 
 [motion.css](../src/motion.css) holds the shared motion:
 
-- Cross-document view transitions (`@view-transition { navigation: auto; }`). Pages crossfade, the navigation buttons hold still, and a project image travels from its card or preview to the case study's lead image through a shared `view-transition-name`. Browsers without support navigate as before.
+- Cross-document view transitions (`@view-transition { navigation: auto; }`). Pages crossfade, the navigation tags hold still, and a project image travels from its card or preview to the case study's lead image through a shared `view-transition-name`. Browsers without support navigate as before.
 - `.rise` lifts a heading line out of its baseline on load. `.settle` fades supporting text in after it.
 - `.reveal-media` ties an image's fade and 34px rise to its scroll position with `animation-timeline: view()`. Browsers without support show the image in place.
 
@@ -126,13 +126,31 @@ Reduced motion keeps the page crossfade and removes the movement.
 
 Other changes:
 
-- [magnetic.ts](../src/lib/magnetic.ts) pulls each navigation button 28% of the way toward the pointer through the `translate` property, which leaves the existing hover `transform` working.
+- [Navigation.tsx](../src/Navigation.tsx) draws the navigation as two swing tags on thread. See [Navigation tags](#navigation-tags).
 - The Work folder leans up to 5 degrees toward the pointer while its prints shift the other way. Its three sheets rise 55ms apart when it opens, and the prints slide up on load. Above 1200 × 860px the folder is 1.3 times its base size. It uses `zoom` instead of `scale`, so the browser redraws the type at the larger size.
 - [NextProject.astro](../src/components/NextProject.astro) replaces three copies of the case-study navigation. The next project's name is set at up to 72px beside its lead image.
 - [SiteFooter.astro](../src/components/SiteFooter.astro) replaces the three page footers. [live-clock.tsx](../src/components/ui/live-clock.tsx) adds the current time in London and New Zealand after hydration. The server output still reads "London / New Zealand" without times.
 - Design drops the "Selected case studies" label that repeated the "Selected projects." heading.
 - `.work-container` moved from `work.css` to `styles.css`, because Home now uses it.
 
-No dependency was added. The magnetic, pointer-following and scroll-reveal patterns are common in motion-primitives, React Bits and Magic UI, where they depend on the Motion library. They are rewritten here in CSS and plain React.
+The pointer-following and scroll-reveal patterns are common in motion-primitives, React Bits and Magic UI, where they depend on the Motion library. They are rewritten here in CSS and plain React. The navigation tags are the one place that uses Motion.
 
 Checked locally on 16 November 2026 in Chrome for Testing: `astro check` and `npm run build` pass with no errors; no horizontal overflow on eight routes at 1440px and on Home, Work and BSTROY at 390px; view transitions complete on Home, Work, Design, case-study and website-project navigation; the keyboard preview appears on focus; reduced motion removes the load animations and pauses the film. Safari, Firefox and physical phones are unchecked.
+
+## Navigation tags
+
+Home and Work are two paper tags that hang on thread from the top edge of the page. The tag for the current page is dark. They replace the two garment buttons and `src/lib/magnetic.ts`, which nothing else used.
+
+[Navigation.tsx](../src/Navigation.tsx) is hydrated with `client:load` in [Header.astro](../src/components/Header.astro) and [index.astro](../src/pages/index.astro). The server output is two plain links at their resting angles, so navigation works before the script loads and without it.
+
+Each tag keeps one Motion value, `swing`, the number of degrees it is away from rest. The link rotates about the top of its thread by that amount. The card rotates about its eyelet by a second value derived from the speed of `swing`, so it trails the thread and catches up. Three things change `swing`:
+
+- **A pointer passing through.** The first mouse movement over a tag pushes it in the direction of travel, in proportion to the pointer's speed, at most once every 350ms.
+- **A drag.** After 4px of movement the tag follows the pointer exactly, through pointer capture. Past 48 degrees it follows at a fifth of the distance. The click that ends a drag is cancelled, so only a press that did not move follows the link. `touch-action: pan-y` leaves vertical scrolling to the browser.
+- **Arriving.** A click stores the tag's name in `sessionStorage`. The next page reads it and gives that tag a push, so the tag you clicked is still moving when the page opens.
+
+On release a spring (`stiffness: 55`, `damping: 2.6`) returns `swing` to zero, starting at the speed the tag already had. It overshoots a few times, which is the pendulum. With reduced motion the pointer push and the arrival push are off, a drag still follows the pointer, and a released tag returns once without swinging.
+
+Motion (`motion` 14.14) is the first animation dependency. The tags use the `m` component with `LazyMotion` and `domAnimation`, which leaves out Motion's drag and layout code. The navigation script is 39.5 KB gzipped and loads on every page. The full `motion` component measured 54.8 KB.
+
+Checked locally on 16 November 2026 in Chrome for Testing at 1440px and 390px: `astro check` and `npm run build` pass; a pointer sweep, a drag released on and off the tag, a plain click, keyboard Enter after a drag and the arrival push behave as described; `checkMobileHeader` in `tests/review-regressions.tsx` passes at 390px; reduced motion was checked through media emulation. Touch dragging on a physical phone, Safari, Firefox and screen readers are unchecked.
