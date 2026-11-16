@@ -27,8 +27,9 @@ export function mountSoundScopeRegression(scope: "all" | "folder") {
 export function checkMobileHeader() {
   const header = document.querySelector<HTMLElement>(".site-header")!;
   const selectors = [
-    ".garment-link-home",
-    ".garment-link-work",
+    // The card, not the link: the link is rotated about its top edge, so its bounding box pokes above the header.
+    ".tag-link-home .tag",
+    ".tag-link-work .tag",
     "button[data-sound]",
     ".github-link",
   ];
