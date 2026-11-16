@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 
 export default function HomeFilm() {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const timeRef = useRef<HTMLSpanElement>(null);
   const [soundOn, setSoundOn] = useState(true);
   const [playing, setPlaying] = useState(true);
   const [error, setError] = useState(false);
@@ -37,6 +38,22 @@ export default function HomeFilm() {
     return () => { active = false; motion.removeEventListener("change", changeMotion); };
   }, []);
 
+  // The caption shows the film's real position. It writes straight to the DOM once
+  // per frame while the film plays, so React does not re-render 60 times a second.
+  useEffect(() => {
+    const video = videoRef.current, label = timeRef.current;
+    if (!video || !label) return;
+    let frame = 0;
+    const two = (value: number) => String(Math.floor(value)).padStart(2, "0");
+    const paint = () => {
+      const time = video.currentTime;
+      label.textContent = `${two(time / 60)}:${two(time % 60)}.${two((time % 1) * 100)}`;
+      if (playing) frame = requestAnimationFrame(paint);
+    };
+    paint();
+    return () => cancelAnimationFrame(frame);
+  }, [playing]);
+
   const toggleSound = async () => {
     const video = videoRef.current;
     if (!video) return;
@@ -70,7 +87,8 @@ export default function HomeFilm() {
       <video ref={videoRef} src="/work/gallery/video/moving-09-home.mp4" poster="/work/gallery/moving-09.jpg" width="1112" height="720" autoPlay loop playsInline muted={!soundOn} preload="auto" disablePictureInPicture disableRemotePlayback aria-label="Selected moving-image work by Corey Kavanagh" onError={() => setError(true)} />
       {error && <figcaption className="film-error">The film could not load. <a href="/work">View the work</a></figcaption>}
     </figure>
-    <div className="home-film-controls" aria-label="Film">
+    <div className="home-film-controls">
+      <p className="home-film-caption"><span>Moving image</span><span className="home-film-time" ref={timeRef} aria-hidden="true">00:00.00</span></p>
       <button className="sound-toggle theme-toggle" type="button" role="switch" aria-checked={playing} aria-label="Play film" disabled={error} onClick={() => { void togglePlayback(); }}>
         <span className="theme-toggle-track" aria-hidden="true"><span className="theme-toggle-thumb" /></span>
         <span className="theme-toggle-label" aria-hidden="true">Film</span>

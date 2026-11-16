@@ -3,7 +3,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import Header from "./Header.astro";
 import DigitalWork from "./DigitalWork.astro";
 import PointStudy from "./PointStudy.astro";
-import Contact from "./Contact.astro";
+import SiteFooter from "./SiteFooter.astro";
 import { workDisciplines } from "../workDisciplines";
 import "../work.css";
 import "../experimental-work.css";
@@ -14,9 +14,9 @@ import "../edited-work.css";
   <Header page="work" />
   <main class="work-refresh edited-discipline work-container" id="technology-content">
       <a class="case-back" href="/work">All work</a>
-      <header class="edited-heading"><h1>Creative technology.</h1><p class="sr-only">{workDisciplines[2].note}</p></header>
+      <header class="edited-heading"><h1><span class="rise"><span>Creative technology.</span></span></h1><p class="sr-only">{workDisciplines[2].note}</p></header>
       <PointStudy />
       <DigitalWork category="creative-technology" />
   </main>
-  <footer class="work-footer work-container"><Contact /><a href="/work">Back to Work</a></footer>
+  <SiteFooter back={{ href: "/work", label: "Back to Work" }} />
 </BaseLayout>

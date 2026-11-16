@@ -2,6 +2,7 @@
 import "../styles.css";
 import "../visualTheme.css";
 import "../home.css";
+import "../motion.css";
 import type { Page } from "../Navigation";
 
 interface Props {
@@ -43,5 +44,9 @@ const shareImage = new URL("/og/default.jpg", Astro.site);
   </head>
   <body>
     <div id="top" class={`site-shell page-${page}`}><slot /></div>
+    <script>
+      import { initMagnetic } from "../lib/magnetic";
+      initMagnetic();
+    </script>
   </body>
 </html>

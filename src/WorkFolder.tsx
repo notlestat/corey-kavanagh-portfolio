@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from "react";
 
 import { dispatchFolderStateChange } from "./lib/folder-events";
 import { workDisciplines } from "./workDisciplines";
@@ -46,6 +46,46 @@ export default function WorkFolder() {
       document.removeEventListener("pointerdown", onPointerDown);
     };
   }, [open]);
+
+  // The folder leans toward the pointer and its prints shift the other way, so the
+  // prints read as sitting deeper than the cover. Mouse only, and off for reduced motion.
+  useEffect(() => {
+    const element = stage.current, room = element?.parentElement;
+    const prints = element?.querySelector<HTMLElement>(".folder-prints");
+    if (!element || !room || !prints) return;
+    const fine = matchMedia("(hover: hover) and (pointer: fine)");
+    const still = matchMedia("(prefers-reduced-motion: reduce)");
+    const target = { x: 0, y: 0 }, current = { x: 0, y: 0 };
+    let frame = 0;
+    const paint = () => {
+      frame = 0;
+      current.x += (target.x - current.x) * 0.12;
+      current.y += (target.y - current.y) * 0.12;
+      const resting = Math.abs(target.x - current.x) < 0.002 && Math.abs(target.y - current.y) < 0.002;
+      if (resting) { current.x = target.x; current.y = target.y; }
+      // x and y run from -1 to 1 across the room; 5 degrees is the most the folder leans.
+      if (resting && target.x === 0 && target.y === 0) element.style.removeProperty("--lean");
+      else element.style.setProperty("--lean", `perspective(1100px) rotateX(${(-current.y * 5).toFixed(2)}deg) rotateY(${(current.x * 5).toFixed(2)}deg)`);
+      prints.style.translate = `${(-current.x * 5).toFixed(2)}px ${(-current.y * 4).toFixed(2)}px`;
+      if (!resting) frame = requestAnimationFrame(paint);
+    };
+    const wake = () => { if (!frame) frame = requestAnimationFrame(paint); };
+    const onMove = (event: PointerEvent) => {
+      if (event.pointerType !== "mouse" || !fine.matches || still.matches) return;
+      const box = room.getBoundingClientRect();
+      target.x = ((event.clientX - box.left) / box.width) * 2 - 1;
+      target.y = ((event.clientY - box.top) / box.height) * 2 - 1;
+      wake();
+    };
+    const onLeave = () => { target.x = 0; target.y = 0; wake(); };
+    room.addEventListener("pointermove", onMove);
+    room.addEventListener("pointerleave", onLeave);
+    return () => {
+      cancelAnimationFrame(frame);
+      room.removeEventListener("pointermove", onMove);
+      room.removeEventListener("pointerleave", onLeave);
+    };
+  }, []);
 
   return (
     <section className="folder-room" aria-labelledby="folder-title">
@@ -103,13 +143,14 @@ export default function WorkFolder() {
           inert={!open}
           aria-hidden={!open}
         >
-          {workDisciplines.map((item) => (
+          {workDisciplines.map((item, index) => (
             <a
               key={item.number}
               href={item.href}
               className="folder-file"
               data-slot="folder-link"
               tabIndex={open ? 0 : -1}
+              style={{ "--n": index } as CSSProperties}
             >
               <span className="folder-file-number">{item.number}</span>
               <span className="folder-file-title">

@@ -10,9 +10,9 @@ const pages = (study.displayMedia ?? []).slice(0, 3);
     {study.liveUrl && <a href={study.liveUrl} target="_blank" rel="noopener noreferrer" aria-label={`Visit ${study.name}, opens in a new tab`}>Visit website <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 19 19 5M5 5h14v14" /></svg></a>}
   </header>
   <div class="website-bundle-pages" data-page-count={pages.length}>
-    {pages.map((page, index) => <figure class="website-page">
+    {pages.map((page, index) => <figure class:list={["website-page", { "reveal-media": index > 0 }]}>
       <a href={page.src} target="_blank" rel="noopener noreferrer" aria-label={`View ${study.name}: ${page.label}, image opens in a new tab`}>
-        <img src={page.src} alt={page.alt} width={page.width} height={page.height} loading={index === 0 ? "eager" : "lazy"} fetchpriority={index === 0 ? "high" : "auto"} />
+        <img src={page.src} alt={page.alt} width={page.width} height={page.height} loading={index === 0 ? "eager" : "lazy"} fetchpriority={index === 0 ? "high" : "auto"} style={index === 0 ? `view-transition-name: work-${study.slug}` : undefined} />
       </a>
     </figure>)}
   </div>

@@ -11,6 +11,8 @@ export interface ScrollingProject {
   role: string;
   width?: number;
   height?: number;
+  /** Shared with the project page's first image, so the preview travels there on navigation. */
+  transitionName?: string;
 }
 
 /** Native horizontal project rail, adapted to Corey's latest preview reference. */
@@ -47,7 +49,7 @@ function ImagesScrollingAnimation({ projects }: { projects: ScrollingProject[] }
       {projects.map((project, index) => <li className="website-project-item" key={project.href}>
         <a className="website-project-link" href={project.href}>
           <figure>
-            <span className="project-site-frame"><img src={project.src} alt={project.alt} width={project.width} height={project.height} loading={index === 0 ? "eager" : "lazy"} draggable={false} /></span>
+            <span className="project-site-frame"><img src={project.src} alt={project.alt} width={project.width} height={project.height} loading={index === 0 ? "eager" : "lazy"} draggable={false} style={{ viewTransitionName: project.transitionName }} /></span>
             <figcaption><h2>{project.title}</h2><p>{project.role}</p></figcaption>
           </figure>
         </a>

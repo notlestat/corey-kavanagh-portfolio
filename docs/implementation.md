@@ -107,3 +107,32 @@ The scripts in `scripts/` prepare favicon exports, STUDY 01 images, and album ar
 Image Press is removed from the project data, generated project pages, public tool snapshot and preview assets. `/work/image-press` and `/tools/image-press` return 404 in this local build. The standalone source repository is unchanged. The [historical integration reference](image-press-integration.md) records its original snapshot and attribution.
 
 STUDY 01 remains absent from the project data, listing and routes. Its unused preparation script and media remain in the repository.
+
+## Local visual pass · 16 November 2026
+
+Unreviewed local changes in a worktree. Nothing here is committed, pushed or published, and none of it is an approved direction yet.
+
+Home moves from a centred stack to the Work pages' column. On a twelve-column grid the film takes seven columns and the introduction four. The name is set at heading size on the film's top edge, and the contact line rests on its bottom edge. The film's caption shows its live playback position, and the Film and Sound switches sit in the same row. Below 900px the page returns to one column.
+
+Under the film, [hover-preview-list.tsx](../src/components/ui/hover-preview-list.tsx) lists every case study and the point study as title rows. With a mouse, an uncropped image of the row follows the pointer in the same paper mount as the website previews. Keyboard focus parks the same image at the right of the focused row. The preview images download on the first hover or focus. Touch screens and widths under 700px show a 64px thumbnail in each row. Rows are separated by space, with no rules.
+
+[motion.css](../src/motion.css) holds the shared motion:
+
+- Cross-document view transitions (`@view-transition { navigation: auto; }`). Pages crossfade, the navigation buttons hold still, and a project image travels from its card or preview to the case study's lead image through a shared `view-transition-name`. Browsers without support navigate as before.
+- `.rise` lifts a heading line out of its baseline on load. `.settle` fades supporting text in after it.
+- `.reveal-media` ties an image's fade and 34px rise to its scroll position with `animation-timeline: view()`. Browsers without support show the image in place.
+
+Reduced motion keeps the page crossfade and removes the movement.
+
+Other changes:
+
+- [magnetic.ts](../src/lib/magnetic.ts) pulls each navigation button 28% of the way toward the pointer through the `translate` property, which leaves the existing hover `transform` working.
+- The Work folder leans up to 5 degrees toward the pointer while its prints shift the other way. Its three sheets rise 55ms apart when it opens, and the prints slide up on load. Above 1200 × 860px the folder is 1.3 times its base size. It uses `zoom` instead of `scale`, so the browser redraws the type at the larger size.
+- [NextProject.astro](../src/components/NextProject.astro) replaces three copies of the case-study navigation. The next project's name is set at up to 72px beside its lead image.
+- [SiteFooter.astro](../src/components/SiteFooter.astro) replaces the three page footers. [live-clock.tsx](../src/components/ui/live-clock.tsx) adds the current time in London and New Zealand after hydration. The server output still reads "London / New Zealand" without times.
+- Design drops the "Selected case studies" label that repeated the "Selected projects." heading.
+- `.work-container` moved from `work.css` to `styles.css`, because Home now uses it.
+
+No dependency was added. The magnetic, pointer-following and scroll-reveal patterns are common in motion-primitives, React Bits and Magic UI, where they depend on the Motion library. They are rewritten here in CSS and plain React.
+
+Checked locally on 16 November 2026 in Chrome for Testing: `astro check` and `npm run build` pass with no errors; no horizontal overflow on eight routes at 1440px and on Home, Work and BSTROY at 390px; view transitions complete on Home, Work, Design, case-study and website-project navigation; the keyboard preview appears on focus; reduced motion removes the load animations and pauses the film. Safari, Firefox and physical phones are unchecked.

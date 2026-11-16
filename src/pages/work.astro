@@ -2,7 +2,7 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Header from "../components/Header.astro";
 import WorkFolder from "../WorkFolder";
-import Contact from "../components/Contact.astro";
+import SiteFooter from "../components/SiteFooter.astro";
 import "../work.css";
 import "../folder.css";
 ---
@@ -12,7 +12,7 @@ import "../folder.css";
   <main class="work-refresh folder-page" id="work-content">
     <WorkFolder client:load />
   </main>
-  <footer class="folder-footer"><Contact /></footer>
+  <SiteFooter back={false} />
   <script is:inline>
     // Keep previously shared index links pointed at Design projects.
     if (location.hash === "#work-index") location.replace("/work/design#case-studies");

@@ -6,8 +6,8 @@ export function GithubIcon() {
 
 export function PageNavigation({ page }: { page: Page }) {
   return <nav className="garment-navigation" aria-label="Pages">
-    {(["home", "work"] as const).map(item => <a className={`garment-link garment-link-${item}`} key={item} href={item === "home" ? "/" : "/work"} aria-current={page === item ? "page" : undefined}>
-      <span className="garment-button" aria-hidden="true"><span className="garment-holes"><i /><i /><i /><i /></span></span>
+    {(["home", "work"] as const).map(item => <a className={`garment-link garment-link-${item}`} key={item} href={item === "home" ? "/" : "/work"} aria-current={page === item ? "page" : undefined} data-magnetic-zone>
+      <span className="garment-button" aria-hidden="true" data-magnetic><span className="garment-holes"><i /><i /><i /><i /></span></span>
       <span className="garment-label">{item === "home" ? "Home" : "Work"}</span>
     </a>)}
   </nav>;
