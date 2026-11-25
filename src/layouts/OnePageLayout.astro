@@ -1,19 +1,13 @@
 ---
-import "../styles.css";
-import "../visualTheme.css";
-import "../home.css";
-import "../motion.css";
-import type { Page } from "../Navigation";
+import "../one-page.css";
 
 interface Props {
   title: string;
-  page: Page;
   description?: string;
 }
 
-const { title, page, description = "Corey Kavanagh works across design, branding and creative technology." } = Astro.props;
+const { title, description = "Corey Kavanagh is a designer in London working across art direction, websites and digital products." } = Astro.props;
 // Share cards need absolute URLs; `site` in astro.config.mjs supplies the origin.
-// scripts/generate-share-image.mjs exports the 1200 × 630 card.
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const shareImage = new URL("/og/default.jpg", Astro.site);
 ---
@@ -39,10 +33,14 @@ const shareImage = new URL("/og/default.jpg", Astro.site);
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content="A still from Corey Kavanagh's moving-image work" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="theme-color" content="#eeefeb" />
+    <meta name="theme-color" content="#ffffff" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Geist:wght@400;500&family=Geist+Mono&display=swap" />
+    <script is:inline>document.documentElement.classList.add("js");</script>
     <title>{title}</title>
   </head>
   <body>
-    <div id="top" class={`site-shell page-${page}`}><slot /></div>
+    <slot />
   </body>
 </html>

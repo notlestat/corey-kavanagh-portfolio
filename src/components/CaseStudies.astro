@@ -1,7 +1,0 @@
----
-import { caseStudies } from "../caseStudyData";
-const artStudies = caseStudies.filter(study => (study.category ?? "art-direction") === "art-direction");
----
-<section class="art-case-index" id="case-studies" aria-label="Selected projects">
-  <div class="art-project-field">{artStudies.map((study) => <a class="art-project reveal-media" href={`/work/${study.slug}`}><figure><span class="art-project-image"><img src={study.media[0].src} srcset={study.media[0].srcSet} sizes="(max-width: 700px) 80vw, 40vw" alt={study.media[0].alt} width={study.media[0].width} height={study.media[0].height} loading="lazy" style={`view-transition-name: work-${study.slug}`} /></span><figcaption><div><h3>{study.name}</h3><p>{study.role}</p></div><span>{study.period}</span></figcaption></figure></a>)}</div>
-</section>

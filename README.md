@@ -1,30 +1,21 @@
 # Portfolio
 
-An image-led portfolio built with Astro, React, TypeScript, and Tailwind CSS. Home plays a looping film. Work opens a folder with one page per discipline.
+A one-page portfolio built with Astro and TypeScript. The page opens with a signature that draws itself and a short letter. Below the letter, each project sits in a pile of images. Click a pile to open the project in a sheet with its images, credits and notes. The site has no UI framework. One script, [src/scripts/one-page.ts](src/scripts/one-page.ts), runs the page.
 
-| Route | Contents |
-| --- | --- |
-| `/work/design` | A filterable slider with the full image and film selection, then five project cards |
-| `/work/interaction-design` | A horizontal row of website projects |
-| `/work/creative-technology` | A point-cloud film with a working terminal. Featured projects with this category appear below it |
-| `/work/<slug>` | One case-study page per entry in `src/caseStudyData.ts` |
-
-`/work/art-direction` redirects to `/work/design`. Website projects open into up to three overlapping page views. Type `help` in the Creative technology terminal to list its playback commands.
-
-`src/components/ui/images-scrolling-animation.tsx` renders the website row with native horizontal scrolling. It uses the shadcn aliases in [components.json](components.json). See the [work display reference](docs/work-display.md) for the data flow, motion choices, and local-review scope.
-
-The site uses the system Helvetica stack. The checked-in version is in [package.json](package.json).
+The first project, SourceLink, is a product case. Its pile holds a working copy of the SourceLink savings calculator, and its sheet shows the problem, the design decisions and what to measure.
 
 ## Run locally
 
-Use a supported even-numbered Node.js release at version 22.12 or higher, with npm. Download or clone the repository, then run:
+Use Node.js 22.12 or higher, with npm. Clone the repository, then run:
 
 ```sh
 npm ci
 npm run dev
 ```
 
-Open the address printed by Astro, usually `http://localhost:4321`. To choose another port, run `npm run dev -- --port 4322`.
+Open the address that Astro prints, usually `http://localhost:4321`.
+
+The dev server also shows draft prompts in the SourceLink case. They mark copy that still needs writing and show as yellow highlights that start with "To write". Published builds leave them out.
 
 ## Check a change
 
@@ -35,31 +26,36 @@ npm run build
 npm run preview
 ```
 
-The build includes Astro and TypeScript checks. `npm run check` runs those checks separately. There is no unit-test script.
+`npm run build` runs `astro check` before it builds. `npm run check` runs the check on its own. There is no unit-test script.
 
-Use the preview to check changed routes, the Work folder, slider controls, media viewing, keyboard focus, narrow layouts, and reduced motion. A passing local build does not establish a production deployment.
+In the preview, check the signature and letter animation, the piles, the calculator, the project sheet, keyboard focus, narrow layouts and reduced motion. A passing local build does not prove that a production deployment worked.
 
 ## Find the source
 
 | Task | File |
 | --- | --- |
-| Edit Home | [src/pages/index.astro](src/pages/index.astro) |
-| Edit discipline links | [src/workDisciplines.ts](src/workDisciplines.ts) |
-| Edit case studies | [src/caseStudyData.ts](src/caseStudyData.ts) |
-| Edit gallery membership | [src/portfolioData.ts](src/portfolioData.ts) |
-| Edit the Design slider and filter | [src/WorkGallery.tsx](src/WorkGallery.tsx) |
-| Edit the media display | [src/components/ui/display-cards.tsx](src/components/ui/display-cards.tsx) |
-| Edit the website row | [src/components/ui/images-scrolling-animation.tsx](src/components/ui/images-scrolling-animation.tsx) |
-| Edit terminal commands | [src/lib/point-study.ts](src/lib/point-study.ts) |
-| Edit contact details | [src/components/Contact.astro](src/components/Contact.astro) |
-| Edit shared typography | [src/visualTheme.css](src/visualTheme.css) |
+| Edit the letter, the index or the page structure | [src/pages/index.astro](src/pages/index.astro) |
+| Edit projects, images and case copy | [src/onePageProjects.ts](src/onePageProjects.ts) |
+| Edit page behaviour: animation, calculator, sheet and clocks | [src/scripts/one-page.ts](src/scripts/one-page.ts) |
+| Edit styles | [src/one-page.css](src/one-page.css) |
+| Edit the signature | [src/components/Signature.astro](src/components/Signature.astro) |
+| Edit metadata and fonts | [src/layouts/OnePageLayout.astro](src/layouts/OnePageLayout.astro) |
+| Edit redirects from old addresses | [astro.config.mjs](astro.config.mjs) |
 | Review hosting settings | [vercel.json](vercel.json) |
 
-Reusable UI components live in `src/components/ui`. The `@/` import alias points to `src/`. [components.json](components.json) records the shadcn-compatible paths. Tailwind scans these components through the explicit sources in [src/styles.css](src/styles.css).
+Images and film live in `public/work`. Each project in `src/onePageProjects.ts` lists its images in `slides`. A pile shows five, three or one of them, depending on how many the project has.
+
+## Add a draft prompt
+
+Case copy accepts a string or `{ draft: "..." }`. A string is published copy. A draft is a note to yourself. `publishable()` in `src/onePageProjects.ts` removes every draft when `import.meta.env.DEV` is false, so drafts never reach the built page or its data. To publish a line, replace its `{ draft }` entry with a string.
+
+## Keep old links working
+
+The site used to have a page per discipline and per project. `astro.config.mjs` redirects those addresses. Each `/work/<project>` address goes to `/#<project>` on the one page, and the discipline pages go to `/` or to the Point study section. The project `id` values in `src/onePageProjects.ts` match the old addresses, so keep them stable.
 
 ## Read the project records
 
-- [Implementation reference](docs/implementation.md) describes the routes, gallery, image viewer, terminal, and static deployment.
-- [Editorial record](docs/editorial-record.md) retains the artwork evidence, draft labels, attribution, and publication decisions.
+- [Editorial record](docs/editorial-record.md) keeps the artwork evidence, attribution and publication decisions.
+- [Image Press integration history](docs/image-press-integration.md) describes an earlier embedded tool that is no longer shipped.
 
-Review media selections, collaborator credits, and usage permissions before changing public claims. Private source documents and personal-use font downloads are excluded from the release.
+Review media selections, collaborator credits and usage permissions before changing public claims.
