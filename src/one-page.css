@@ -95,6 +95,7 @@
   .case-sec{padding:16px 0;border-top:1px solid var(--line)}
   .case-sec:first-child{border-top:0}
   .case-sec h3{margin:0 0 6px!important}
+  .case-sec > p + p{margin-top:10px}
   .decision{margin-top:14px}
   .decision b{display:block;font-weight:500;color:var(--ink);margin-bottom:2px}
   .decision p+p{margin-top:6px}
@@ -170,7 +171,7 @@
   .thumbs button:hover{opacity:.85}
   .thumbs button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
   .thumbs img{width:100%;height:100%;object-fit:cover;display:block}
-  .sheet-info{padding:30px 30px 26px;overflow-y:auto;display:flex;flex-direction:column}
+  .sheet-info{padding:30px 30px 26px;overflow-y:auto;max-height:calc(100dvh - 48px);overscroll-behavior:contain;display:flex;flex-direction:column}
   .sheet-info h2{margin:6px 0 0;font-size:clamp(28px,3vw,40px);line-height:1.05;letter-spacing:-.04em;font-weight:500}
   .sheet-info .lead{margin:12px 0 0;font-size:16px;line-height:1.45}
   .sheet-meta{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:22px 0 0;padding:12px 0;border-block:1px solid var(--line)}
@@ -203,7 +204,7 @@
     .sheet-inner{grid-template-columns:1fr;max-height:100dvh;overflow-y:auto}
     .sheet-media{padding:56px 14px 14px}
     .sheet-stage{height:auto;max-height:56vh}.sheet-stage img,.sheet-stage video{max-height:56vh}
-    .sheet-info{padding:22px 18px 32px;overflow:visible}
+    .sheet-info{padding:22px 18px 32px;overflow:visible;max-height:none}
   }
 
   footer b{font-weight:500;color:var(--ink)}
